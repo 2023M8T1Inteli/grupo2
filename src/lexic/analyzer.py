@@ -31,9 +31,14 @@ class Analyzer:
     
     def lexic(self):
 
-        while self.index < len(self.code):
+        while self.index <= len(self.code):
+
+            if self.index == len(self.code):
+                self.token_list.append(Token("EOF", "EOF", self.current_line))
+                break
 
             c = self.code[self.index]
+
             self.index += 1
 
             if c == "\n":
@@ -78,11 +83,6 @@ class Analyzer:
                 tmp += self.code[self.index]
             else:
                 if tmp in self.reserved_words:
-                    if tmp == "fim" and self.code[self.index] == ".": # FIM.
-                        tmp += self.code[self.index]
-                        self.token_list.append(Token("EOF", tmp, self.current_line))
-                        return self.index + 1
-                    
                     self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
                     return self.index
                 else:
