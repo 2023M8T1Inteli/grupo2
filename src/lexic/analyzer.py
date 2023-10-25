@@ -27,7 +27,7 @@ class Analyzer:
                   ">": "OPREL", ">=": "OPREL", "+": "OPSUM", "-": "OPSUM", "ou": "OPSUM", 
                   "*": "OPMUL", "/": "OPMUL", "%": "OPMUL", "e": "OPMUL", "^": "OPPOW"
                   }
-        self.symbol_list = ["+", "-", "*", "/", "^", "%", "(", ")", "<", ">", "=", "<>", "<=", ">=", ":", ";", ","]
+        self.symbol_list = ["+", "-", "*", "/", "^", "%", "(", ")", "<", ">", "=", "<>", "<=", ">=", ":", ";", ",", "."]
     
     def lexic(self):
 
@@ -43,6 +43,12 @@ class Analyzer:
             if c == " ":
                 continue
             
+            if c == "/":
+                i = self.index
+                self.index = self.comments(c)
+                if self.index > i:
+                    continue
+
             if c in self.alphabet_list:
                 self.index = self.starts_alphabetically(c)
                 continue
@@ -60,6 +66,7 @@ class Analyzer:
                 continue
             
             print("erro lexico na linha " + str(self.current_line))
+            self.token_list = []
             break
             
         
@@ -71,6 +78,11 @@ class Analyzer:
                 tmp += self.code[self.index]
             else:
                 if tmp in self.reserved_words:
+                    if tmp == "fim" and self.code[self.index] == ".": # FIM.
+                        tmp += self.code[self.index]
+                        self.token_list.append(Token("EOF", tmp, self.current_line))
+                        return self.index + 1
+                    
                     self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
                     return self.index
                 else:
@@ -78,6 +90,10 @@ class Analyzer:
                     return self.index
             self.index = self.index + 1
 
+        if tmp in self.alphabet_list:
+            self.token_list.append(Token("ID", tmp, self.current_line))
+            return self.index
+    
         return self.index
     
 
@@ -90,6 +106,10 @@ class Analyzer:
                 self.token_list.append(Token("INTEGER", tmp, self.current_line))
                 return self.index
             self.index = self.index + 1
+
+        if tmp in self.digit_list:
+            self.token_list.append(Token("INTEGER", tmp, self.current_line))
+            return self.index
         
         return self.index
 
@@ -111,13 +131,34 @@ class Analyzer:
         return self.index
     
     def starts_string(self, c):
-        tmp = ""
+        tmp = str(c)
         while self.index < len(self.code):
             if self.code[self.index] != '"':
                 tmp += self.code[self.index]
             else:
+                tmp += self.code[self.index]
                 self.token_list.append(Token("STRING", tmp, self.current_line))
                 return self.index + 1
             self.index = self.index + 1
         
         return self.index
+    
+    def comments(self, c):
+        i = self.index
+        tmp = str(c)
+        if self.code[self.index] == "/":
+            while self.code[self.index] != "\n":
+                self.index += 1
+            self.current_line += 1
+            return self.index + 1
+        
+        if self.code[self.index] == "*":
+            self.index += 1
+            while self.index < len(self.code):
+                if self.code[self.index] == "*":
+                    self.index += 1
+                    if self.code[self.index] == "/":
+                        self.index += 1
+                        return self.index
+                self.index += 1
+        return i
