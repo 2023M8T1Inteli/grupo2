@@ -54,6 +54,10 @@ class Analyzer:
             if c in self.symbol_list:
                 self.index = self.starts_symbol(c)
                 continue
+
+            if c == '"':
+                self.index = self.starts_string(c)
+                continue
             
             print("erro lexico na linha " + str(self.current_line))
             break
@@ -104,4 +108,16 @@ class Analyzer:
                 return self.index
             
         self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
+        return self.index
+    
+    def starts_string(self, c):
+        tmp = ""
+        while self.index < len(self.code):
+            if self.code[self.index] != '"':
+                tmp += self.code[self.index]
+            else:
+                self.token_list.append(Token("STRING", tmp, self.current_line))
+                return self.index + 1
+            self.index = self.index + 1
+        
         return self.index
