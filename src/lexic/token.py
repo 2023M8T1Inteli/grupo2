@@ -10,3 +10,4 @@ class Token:
 
     def __eq__(self, other):
         return self.type == other.type and self.value == other.value
+    
