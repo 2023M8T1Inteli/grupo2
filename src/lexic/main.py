@@ -9,11 +9,11 @@ exemplos = {"exemplo1": "a = 1\nb = 12\nc = (12+3)",
             "exemplo5": "programa :\ninicio\n    programas = verdade\n  \n  verdades = 0\n  se entao inicio\n       ses = verdades\n       programas = ler()\n     x = ler_varios(11, 4, 1)\n  fim\n\nfim."
             }
 
-code = exemplos["exemplo5"]
+code = exemplos["exemplo1"]
 
-exemplo_teste = 'adsadasdsa mostrar \n senao sddas 124'
+exemplo_teste = '/*adsadasdsa mostrar \n senao sddas 124 "#"\n*/'
 
-analyzer = Analyzer(code)
+analyzer = Analyzer(exemplo_teste)
 analyzer.lexic()
 print(analyzer.token_list)
 

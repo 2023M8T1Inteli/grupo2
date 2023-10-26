@@ -78,7 +78,16 @@ class Analyzer:
 
     def starts_alphabetically(self, c):
         tmp =  str(c)
-        while self.index < len(self.code):
+        while self.index <= len(self.code):
+
+            if self.index == len(self.code): # jeito burro de resolver o problema da ultima palavra
+                if tmp in self.reserved_words:
+                    self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
+                    return self.index
+                else:
+                    self.token_list.append(Token("ID", tmp, self.current_line))
+                    return self.index
+
             if self.code[self.index] in self.alphabet_list or self.code[self.index] in self.digit_list:
                 tmp += self.code[self.index]
             else:
@@ -90,16 +99,17 @@ class Analyzer:
                     return self.index
             self.index = self.index + 1
 
-        if tmp in self.alphabet_list:
-            self.token_list.append(Token("ID", tmp, self.current_line))
-            return self.index
-    
         return self.index
     
 
     def starts_numerically(self, c):
         tmp = str(c)
-        while self.index < len(self.code):
+        while self.index <= len(self.code):
+
+            if self.index == len(self.code): # jeito burro de resolver o problema do ultimo numero
+                self.token_list.append(Token("INTEGER", tmp, self.current_line))
+                return self.index
+            
             if self.code[self.index] in self.digit_list:
                 tmp += self.code[self.index]
             else:
@@ -107,15 +117,16 @@ class Analyzer:
                 return self.index
             self.index = self.index + 1
 
-        if tmp in self.digit_list:
-            self.token_list.append(Token("INTEGER", tmp, self.current_line))
-            return self.index
         
         return self.index
 
 
     def starts_symbol(self, c):
         tmp = str(c)
+
+        if self.index == len(self.code):
+            self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
+            return self.index
 
         if (self.index) < len(self.code):
             tmp2 = tmp + self.code[self.index]
@@ -127,7 +138,7 @@ class Analyzer:
                 self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
                 return self.index
             
-        self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
+        # self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
         return self.index
     
     def starts_string(self, c):
