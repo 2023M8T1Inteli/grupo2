@@ -22,6 +22,9 @@ Para calcular o TAM, foi multiplicado o número estimado de PCD pelo custo médi
 Estimativa TAM: R$ 2,062,368,000,000
 
 ## Matriz de Risco
+
+![matriz-risco](img/rm.png)
+
 ### Ameaças
 
 - "O tapete com mau contato pode interferir na experiência de jogo":
@@ -85,6 +88,8 @@ A análise considerou diversos atributos, como usabilidade, preço, acessibilida
 | Inteligência de dados | 10        | 0                       | 0       |
 | Segurança         | 9              | 10                      | 5       |
 | Reabilitação      | 10             | 4                       | 8       |
+
+![oceano-azul](img/oa.png)
 
 # Avaliação de Atributos
 
