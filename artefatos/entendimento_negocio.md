@@ -76,7 +76,7 @@ Estimativa TAM: R$ 2,062,368,000,000
 
 
 ## Matriz de oceano azul
-A análise considerou diversos atributos, como usabilidade, preço, acessibilidade, inovação, suporte, inteligência de dados, segurança e reabilitação. a maior nota significa melhor performance naquele atributo.
+A análise considerou diversos atributos, como usabilidade, preço, acessibilidade, inovação, suporte, inteligência de dados, segurança e reabilitação. a maior nota significa melhor performance naquele atributo. Os produtos analisados foram, o tapete do grupo 2, um tapete generico disponível no mercado sem a integração tecnologica e por fim o Nirvana que é um dispositivo médico baseado em realidade virtual projetado especificamente para auxiliar a reabilitação motora em pacientes com distúrbios neuromotores.
 
 | Atributos          | Tapete grupo 2 | Tapete sensorial comum | Nirvana |
 |-------------------|----------------|-------------------------|---------|
