@@ -138,3 +138,42 @@ Para explorar essa oportunidade:
 
 Melhorar o suporte pode criar um Oceano Azul, uma vez que, de acordo com a análise, os concorrentes já têm um alto nível de desempenho em outros atributos, como usabilidade e inovação. Portanto, focar em uma área onde eles não se destacam pode criar uma vantagem competitiva única para o "Tapete do Grupo 2".
 
+<br>
+
+# Análise Financeira 
+
+A análise financeira do projeto para a criação do tapete sensorial conectado, utilizando o Greg Maker como componente central, voltado para pessoas com leves desordens neurológicas na AACD, requer uma avaliação detalhada dos custos e projeções de receitas relacionadas ao projeto. É importante destacar que os valores apresentados a seguir são estimativas aproximadas, uma vez que o objetivo principal do projeto é fornecer uma solução inovadora para a AACD. Os custos de mão de obra mencionados são fornecidos apenas para fins de análise e planejamento, porém, como este é um projeto realizado por alunos com o principal propósito de aprendizado, não implicará em custos reais de mão de obra.
+
+## Projeções de Custos
+
+A projeção de custos é um processo crucial para o projeto, auxiliando na estimativa dos recursos financeiros necessários para sua execução. Abaixo, apresentamos uma lista geral dos principais custos, destacando o uso do Greg Maker, o tapete sensorial, e outros componentes eletrônicos.
+
+## Desenvolvimento do Tapete Sensorial:
+
+- Materiais (Tapete): R$ 400
+- Greg Maker: R$ 500
+- Outros componentes eletrônicos utilizados durante a construção e testes: R$ 200
+
+---
+
+- Total: R$ 1.100
+
+## Estimativa de Mão de Obra
+
+É importante ressaltar que a estimativa de mão de obra é meramente uma aproximação, uma vez que este projeto é realizado por alunos e, portanto, não envolve custos reais de mão de obra. Sete desenvolvedores trabalharão 2 horas por dia, 5 dias por semana, durante 1 ano (cerca de 200 dias). A taxa de custo por hora de trabalho de cada membro da equipe é estimada em R$ 30. Isso resultaria em uma estimativa média de custo relacionado à mão de obra no valor de R$ 252.000 por ano se fosse um projeto comercial.
+
+## Projeções de Receitas
+
+O projeto pode gerar receitas indiretas por meio de doações de empresas privadas, aumento da visibilidade da AACD e o desenvolvimento de novos produtos e serviços. Além disso, deve ser ressaltado que o impacto social positivo para pessoas com desordens neurológicas leves é um dos principais objetivos do projeto, oferecendo aprimoramento na qualidade de vida e novas oportunidades de interação, aprendizado e desenvolvimento.
+
+**Obs:** Essas estimativas são baseadas em informações disponíveis até o momento e podem ser ajustadas à medida que o projeto avança.
+
+<br>
+
+# Proposta de Valor (Canvas Value Preposition)
+
+Mapeamento da solução final a ser entregue através das principais dores e necessidades do cliente.
+
+![matriz-risco](img/proposta_de_valor.png)
+
+
