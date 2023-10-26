@@ -166,7 +166,9 @@ class Analyzer:
         if self.code[self.index] == "*":
             self.index += 1
             while self.index < len(self.code):
-                if self.code[self.index] == "*":
+                if self.code[self.index] == "\n":
+                    self.current_line += 1
+                elif self.code[self.index] == "*":
                     self.index += 1
                     if self.code[self.index] == "/":
                         self.index += 1
