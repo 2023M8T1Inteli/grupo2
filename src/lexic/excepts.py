@@ -1,6 +1,6 @@
 class LexicalException(Exception):
 	"""
-		Define uma classe (vazia) que representa um erro léxico.
-		Herda da classe Exception.
+    	Represents a lexical error.
+    	Inherits from the base Exception class.
 	"""
 	pass
