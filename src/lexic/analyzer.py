@@ -1,4 +1,5 @@
 from token import Token
+from excepts import LexicalException
 
 class Analyzer:
 
@@ -70,9 +71,9 @@ class Analyzer:
                 self.index = self.starts_string(c)
                 continue
             
-            print("erro lexico na linha " + str(self.current_line))
-            self.token_list = []
-            break
+            raise LexicalException("Caractere invalido na linha " + str(self.current_line) + ": " + c)
+            
+
             
         
 
