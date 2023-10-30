@@ -89,11 +89,6 @@ class Analyzer:
                 self.index = self.starts_symbol(c)
                 continue
 
-            # # If the character is a double quote, process the string
-            # if c == '"':
-            #     self.index = self.starts_string(c)
-            #     continue
-
             # If none of the above conditions are met, raise a lexical exception
             raise LexicalException(f"Invalid character on line {self.current_line}: {c}")
 
@@ -163,7 +158,6 @@ class Analyzer:
         """
                 
         tmp = str(c)
-        print(tmp)
 
         if self.index == len(self.code):
             self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
