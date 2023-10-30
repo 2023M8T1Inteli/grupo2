@@ -20,7 +20,7 @@ class Token:
         """
         Returns a string representation of the token object.
         """
-        return f"({self.type}, {self.value}, {self.line})"
+        return f"({self.type} {self.value} {self.line})"
     
     def __eq__(self, other):
         """

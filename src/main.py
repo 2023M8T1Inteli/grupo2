@@ -1,9 +1,9 @@
-from token import Token
-from analyzer import Analyzer
+from lexical.analyzer import Analyzer
+# from lexical.token import Token
 
 # Define sample code snippets for testing the lexer
 exemplos = {
-    "exemplo1": "a = 1\nb = 12\nc = (12+3)", 
+    "exemplo1": 'a = 1\nb = 12\nc = (12+"xxx"3) 2xas_a=was dc  "sss', 
     "exemplo2": "inicio\n    z = -1234\nfim", 
     "exemplo3": "teste = 1+2 -3 *\n\n40/5 ^ 6 %\n\n\n987", 
     "exemplo4": "se abc <> xyz entao\ninicio\n   x=(verdade)\n   y= ler ( )\nfim", 
@@ -11,7 +11,7 @@ exemplos = {
 }
 
 # Select one of the samples for processing
-code = exemplos["exemplo4"]
+code = exemplos["exemplo1"]
 
 # Create an instance of the Analyzer class
 analyzer = Analyzer(code)

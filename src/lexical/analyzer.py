@@ -1,5 +1,5 @@
-from token import Token
-from excepts import LexicalException
+from lexical.token import Token
+from lexical.excepts import LexicalException
 
 class Analyzer:
 
@@ -40,7 +40,7 @@ class Analyzer:
                   ">": "OPREL", ">=": "OPREL", "+": "OPSUM", "-": "OPSUM", "ou": "OPSUM", 
                   "*": "OPMUL", "/": "OPMUL", "%": "OPMUL", "e": "OPMUL", "^": "OPPOW"
                   }
-        self.symbol_list = ["+", "-", "*", "/", "^", "%", "(", ")", "<", ">", "=", "<>", "<=", ">=", ":", ";", ",", "."]  # List of valid symbols
+        self.symbol_list = ["+", "-", "*", "/", "^", "%", "(", ")", "<", ">", "=", "<>", "<=", ">=", ":", ";", ",", ".", '"']  # List of valid symbols
     
     def lexic(self):
         """
@@ -89,10 +89,10 @@ class Analyzer:
                 self.index = self.starts_symbol(c)
                 continue
 
-            # If the character is a double quote, process the string
-            if c == '"':
-                self.index = self.starts_string(c)
-                continue
+            # # If the character is a double quote, process the string
+            # if c == '"':
+            #     self.index = self.starts_string(c)
+            #     continue
 
             # If none of the above conditions are met, raise a lexical exception
             raise LexicalException(f"Invalid character on line {self.current_line}: {c}")
@@ -163,6 +163,7 @@ class Analyzer:
         """
                 
         tmp = str(c)
+        print(tmp)
 
         if self.index == len(self.code):
             self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
@@ -176,7 +177,12 @@ class Analyzer:
             
             else:
                 self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
-                return self.index
+                if tmp == '"':
+                    tmp2 = self.code[self.index]
+                    self.index = self.starts_string(tmp2)
+                    return self.index
+                else:
+                    return self.index
             
         return self.index
     
@@ -191,9 +197,8 @@ class Analyzer:
             if self.code[self.index] != '"':
                 tmp += self.code[self.index]
             else:
-                tmp += self.code[self.index]
                 self.token_list.append(Token("STRING", tmp, self.current_line))
-                return self.index + 1
+                return self.index
             self.index = self.index + 1
         
         return self.index
