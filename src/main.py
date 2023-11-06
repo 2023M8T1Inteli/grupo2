@@ -3,15 +3,22 @@ from lexical.analyzer import Analyzer
 
 # Define sample code snippets for testing the lexer
 exemplos = {
-    "exemplo1": 'a = 1\nb = 12\nc = (12+"xxx"3) 2xas_a=was dc  "sss', 
+    "exemplo1": 'a = 1\nb = 12\nc = (12+"xxx"3) 2xas_a=was dc  "sss" s', 
     "exemplo2": "inicio\n    z = -1234\nfim", 
     "exemplo3": "teste = 1+2 -3 *\n\n40/5 ^ 6 %\n\n\n987", 
-    "exemplo4": "se abc <> xyz entao\ninicio\n   x=(verdade)\n   y= ler ( )\nfim", 
-    "exemplo5": "programa :\ninicio\n    /*programas = verdade\n  \n  verdades = 0\n  se entao inicio\n*/      ses = verdades\n       programas = ler()\n     x = ler_varios(11, 4, 1)\n  fim\n\nfim."
+    "exemplo4": 'se "oioi" abc <> xyz entao\ninicio  "oioi"\n   x=(verdade)\n   y= ler ( )\nfim', 
+    "exemplo5": 'programa "cores":\n inicio'
 }
 
 # Select one of the samples for processing
-code = exemplos["exemplo1"]
+code1 = exemplos["exemplo4"]
+
+# Read the code from the file
+with open('./lexical/test/example1.w', 'r') as file:
+    code = file.read()
+
+
+# print(code)
 
 # Create an instance of the Analyzer class
 analyzer = Analyzer(code)

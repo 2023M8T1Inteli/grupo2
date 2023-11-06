@@ -173,6 +173,7 @@ class Analyzer:
                 self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
                 if tmp == '"':
                     tmp2 = self.code[self.index]
+                    print(tmp2)
                     self.index = self.starts_string(tmp2)
                     return self.index
                 else:
@@ -187,15 +188,17 @@ class Analyzer:
         """
                 
         tmp = str(c)
+        self.index = self.index + 1
         while self.index < len(self.code):
             if self.code[self.index] != '"':
                 tmp += self.code[self.index]
             else:
                 self.token_list.append(Token("STRING", tmp, self.current_line))
-                return self.index
+                self.token_list.append(Token(self.reserved_words[self.code[self.index]], self.code[self.index], self.current_line))
+                return self.index + 1
             self.index = self.index + 1
         
-        return self.index
+        return self.index 
     
     def comments(self, c):
 
