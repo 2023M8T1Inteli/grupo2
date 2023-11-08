@@ -1,7 +1,7 @@
-from lexical.token import Token
-from lexical.excepts import LexicalException
+from lexic.token import Token
+from lexic.excepts import LexicalException
 
-class Analyzer:
+class Lexic:
 
     """"
         A lexical analyzer that processes source code to produce a list of tokens.
@@ -173,7 +173,6 @@ class Analyzer:
                 self.token_list.append(Token(self.reserved_words[tmp], tmp, self.current_line))
                 if tmp == '"':
                     tmp2 = self.code[self.index]
-                    print(tmp2)
                     self.index = self.starts_string(tmp2)
                     return self.index
                 else:
