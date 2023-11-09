@@ -6,6 +6,7 @@ inicio
     Para os comandos abaixo, ao invés de "casar" com um
     <sum_expression>, case os valores com tokens INTEGER */
     xyz = ler_varios(1, 2, 3)
+
     
     mostrar(4)
 

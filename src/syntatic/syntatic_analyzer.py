@@ -18,7 +18,7 @@ class Syntatic:
             self.current_token = None
 
 
-    def match(self, expected):
+    def match(self, expected=None):
         if self.current_token.type == expected:
             self.next_token()
         else:
@@ -42,10 +42,9 @@ class Syntatic:
 
 
     def statement_list(self):
-        if self.current_token.type == "RBLOCK":
-            return
-        self.statement()
-        self.statement_list()
+        if self.current_token.type != "RBLOCK":
+            self.statement()
+            self.statement_list()
 
     def statement(self):
         if self.current_token.type == "ID":
@@ -56,6 +55,11 @@ class Syntatic:
             self.while_statement()
         elif self.current_token.value == "mostrar" or self.current_token.value == "tocar" or self.current_token.value == "esperar" or self.current_token.value == "mostrar_tocar":
             self.command_statement()
+        else:
+            i = self.index - 1
+            raise Exception(f"Syntatic error: expected statement line {self.tokens[i].line}") ## necessário arrumar
+        
+        ## Entender como trata o caso de não ter o else
         
     def assignment_statement(self):
         self.match("ID")
@@ -168,6 +172,8 @@ class Syntatic:
             self.match("LPAR")
             self.expression()
             self.match("RPAR")
-
+        else:
+            i = self.index - 1
+            raise Exception(f"Syntatic error: expected factor line {self.tokens[i].line}")
     def boolean(self):
             self.match("BOOLEAN")

@@ -44,4 +44,5 @@
 | '-' <factor>
 | NAO <boolean>
 | LPAR <expression> RPAR
+
 <boolean> ::= 'verdade' | 'falso'

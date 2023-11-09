@@ -15,7 +15,7 @@ exemplos = {
 code1 = exemplos["exemplo1"]
 
 # Read the code from the file
-with open('src/lexic/test/example2.w', 'r') as file:
+with open('src/syntatic/test/example2.w', 'r') as file:
     code = file.read()
 
 
