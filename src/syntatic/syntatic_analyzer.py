@@ -22,7 +22,7 @@ class Syntatic:
         if self.current_token.type == expected:
             self.next_token()
         else:
-            print(self.current_token)
+            # print(self.current_token)
             raise Exception(f"Syntatic error: expected {expected} line {self.current_token.line}")
         
     def program(self):
@@ -119,10 +119,13 @@ class Syntatic:
 
     
     def expression(self):
+        print(self.current_token)
+
         self.sum_expression()
+        print(self.current_token)
         if self.current_token.type == "OPREL":
             self.relop()
-            self.sum_expression()
+            self.sum_expression() ### substituir por expression
 
     
     def sum_expression(self):
@@ -135,6 +138,7 @@ class Syntatic:
 
     def sum_expression2(self):
         if self.current_token.type == "OPSUM":
+            self.match("OPSUM")
             self.mult_term()
             self.sum_expression2()
 
@@ -173,6 +177,7 @@ class Syntatic:
             self.expression()
             self.match("RPAR")
         else:
+            print(self.current_token)
             i = self.index - 1
             raise Exception(f"Syntatic error: expected factor line {self.tokens[i].line}")
     def boolean(self):
