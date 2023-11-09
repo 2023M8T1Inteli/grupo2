@@ -1,5 +1,6 @@
 from lexic.lexic_analyzer import Lexic
 from syntatic.syntatic_analyzer import Syntatic
+from compiler.compiler import Compiler
 # from lexical.token import Token
 
 # Define sample code snippets for testing the lexer
@@ -15,20 +16,9 @@ exemplos = {
 code1 = exemplos["exemplo1"]
 
 # Read the code from the file
-with open('src/syntatic/test/example3.w', 'r') as file:
+with open('src/syntatic/test/example5.w', 'r') as file:
     code = file.read()
 
 
-# print(code)
-
-# Create an instance of the Lexic class
-lexic_analyzer = Lexic(code)
-
-# Process the code using the lexic method
-lexic_analyzer.lexic()
-
-# Print the resulting tokens
-# print(lexic_analyzer.token_list)
-syntatic_analyzer = Syntatic(lexic_analyzer.token_list)
-syntatic_analyzer.analyze()
-# print(analyzer.token_list)
+analyser = Compiler(code)
+analyser.compile()

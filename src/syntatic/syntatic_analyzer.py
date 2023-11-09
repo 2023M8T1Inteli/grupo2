@@ -18,7 +18,7 @@ class Syntatic:
             self.current_token = None
 
 
-    def match(self, expected=None):
+    def match(self, expected):
         if self.current_token.type == expected:
             self.next_token()
         else:
@@ -119,10 +119,10 @@ class Syntatic:
 
     
     def expression(self):
-        print(self.current_token)
+        # print(self.current_token)
 
         self.sum_expression()
-        print(self.current_token)
+        # print(self.current_token)
         if self.current_token.type == "OPREL":
             self.relop()
             self.sum_expression() ### substituir por expression
@@ -177,7 +177,7 @@ class Syntatic:
             self.expression()
             self.match("RPAR")
         else:
-            print(self.current_token)
+            # print(self.current_token)
             i = self.index - 1
             raise Exception(f"Syntatic error: expected factor line {self.tokens[i].line}")
     def boolean(self):
