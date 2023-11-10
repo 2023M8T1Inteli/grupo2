@@ -8,3 +8,7 @@ with open(f'{sys.argv[1]}', 'r') as file:
 
 analyser = Compiler(code)
 analyser.compile()
+
+
+### Para rodar o compilador, execute o comando abaixo no terminal:
+### python3 src/main.py <nome do arquivo>
