@@ -1,0 +1,72 @@
+import QtQuick 6.2
+
+// Model for storing structured data for UI components
+ListModel { 
+
+    // List element representing 'Events' category
+    ListElement {
+        name: "Interação" 
+        category: "Events" 
+        // Array of blocks within the 'Events' category
+        blocks: [
+            // Individual block representing a specific event
+            ListElement {
+                name: "Se quadrante 4 pressionado" 
+                portrait: "img/onPress.png" 
+                refCode: "botao_pressionado = ler_varios(4, 1, 0)\nse botao_pressionado entao\ninicio\n" // Reference code for the event
+                category: "Events"
+            },
+            // Another block in the 'Events' category
+            ListElement {
+                name: "Se quadrante 1 pressionado"
+                portrait: "img/onPress.png"
+                refCode: "botao_pressionado = ler_varios(1, 1, 0)\nse botao_pressionado entao\ninicio\n"
+                category: "Events"
+            }
+        ]
+    }
+
+    // List element for 'Actions / Display' category
+    ListElement {
+        name: "Ações / Exibição"
+        category: "Actions"
+        // Blocks under the 'Actions' category
+        blocks: [
+            // Block representing an action to show an image
+            ListElement {
+                name: "Mostrar Imagem"
+                portrait: "img/executeAction.png"
+                refCode: "mostrar("
+                category: "Actions"
+            }
+        ]
+    }
+
+    // List element for user's images
+    ListElement {
+        name: "Suas Imagens"
+        category: "Images"
+        // Blocks representing different images
+        blocks: [
+            // Each block corresponds to a specific image
+            ListElement {
+                name: "Melão"
+                portrait: "img/melao.png"
+                refCode: "1)\nfim\n"
+                category: "Images"
+            },
+            ListElement {
+                name: "Maçã"
+                portrait: "img/maca.png"
+                refCode: "2)\nfim\n"
+                category: "Images"
+            },
+            ListElement {
+                name: "Banana"
+                portrait: "img/banana.png"
+                refCode: "3)\nfim\n"
+                category: "Images"
+            }
+        ]
+    }
+}
