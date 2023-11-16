@@ -9,6 +9,16 @@ qt6_add_qml_module(content
         App.qml
     RESOURCES
     fonts/fonts.txt
+    img/back.png
+    img/card1.jpg
+    img/card2.png
+    img/folder.png
+    img/patient.png
+    img/play.png
+    img/settings.png
+    img/font-solid.svg
+    img/image-solid.svg
+    img/play-solid.svg
     code/main.py
     code/compiler/compiler.py
     code/lexic/lexic_analyzer.py
@@ -22,6 +32,7 @@ qt6_add_qml_module(content
     QML_FILES views/Code.qml
     QML_FILES views/Projects.qml
     QML_FILES views/Patients.qml
+    QML_FILES views/Scene.qml
     QML_FILES views/AddPatientModal.qml
     QML_FILES components/NavBar.qml
     QML_FILES components/CustomButton.qml

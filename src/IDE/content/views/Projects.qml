@@ -2,26 +2,31 @@ import QtQuick 6.2
 import QtQuick.Layouts
 import QtQuick.Controls
 import "../listModels"
+import "../components"
 
 // Projects Area definition
 Rectangle {
     id: rectangle
-    width: parent.width
-    height: parent.height
+    anchors.fill: parent
     color: root.white // Accessible color
+
+    GridLayout {
+          anchors.fill: parent
+          columns: 2
+          rows: 2
+
+
+      // Navbar
+          NavBar {
+               Layout.columnSpan: 2
+          }
 
     // Responsive column layout
     ColumnLayout {
-        anchors.fill: parent
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+        Layout.columnSpan: 2
         spacing: root.height / 14
-
-        // Background
-        Rectangle {
-            Layout.fillWidth: true
-            height: 60
-            color: root.primaryColor
-        }
-
 
         // Responsive column layout for elements in the page
         ColumnLayout {
@@ -33,31 +38,6 @@ Rectangle {
             // Responsive layout for the icons
             RowLayout {
                 anchors.horizontalCenter: parent.horizontalCenter
-                // Back Button
-                Button {
-                    implicitWidth: 50
-                    height: 40
-                    Layout.alignment: Qt.AlignHCenter
-                    background: Rectangle {
-                        implicitWidth: 50
-                        implicitHeight: 40
-                        radius:6
-                        color: root.primaryColor
-                        anchors.centerIn: parent
-                        Text {
-                            anchors.centerIn: parent
-                            text:"<-"
-                            font.pixelSize: 20
-                            color: root.white
-                        }
-                    }
-
-                    onClicked: {
-                        // Handle login action
-                    }
-
-                }
-
                 // Title card
                 Text {
                     height: 40
@@ -69,14 +49,7 @@ Rectangle {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                // Image for settings
-                Image {
-                    height: 48
-                    width: 48
-                    source: "../img/settings.png"
-                    Accessible.name: "Desenho de engrenagem"
-                    Accessible.description: "Desenho de engrenagem para indicar a tela de opções"
-                }
+
             }
 
             // Responsive Grid View
@@ -169,4 +142,5 @@ Rectangle {
             }
         }
     }
+}
 }

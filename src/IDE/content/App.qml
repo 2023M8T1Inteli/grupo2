@@ -24,7 +24,7 @@ ApplicationWindow {
 
     StackView {
         id: navigationStack
-        initialItem: codeScreen
+        initialItem: loginScreen
         anchors.fill: parent
     }
 
@@ -55,7 +55,7 @@ ApplicationWindow {
 
     Component {
         id: sceneBuilder
-        SceneBuilder{}
+        Scene{}
     }
 
    }
