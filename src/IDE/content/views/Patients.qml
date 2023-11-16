@@ -2,25 +2,29 @@ import QtQuick 6.2
 import QtQuick.Layouts
 import QtQuick.Controls
 import "../listModels"
+import "../components"
 
 Rectangle {
     id: rectangle
-    width: parent.width
-    height: parent.height
+    anchors.fill: parent
     color: root.white // Accessible white color
 
     // Responsive Column Layout
-
-    ColumnLayout {
+  GridLayout {
         anchors.fill: parent
-        spacing: root.height / 30 // Spacing between elements
+        columns: 2
+        rows: 2
 
-        // Bar-like Rectangle
-        Rectangle {
-            Layout.fillWidth: true
-            height: 60
-            color: root.primaryColor // Primary color with careful contrast
+
+    // Navbar
+        NavBar {
+             Layout.columnSpan: 2
         }
+    ColumnLayout {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        Layout.columnSpan: 2
+        spacing: root.height / 30 // Spacing between elements
 
 
         // Modal to Add patients
@@ -44,35 +48,6 @@ Rectangle {
                 Layout.margins: 70
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                // Back button
-                Button {
-                    implicitWidth: 64
-                    height: 48
-                    Layout.alignment: Qt.AlignHCenter
-                    background:
-                        // Area of the back button image
-                        Rectangle {
-                            implicitWidth: 64
-                            implicitHeight: 48
-                            radius:6
-                            color: root.primaryColor
-                            anchors.centerIn: parent
-
-                            // Image for the back button
-                            Image {
-                                anchors.centerIn: parent
-                                Accessible.name: "Seta para trás"
-                                Accessible.description: "Seta para trás para indicar que é possível voltar de página"
-                                source: "../img/back.png"
-                            }
-                        }
-
-                    onClicked: {
-                        // Handle login action
-                    }
-
-                }
-
                 // Header name
                 Text {
                     height: 40
@@ -82,15 +57,6 @@ Rectangle {
                     font.bold: true
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
-                }
-
-                // Image for the settings button
-                Image {
-                    height: 48
-                    width: 48
-                    source: "../img/settings.png"
-                    Accessible.name: "Desenho de engrenagem"
-                    Accessible.description: "Desenho de engrenagem para indicar a tela de opções"
                 }
             }
 
@@ -161,7 +127,7 @@ Rectangle {
                                     anchors.fill: parent
                                     cursorShape: Qt.PointingHandCursor
                                     onClicked: {
-                                        navigationStack.push(codeScreen)
+                                        navigationStack.push(sceneBuilder)
                                     }
                                 }
 
@@ -204,4 +170,5 @@ Rectangle {
         }
     }
 
+}
 }

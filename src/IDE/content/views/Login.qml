@@ -5,8 +5,7 @@ import "../components"
 
 Rectangle {
     id: rectangle
-    width: root.width
-    height: root.height
+    anchors.fill: parent
     color: "white"
 
     GridLayout {
