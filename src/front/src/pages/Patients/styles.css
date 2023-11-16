@@ -1,0 +1,67 @@
+.patients-container .options{
+    display: flex;
+    margin: 2rem 0;
+    padding: var(--layout-padding);
+    align-items: center;
+    justify-content: space-between;
+}
+
+.patients-container .patients-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+    justify-content: center;
+    gap: 1rem;
+    padding: var(--layout-padding);
+    overflow-y: auto; 
+    height: 60vh;
+}
+
+.patients-container .patients-list .patient {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+    align-items: center;
+    gap: 1rem;
+    padding: 0 1rem 1rem 1rem;
+    background: var(--white);
+    border-radius: 1rem;
+    transition: .2s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.patients-container .patients-list .patient:hover {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, .25);
+}
+
+.patients-container .patients-list .patient img {
+    border-radius: 1rem 1rem 0 0;
+}
+
+.patients-container .patients-list .patient > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: left;
+}
+
+.patients-container .patients-list .patient > div p {
+    font-weight: 500;
+    margin: 0;
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+.patients-container .patients-list .patient > div p:first-child {
+    font-weight: 700;
+    color: var(--black);
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .patients-container .patients-list {
+        grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    }
+}
