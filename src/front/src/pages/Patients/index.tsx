@@ -1,7 +1,7 @@
-import Button from '../../components/Button'
-import './styles.css'
-import play from '/play.svg'
-import child_smile from '/child-smile.png'
+import Button from '../../components/Button';
+import './styles.css';
+import child_smile from '/child-smile.png';
+import plus from '/plus.svg';
 
 export default function Patients() {
 
@@ -18,6 +18,9 @@ export default function Patients() {
                 />
             </div>
             <div className="patients-list">
+                <a className="patient add" href=''>
+                    <img src={plus} />
+                </a>
                 <a className="patient" href=''>
                     <img src={child_smile} />
                     <div>
