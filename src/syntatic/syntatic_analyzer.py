@@ -1,3 +1,6 @@
+
+from syntatic.tree_generator import NoInterno, NoFolha, SyntaxException
+
 class Syntatic:
 
     """
@@ -21,10 +24,10 @@ class Syntatic:
             Analyze the tokens by parsing them according to the grammar rules.
             The method starts with the 'program' non-terminal symbol and expects an EOF at the end.
         """
-        self.program()
+        tree = self.program()
         self.match("EOF")
-
-    
+        return tree
+        
     def next_token(self):
         """
             Advances to the next token in the token list. If the end of the list is reached,
@@ -55,14 +58,15 @@ class Syntatic:
         """
             Validates the structure of a QAL program, which includes a program declaration followed by a block of code.
         """
-
         self.match("PROGRAMA")
         self.match("DQUOTE")
+        program_name = self.current_token.value
         self.match("STRING")
         self.match("DQUOTE")
         self.match("COLON")
-        self.block()
+        block_node = self.block()
         self.match("DOT")
+        return NoInterno("programa", nome=program_name, bloco=block_node)
 
 
     def block(self):
@@ -70,17 +74,20 @@ class Syntatic:
             Validates a block of code, which is defined by a list of statements enclosed in block delimiters.
         """
         self.match("LBLOCK")
-        self.statement_list()
+        statement_list_node = self.statement_list()
         self.match("RBLOCK")
+        return NoInterno("bloco", listaAtribuicao=statement_list_node)
 
 
     def statement_list(self):
         """
             Recursively processes a list of statements until the end of the block is reached.
         """
-        if self.current_token.type != "RBLOCK":
-            self.statement()
-            self.statement_list()
+        statement_nodes = []
+        while self.current_token.type != "RBLOCK":
+            statement_node = self.statement()
+            statement_nodes.append(statement_node)
+        return statement_nodes
 
     def statement(self):
         """
@@ -89,16 +96,16 @@ class Syntatic:
             :raises Exception: If an unexpected statement type is encountered.
         """
         if self.current_token.type == "ID":
-            self.assignment_statement()
+            return self.assignment_statement()
         elif self.current_token.type == "SE":
-            self.if_statement()
+            return self.if_statement()
         elif self.current_token.type == "ENQUANTO":
-            self.while_statement()
-        elif self.current_token.value == "mostrar" or self.current_token.value == "tocar" or self.current_token.value == "esperar" or self.current_token.value == "mostrar_tocar":
-            self.command_statement()
+            return self.while_statement()
+        elif self.current_token.value in ["mostrar", "tocar", "esperar", "mostrar_tocar"]:
+            return self.command_statement()
         else:
             i = self.index - 1
-            raise Exception(f"Syntatic error: expected statement line {self.tokens[i].line}") ## necessário arrumar
+            raise Exception(f"Syntatic error: expected statement line {self.tokens[i].line}")
         
         ## Entender como trata o caso de não ter o else
         
@@ -106,13 +113,15 @@ class Syntatic:
         """
             Processes an assignment statement, which assigns a value to a variable.
         """
+        id_node = NoFolha("ID", self.current_token.value, self.current_token.line)
         self.match("ID")
         self.match("ASSIGN")
-        if self.current_token.value == "ler" or self.current_token.value == "ler_varios":
-            self.input_statement()
-
+        if self.current_token.value in ["ler", "ler_varios"]:
+            input_node = self.input_statement()
+            return NoInterno("atribuicao", id=id_node, valor=input_node)
         else:
-            self.expression()
+            expression_node = self.expression()
+            return NoInterno("atribuicao", id=id_node, valor=expression_node)
 
 
     def if_statement(self):
@@ -120,76 +129,91 @@ class Syntatic:
             Processes an if statement, including an optional else block.
         """
         self.match("SE")
-        self.expression()
+        condition_node = self.expression()
         self.match("ENTAO")
-        self.block()
+        then_block_node = self.block()
         if  self.current_token.type == "SENAO":
             self.match("SENAO")
-            self.block()
+            else_block_node = self.block()
+            return NoInterno("se", condicao=condition_node, entao=then_block_node, senao=else_block_node)
+        else:
+            return NoInterno("se", condicao=condition_node, entao=then_block_node)
 
     def while_statement(self):
         """
             Processes a while statement, which executes a block of code as long as a condition is true.
         """
         self.match("ENQUANTO")
-        self.expression()
+        condition_node = self.expression()
         self.match("FACA")
-        self.block()
+        block_node = self.block()
+        return NoInterno("enquanto", condicao=condition_node, faca=block_node)
 
     def command_statement(self):
         """
             Processes a command statement, which can be a display, wait, play sound command, or a combination of display and play.
         """
-        if self.current_token.value == "mostrar" or self.current_token.value == "esperar" or self.current_token.value == "tocar":
-            self.match("COMANDO")
-            self.match("LPAR")
-            self.sum_expression()
-            self.match("RPAR")
-
-        elif self.current_token.value == "mostrar_tocar":
-            self.match("COMANDO")
-            self.match("LPAR")
-            self.sum_expression()
+        command = self.current_token.value
+        self.match("COMANDO")
+        self.match("LPAR")
+        param1_node = self.sum_expression()
+        if command == "mostrar_tocar":
             self.match("COMMA")
-            self.sum_expression()
+            param2_node = self.sum_expression()
             self.match("RPAR")
+            return NoInterno(command, param1=param1_node, param2=param2_node)
+        else:
+            self.match("RPAR")
+            return NoInterno(command, param=param1_node)
 
 
     def input_statement(self):
         """
             Processes an input statement, which reads user input.
         """
-        if self.current_token.value == "ler":
-            self.match("COMANDO")
-            self.match("LPAR")
+        command = self.current_token.value
+        self.match("COMANDO")
+        self.match("LPAR")
+        if command == "ler_varios":
+            param1_node = self.sum_expression()
+            self.match("COMMA")
+            param2_node = self.sum_expression()
+            self.match("COMMA")
+            param3_node = self.sum_expression()
             self.match("RPAR")
+            return NoInterno(command, param1=param1_node, param2=param2_node, param3=param3_node)
         else:
-            self.match("COMANDO")
-            self.match("LPAR")
-            self.sum_expression()
-            self.match("COMMA")
-            self.sum_expression()
-            self.match("COMMA")
-            self.sum_expression()
             self.match("RPAR")
+            return NoInterno(command)
 
     
     def expression(self):
         """
             Processes an expression, which can be a mathematical or logical expression.
         """
-        self.sum_expression()
+        sum_node = self.sum_expression()
         if self.current_token.type == "OPREL":
-            self.relop()
-            self.sum_expression() ### substituir por expression
+            op = self.current_token.value
+            self.match("OPREL")
+            right_node = self.expression()
+            return NoInterno(op, esquerda=sum_node, direita=right_node)
+        else:
+            return sum_node
+
 
     
     def sum_expression(self):
         """
             Processes a sum expression, which deals with addition and subtraction.
         """
-        self.mult_term()
-        self.sum_expression2()
+        term_node = self.mult_term()
+        if self.current_token.type == "OPSUM":
+            op = self.current_token.value
+            self.match("OPSUM")
+            right_node = self.sum_expression()
+            return NoInterno(op, esquerda=term_node, direita=right_node)
+        else:
+            return term_node
 
     
     def relop(self):
@@ -211,8 +235,14 @@ class Syntatic:
         """
             Processes a multiplication term within an expression.
         """
-        self.power_term()
-        self.mult_term2()
+        term_node = self.power_term()
+        if self.current_token.type == "OPMUL":
+            op = self.current_token.value
+            self.match("OPMUL")
+            right_node = self.mult_term()
+            return NoInterno(op, esquerda=term_node, direita=right_node)
+        else:
+            return term_node
 
     def mult_term2(self):
         """
@@ -227,10 +257,13 @@ class Syntatic:
         """
             Processes an exponentiation term within an expression.
         """
-        self.factor()
+        factor_node = self.factor()
         if self.current_token.type == "OPPOW":
             self.match("OPPOW")
-            self.power_term()
+            right_node = self.power_term()
+            return NoInterno("^", esquerda=factor_node, direita=right_node)
+        else:
+            return factor_node
 
 
     def factor(self):
@@ -238,28 +271,36 @@ class Syntatic:
             Processes a factor, which can be a number, a variable, or an entire expression enclosed in parentheses.
         """
         if self.current_token.type == "ID":
+            node = NoFolha("ID", self.current_token.value, self.current_token.line)
             self.match("ID")
         elif self.current_token.type == "INTEGER":
+            node = NoFolha("INTEGER", self.current_token.value, self.current_token.line)
             self.match("INTEGER")
         elif self.current_token.type == "BOOLEAN":
-            self.boolean()
-        elif self.current_token.value == "+" or self.current_token.value == "-":
+            node = self.boolean()
+        elif self.current_token.value in ["+", "-"]:
+            op = self.current_token.value
             self.match("OPSUM")
-            self.factor()
+            right_node = self.factor()
+            node = NoInterno(op, direita=right_node)
         elif self.current_token.type == "NAO":
             self.match("NAO")
-            self.boolean()
+            right_node = self.boolean()
+            node = NoInterno("NAO", direita=right_node)
         elif self.current_token.type == "LPAR":
             self.match("LPAR")
-            self.expression()
+            node = self.expression()
             self.match("RPAR")
         else:
             i = self.index - 1
             raise Exception(f"Syntatic error: expected factor line {self.tokens[i].line}")
+        return node
         
 
     def boolean(self):
         """
             Processes a boolean value within an expression.
         """
+        node = NoFolha("BOOLEAN", self.current_token.value, self.current_token.line)
         self.match("BOOLEAN")
+        return node
