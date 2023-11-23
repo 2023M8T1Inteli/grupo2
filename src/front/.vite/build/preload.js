@@ -1,1 +1,1 @@
-"use strict";
+"use strict";const r=require("electron"),o={ipcRenderer:{sendMessage(e,...n){r.ipcRenderer.send(e,...n)},on(e,n){const s=(t,...c)=>n(...c);return r.ipcRenderer.on(e,s),()=>{r.ipcRenderer.removeListener(e,s)}},once(e,n){r.ipcRenderer.once(e,(s,...t)=>n(...t))}},getUsers:()=>r.ipcRenderer.invoke("db:getUsers")};r.contextBridge.exposeInMainWorld("electron",o);

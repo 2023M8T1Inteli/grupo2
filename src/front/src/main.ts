@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 
 import { getUsers } from "./services/Database.service";
@@ -27,8 +27,6 @@ const createWindow = () => {
     );
   }
 
-  console.log(123);
-  getUsers(); // Open the DevTools.
   mainWindow.webContents.openDevTools();
 };
 
@@ -44,6 +42,12 @@ app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
   }
+});
+
+app.whenReady().then(() => {
+  ipcMain.handle("db:getUsers", async () => {
+    return await getUsers();
+  });
 });
 
 app.on("activate", () => {

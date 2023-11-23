@@ -50,7 +50,9 @@ export type Session = {
 };
 
 export function connect() {
-  const db = Database(path.join(__dirname, "../db", "database.db"), {
+  const c_path = path.join(__dirname, "../db/", "database.sqlite");
+  console.log(c_path);
+  const db = Database(path.join(__dirname, "/db/", "database.sqlite"), {
     verbose: console.log,
     fileMustExist: true,
   });
@@ -88,15 +90,15 @@ export function deleteUser(id: number) {
   return info;
 }
 
-export function getUser(id: number) {
+export async function getUser(id: number) {
   const db = connect();
   const stmt = db.prepare("SELECT * FROM users WHERE id = ?");
-  const info = stmt.get(id);
+  const info = await stmt.get(id);
   db.close();
   return info;
 }
 
-export function getUsers() {
+export async function getUsers() {
   const db = connect();
   const stmt = db.prepare("SELECT * FROM users");
   const info = stmt.all();
