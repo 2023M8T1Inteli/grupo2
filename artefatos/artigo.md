@@ -28,7 +28,20 @@ O objetivo principal deste projeto é proporcionar um ambiente terapêutico assi
 
 Por fim, este trabalho está intrinsicamente relacionado aos esforços da AACD para capacitar seus pacientes e profissionais com as ferramentas e recursos mais recentes da Tecnologia Assistiva. Espera-se que o tapete sensorial conectado ao Greg Maker e manipulado através de uma IDE represente uma solução inovadora e acessível para atender às necessidades de indivíduos com desordens neurológicas leves, auxiliando-os a desenvolver respostas rápidas e adaptativas para as demandas cotidianas.
 
+
+# Estudos relacionados
+
+Neste segmento, apresentamos estudos relevantes que complementam a compreensão do uso da tecnologia assistiva na reabilitação de indivíduos com deficiências neurológicas, com um enfoque especial em crianças com paralisia cerebral.
+
+O estudo "Assistive technology for promoting adaptive skills of children with cerebral palsy: ten cases evaluation" investigou o uso de tecnologia assistiva para aprimorar as habilidades adaptativas de crianças com paralisia cerebral. Dez crianças participaram do estudo, que foi dividido em três fases distintas, cada uma focada em aspectos específicos da interação com a tecnologia assistiva. Os resultados indicaram uma melhoria significativa no desempenho e na participação ativa dos participantes, sugerindo que a tecnologia assistiva pode ser uma ferramenta valiosa na promoção da independência dessas crianças. Os avaliadores sociais deram pontuações favoráveis ao uso da tecnologia e dos programas, indicando que programas baseados em tecnologia assistiva foram eficazes para promover a independência de crianças com paralisia cerebral ​(Stasolla et al., 2018).
+
+O estudo "Assistive technology for people with cerebral palsy" analisa a eficácia da tecnologia assistiva no apoio a indivíduos com paralisia cerebral. Focando em como a tecnologia assistiva pode melhorar a independência e a qualidade de vida, o estudo explora diversas modalidades de tecnologia assistiva aplicadas a esta população. A pesquisa oferece insights sobre a integração de tecnologias adaptativas no cotidiano de pessoas com paralisia cerebral, destacando os benefícios práticos e potenciais desafios na implementação dessas soluções. Os resultados enfatizam a importância de uma abordagem personalizada, considerando as necessidades individuais de cada pessoa com paralisia cerebral na escolha e no uso da tecnologia assistiva (Zupan et al., 2012). 
+
 # Referências Bibliográficas
+
+A. Zupan, M. Jenko (2012). Assistive technology for people with cerebral palsy, Corpus ID: 58824503.
+
+Fabrizio Stasolla , Alessandro O Caffò , Viviana Perilli , Adele Boccasini , Rita Damiani , Fiora D'Amico. (2018). Assistive technology for promoting adaptive skills of children with cerebral palsy: ten cases evaluation. Assistive Technology, 4(5):489-502. doi: 10.1080/17483107.2018.1467972. Epub 2018 May 6.
 
 Rosembaum, P., & Leung, K. M. (2007). The changing panorama of cerebral palsy in the United States. In M. M. Swaiman, & S. Ashwal (Eds.), Pediatric Neurology: Principles and Practice (Vol. 3, pp. 2103-2117). Elsevier.
 
