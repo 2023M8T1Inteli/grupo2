@@ -9,21 +9,12 @@ export default function Login() {
   const navigate = useNavigate();
 
   function auth() {
-    login();
+    login("joao123", "123456");
 
     console.log("TESTE");
 
     navigate("/");
   }
-
-  useEffect(() => {
-    window.electron.getUsers().then((users) => {
-      console.log(users);
-    });
-    // window.electron.db.getUsers().then((users) => {
-    //   console.log(users);
-    // });
-  }, []);
 
   return (
     <div className="login-container">
@@ -39,4 +30,3 @@ export default function Login() {
     </div>
   );
 }
-
