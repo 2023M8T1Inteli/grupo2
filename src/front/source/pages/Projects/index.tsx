@@ -1,6 +1,8 @@
+ import React from 'react'
 import Button from '../../components/Button'
 import './styles.css'
 import play from '/play.svg'
+import plus from '/plus.svg';
 
 export default function Projects() {
 
@@ -17,6 +19,9 @@ export default function Projects() {
                 />
             </div>
             <div className="projects-list">
+                <a className="project add" href='/game'>
+                    <img src={plus} />
+                </a>
                 <div className="project">
                     <div>
                         <p className='project-name'>Nome do projeto</p>

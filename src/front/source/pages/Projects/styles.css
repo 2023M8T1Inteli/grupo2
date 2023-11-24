@@ -26,6 +26,19 @@
     border-radius: 1rem;
 }
 
+.projects-container .projects-list .add {
+    height: 11rem;
+    font-size: 12rem;
+    justify-content: center;
+    padding: 1rem;
+    background: var(--primary);
+    color: var(--white);
+}
+
+.projects-container .projects-list .add  img {
+    height: 50%;
+}
+
 .projects-container .projects-list .project p {
     margin: .35rem;
     text-align: center;

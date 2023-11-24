@@ -7,6 +7,7 @@ import Projects from '../pages/Projects';
 import Patients from '../pages/Patients';
 import { AuthProvider } from '../contexts/AuthContext';
 import { useState, useEffect } from 'react';
+import DragDrop from '../pages/Game';
 
 export default function Router() {
 
@@ -21,6 +22,7 @@ export default function Router() {
             <AuthProvider>
                 {showNavbar && <Navbar name='Maria Júlia' role='Terapeuta ocupacional' />}
                 <Routes>
+                    <Route path='/game' element={<DragDrop />} />
                     <Route path="/login" element={<Login />} />
                     <Route path='/' element={<Home />} />
                     <Route path='/projects' element={<Projects />} />
