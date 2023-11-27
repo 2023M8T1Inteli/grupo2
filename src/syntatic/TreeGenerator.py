@@ -1,4 +1,3 @@
-
 import lexic.token as Token 
 
 class SyntaxException(Exception):
@@ -79,7 +78,7 @@ class NoTabela:
     Por simplicidade, mantenha os atributos públicos.
     """
 
-    def __init__(self, value, type, **kwargs):
+    def __init__(self, value, tipo, **kwargs):
         self.value = value
         self.tipo = tipo
         self.d = {}
