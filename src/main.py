@@ -1,4 +1,7 @@
 from compiler.compiler import Compiler
+from syntatic.semantyc import AnalisadorSemantico
+from syntatic.TreeGenerator import NoInterno, NoFolha
+
 import sys
 
 # Read the code from the file passed as argument
@@ -8,7 +11,6 @@ with open(f'{sys.argv[1]}', 'r') as file:
 
 analyser = Compiler(code)
 analyser.compile()
-
 
 ### Para rodar o compilador, execute o comando abaixo no terminal:
 ### python3 src/main.py <nome do arquivo>

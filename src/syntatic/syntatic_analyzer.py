@@ -1,5 +1,4 @@
-
-from syntatic.tree_generator import NoInterno, NoFolha, SyntaxException
+from syntatic.TreeGenerator import NoInterno, NoFolha, SyntaxException
 
 class Syntatic:
 
