@@ -14,7 +14,7 @@ class Compiler:
         lexic_analyzer.lexic()
         syntatic_analyzer = Syntatic(lexic_analyzer.token_list)
         tree = syntatic_analyzer.analyze()
-        # self.print_tree(tree)
+        self.print_tree(tree)
         analiseSemantica = AnalisadorSemantico(tree)
         analiseSemantica.analisar()
         print(analiseSemantica.tabela)

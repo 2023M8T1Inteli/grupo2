@@ -8,7 +8,6 @@ import sys
 with open(f'{sys.argv[1]}', 'r') as file:
     code = file.read()
 
-
 analyser = Compiler(code)
 analyser.compile()
 
