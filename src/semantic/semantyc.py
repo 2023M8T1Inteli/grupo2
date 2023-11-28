@@ -1,4 +1,5 @@
-from syntatic.TreeGenerator import NoTabela
+from semantic.table import NoTabela
+from syntatic.TreeGenerator import NoInterno, NoFolha
 
 class SemanticException(Exception):
     pass
