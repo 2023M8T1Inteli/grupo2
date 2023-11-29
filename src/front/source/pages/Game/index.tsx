@@ -1,6 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import Button from '../../components/Button';
+import { AutoRedirect } from '../../contexts/AuthContext';
 
 const initialTasks = {
   palette1: {
@@ -79,6 +80,7 @@ const initialTasks = {
     cards: []
   }
 };
+
 function DragDrop() {
   
   const [tasks, setTasks] = useState(initialTasks);
@@ -99,6 +101,7 @@ function DragDrop() {
 
   const renderTask = useCallback((task, index, id) => (
     <Draggable key={task.label} draggableId={task.label} index={index}>
+      <AutoRedirect />
       {(provided) => (
         <div
           ref={provided.innerRef}

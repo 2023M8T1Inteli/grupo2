@@ -3,8 +3,11 @@ import Button from '../../components/Button'
 import './styles.css'
 import play from '/play.svg'
 import plus from '/plus.svg';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function Projects() {
+
+    const { userName } = useAuth();
 
     return (
         <div className="projects-container">
@@ -26,7 +29,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -36,7 +39,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -46,7 +49,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -56,7 +59,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -66,7 +69,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -76,7 +79,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -86,7 +89,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -96,7 +99,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -106,7 +109,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -116,7 +119,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -126,7 +129,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -136,7 +139,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />
@@ -146,7 +149,7 @@ export default function Projects() {
                     <div>
                         <p className='project-name'>Nome do projeto</p>
                         <p className='created-at'>Criado em 27/10</p>
-                        <p className='project-author'>por <b>Maria Júlia</b></p>
+                        <p className='project-author'>por <b>{userName()}</b></p>
                     </div>
                     <a href="/patients">
                         <img src={play} />

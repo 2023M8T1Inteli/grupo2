@@ -6,11 +6,11 @@ interface ButtonProps {
     value?: string,
     variant: "primary" | "secondary" | "back" | "settings",
     onClick?: any,
-    to?: string
+    to?: string,
+    type?: string
 }
 
 export default function Button(props: ButtonProps) {
-
     return (
         <>
             {
@@ -21,16 +21,16 @@ export default function Button(props: ButtonProps) {
                     :
                     props.variant === "back"
                         ?
-                        <button className={`button-${props.variant}`} onClick={() => { history.back() }}>
+                        <button {...props} className={`button-${props.variant}`} onClick={() => { history.back() }}>
                             <img src={back} />
                         </button>
                         :
                         props.variant === "settings" ?
-                            <a className={`button-${props.variant}`} href='/settings'>
+                            <a {...props} className={`button-${props.variant}`} href='/settings'>
                                 <img src={settings} />
                             </a>
                             :
-                            <button className={`button-${props.variant}`} onClick={props.onClick}>
+                            <button  {...props} className={`button-${props.variant}`} onClick={props.onClick}>
                                 {props.value}
                             </button>
             }

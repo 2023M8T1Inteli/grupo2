@@ -21,3 +21,14 @@ export function errorToast(content: string) {
     draggable: true,
   });
 }
+
+export function infoToast(content: string) {
+  return toast.info(content, {
+    position: "top-right",
+    autoClose: 10000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  });
+}

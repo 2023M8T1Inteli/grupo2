@@ -8,9 +8,13 @@ import Patients from '../pages/Patients';
 import { AuthProvider } from '../contexts/AuthContext';
 import { useState, useEffect } from 'react';
 import DragDrop from '../pages/Game';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Router() {
 
+    
+    
     const location = useLocation();
     const [showNavbar, setShowNavbar] = useState(false);
 
@@ -20,6 +24,7 @@ export default function Router() {
 
     return (
             <AuthProvider>
+                <ToastContainer />
                 {showNavbar && <Navbar name='Maria Júlia' role='Terapeuta ocupacional' />}
                 <Routes>
                     <Route path='/game' element={<DragDrop />} />

@@ -59,5 +59,5 @@ export const users = {
     const info = stmt.get(username);
     db.close();
     return info;
-  },
+  }
 };
