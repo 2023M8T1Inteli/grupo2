@@ -5,8 +5,8 @@ import { useAuth } from '../../contexts/AuthContext';
 import { successToast } from '../Toast';
 
 interface NavbarProps {
-    name: string;
-    role: string;
+    name?: string;
+    role?: string;
 }
 
 export default function Navbar(props: NavbarProps) {

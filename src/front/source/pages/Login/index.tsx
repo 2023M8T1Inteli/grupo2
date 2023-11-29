@@ -42,7 +42,7 @@ export default function Login() {
       return;
     }
 
-    successToast('Sucesso no login!');
+    successToast(`Login efetuado com sucesso!`);
     sessionStorage.setItem('user_data', JSON.stringify(user));
     login();
     navigate("/");
@@ -63,7 +63,9 @@ export default function Login() {
             variant="primary"
             value="Entrar"
           />
-          <a href="/register">ou crie sua conta agora</a>
+          <span className="register" onClick={() => {infoToast("Trabalho em progresso! 🚀")}}>
+            ou crie sua conta agora
+          </span>
         </div>
       </form>
     </div>

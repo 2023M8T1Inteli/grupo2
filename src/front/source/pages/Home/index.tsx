@@ -5,6 +5,8 @@ import folder from '/folder.jpg'
 
 export default function Home() {    
 
+    console.log("TESTE")
+
     return (
         <div className="home-container">
             <AutoRedirect />

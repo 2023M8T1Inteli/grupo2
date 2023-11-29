@@ -72,6 +72,8 @@
     background-color: var(--primary-active);
 }
 
-.login-container a {
+.login-container span.register {
     color: var(--black);
+    text-decoration: underline;
+    cursor: pointer;
 }

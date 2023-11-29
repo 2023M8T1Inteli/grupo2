@@ -11,12 +11,15 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AutoRedirect = () => {
+export const AutoRedirect = (props: any) => {
   const { isLoggedIn } = useAuth();
 
   if (!isLoggedIn) {
     return <Navigate to="/login" />;
   }
+
+  return props.children
+
 };
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
@@ -39,7 +42,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = async () => {
     successToast("Logout efetuado com sucesso.");
-    localStorage.clear();
+    sessionStorage.clear();
     setIsLoggedIn(false);
   };
 
