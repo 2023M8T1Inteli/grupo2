@@ -26,7 +26,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const userName = () => {
     const user = JSON.parse(sessionStorage.getItem('user_data') as string);
-    return user.username;
+    if (user) {
+      return user.username;
+    }
+    return
   }
 
   const login = () => {
