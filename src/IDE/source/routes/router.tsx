@@ -18,7 +18,8 @@ import Patients from '../pages/Patients';
 import { AuthProvider } from '../contexts/AuthContext';
 import { useState, useEffect } from 'react';
 import DragDrop from '../pages/Game';
-import Editor from '../pages/Editor';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Router() {
 
