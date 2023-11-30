@@ -20,6 +20,7 @@ import { useState, useEffect } from 'react';
 import DragDrop from '../pages/Game';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Editor from '../pages/Editor';
 
 export default function Router() {
 
