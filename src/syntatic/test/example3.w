@@ -1,13 +1,18 @@
-// Exemplo de programa válido
-programa "jogo":
+programa "exemplo1":
 inicio
-  pontuacao = ler()
-  se (pontuacao >= 10) ou (pontuacao == 5) entao // Confirmar se precisa estar entre ()
-  inicio
-    mostrar(x)
-  fim senao
-  inicio
-    mostrar(3)
-    tocar(3)
-  fim
+      qtd = 1
+      resp = ler_varios(10, qtd, 1)
+      i = 30
+      x = 1
+      enquanto (i >= 1) ou (resp) faca inicio
+            se x > 20 entao inicio
+                  x = 1
+            fim senao inicio
+                  x = x + 1
+            fim
+            mostrar(x)
+            qtd = qtd + 1
+            resp = ler_varios(10, qtd, 1)
+            i = i - 1
+      fim
 fim.
