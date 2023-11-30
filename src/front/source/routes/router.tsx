@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import DragDrop from '../pages/Game';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Editor from '../pages/Editor';
 
 export default function Router() {
 
@@ -29,6 +30,7 @@ export default function Router() {
                 <Routes>
                     <Route path='/game' element={<DragDrop />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/editor" element={<Editor />} />
                     <Route path='/' element={<Home />} />
                     <Route path='/projects' element={<Projects />} />
                     <Route path='/patients' element={<Patients />} />
