@@ -227,6 +227,11 @@
   dependencies:
     "@jridgewell/trace-mapping" "0.3.9"
 
+"@djpfs/react-vlibras@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/@djpfs/react-vlibras/-/react-vlibras-2.0.2.tgz"
+  integrity sha512-mhfxr1cg8tLdcXBUT5hictbcityoAXFKJz4/boiMGbpsZRCVkqC5EoJVRF+6brrB1GBAoVLCtn1OuzipEopewA==
+
 "@electron-forge/cli@^7.1.0":
   version "7.1.0"
   resolved "https://registry.npmjs.org/@electron-forge/cli/-/cli-7.1.0.tgz"
