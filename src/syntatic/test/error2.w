@@ -1,9 +1,9 @@
-// Erro: estrutura 'se ... entao ... senao' mal formada
-programa "erro2":
+programa "exemplo4":
 inicio
-  se 1 > 0
-  inicio  // Falta a palavra-chave 'entao'
-    mostrar(x)
-  fim  // Não fechou corretamente a estrutura do 'se'
-  mostrar(y)
+      x = (3 ^ 5) ^ 2
+      y = 3 ^ 5 ^ 2
+      z = (10 + 2 * 50 / 5 - 1) % 2
+      se (3 + 4 -5) % 2 == 0 entao inicio
+            mostrar(10 / 2, 2 * 1)
+      fim
 fim.
