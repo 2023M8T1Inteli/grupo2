@@ -1,6 +1,7 @@
 import './styles.css';
 
 import profile from '../../assets/img/profile.png'
+import Button from '../Button'; 
 
 interface NavbarProps {
     name: string,
@@ -14,11 +15,10 @@ export default function Navbar(props: NavbarProps) {
         <nav className='navbar-container' role="navigation">
             <div className="menu">
 
-                <input type="checkbox" />
-
-                <span></span>
-                <span></span>
-                <span></span>
+                <Button
+                    variant='back'
+                    onClick={() => {console.log("A")}}
+                />
             </div>
             <div className='profile-container'>
                 <div>   

@@ -1,7 +1,7 @@
  import React from 'react'
 import Button from '../../components/Button'
 import './styles.css'
-import play from '/play.svg'
+import play from '/play.svg';
 import plus from '/plus.svg';
 
 export default function Projects() {
@@ -9,17 +9,13 @@ export default function Projects() {
     return (
         <div className="projects-container">
             <div className='options'>
-                <Button
-                    variant='back'
-                    onClick={() => {console.log("A")}}
-                />
                 <h1>Projetos</h1>
                 <Button
                     variant='settings'
                 />
             </div>
             <div className="projects-list">
-                <a className="project add" href='/game'>
+                <a className="project add" href='/editor'>
                     <img src={plus} />
                 </a>
                 <div className="project">
