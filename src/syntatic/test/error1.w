@@ -1,8 +1,9 @@
-// Erro: falta de palavra-chave 'inicio' e 'fim'
-programa "erro1":
-  valor = ler()
-  se valor == 1 entao
-    mostrar(1)
-  senao
-    tocar(2)
+programa "exemplo3":
+inicio
+      x = (3 ^ 5) ^ 2
+      y = 3 ^ 5 ^ 2
+      z = (10 + 2 * 50 / 5 - 1) % 2
+      se (3 + 4 - 5) % 2 = 0 entao inicio
+      mostrar(10 / 2)
+      fim
 fim.
