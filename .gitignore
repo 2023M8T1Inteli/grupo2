@@ -1,4 +1,10 @@
 .vscode
 target
 *.pdf
-front
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+node_modules

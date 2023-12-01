@@ -18,4 +18,3 @@ class Compiler:
         analiseSemantica = AnalisadorSemantico(tree)
         analiseSemantica.analisar()
         print(analiseSemantica.tabela)  # imprime apenas a tabela de símbolos
-
