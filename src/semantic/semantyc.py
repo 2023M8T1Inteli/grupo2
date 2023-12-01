@@ -14,119 +14,109 @@ class AnalisadorSemantico:
         self.visitarAlg(self.arvore)
     
     def visitarAlg(self, no):
-        print("arvore: " + str(self.arvore))    
+        # print("arvore: " + str(self.arvore))    
 
         nome_programa = no.get("nome")
         self.tabela[nome_programa] = NoTabela(None, "alg")
-        self.visitarDeclarations(no.get("bloco"))
-        self.visitarBlock(no.get("bloco"))
+        # self.visitarDeclarations(no.get("bloco"))
+        self.visitarBloco(no.get("bloco"))
     
-    def visitarDeclarations(self, noDeclarations):
-        declarations = noDeclarations.get("listaAtribuicao")
-        while declarations:
-            declaration = declarations.get("atribuicao")
-            self.visitarVarDeclaration(declaration)
-            declarations = declarations.get("prox")
-    
-    def visitarVarDeclaration(self, noVarDeclaration):
-        nome_id = noVarDeclaration.get("id")
-        expression = noVarDeclaration.get("op")
-        if expression == "atribuicao":
-            tokid = noVarDeclaration.get("id")
-            if tokid.value not in self.tabela:
-                raise SemanticException(f"O identificador '{tokid}' na linha {nome_id.line} não foi declarado")
-            self.tabela[nome_id.value] = NoTabela(None, self.tabela[tokid.value].tipo)
-        elif expression == "sumExpression":
-            if noVarDeclaration.get("id").tipo == "ID":
-                if noVarDeclaration.get("id").value not in self.tabela:
-                    raise SemanticException(f"O identificador '{noVarDeclaration.get('id').value}' na linha {nome_id.line} não foi declarado")
-                self.tabela[nome_id.value] = NoTabela(None, noVarDeclaration.get("id").tipo)
+    def visitarBloco(self, bloco):
+        # print("bloco: " + str(bloco.op))
+
+        declaracoes = bloco.get("listaAtribuicao")
+        while declaracoes:
+            declaracao = declaracoes.get("atribuicao")
+
+            ## ASSIGN STATEMENT
+            if declaracao.op == "atribuicao":
+                id_token = declaracao.get("id")
+                if id_token.value not in self.tabela:
+                    exp = self.visitarExpression(declaracao.get("expression"))
+                    self.tabela[id_token.value] = NoTabela(exp.valor, exp.tipo)
+                    
+                else:
+                    exp = self.visitarExpression(declaracao.get("expression"))
+                    if self.tabela[id_token.value].tipo != exp.tipo:
+                        raise SemanticException(f"Tipos incompatíveis: {id_token.value} e {exp.valor} na linha {id_token.line}")
+                    else:
+                        self.tabela[id_token.value].valor = exp.valor
+                        
+
+            declaracoes = declaracoes.get("prox")
 
 
-    def visitarBlock(self, noBlock):
-        statement = noBlock.get("listaAtribuicao")
-        while statement:
-            if statement.op == "atribuicao":
-                id_node = statement.get("id")
-
-                if statement.get('valor').op == "ID" and statement.get('valor').value not in self.tabela:
-                    raise SemanticException(f"O identificador '{statement.get('valor').value}' na linha {id_node.line} não foi declarado")
-
-                expression_node = statement.get("valor")
-                if expression_node:
-                    tipo_id = self.tabela[id_node.value].tipo
-                    tipo_expression = self.visitarExpression(expression_node).tipo
-
-                    if tipo_id != tipo_expression:
-                        raise SemanticException(f"O identificador '{id_node.get('value')}' na linha {id_node.get('line')} não pode receber uma expressão do tipo '{tipo_expression}'")
-
-                    self.tabela[id_node.get("value")].value = id_node.get("value")
-
-            elif statement.get("op") == "mostrar":
-                expression_node = statement.get("param")
-                self.visitarExpression(expression_node)
-
-            elif statement.get("op") == "se":
-                block_if = statement.get("entao")
-                self.visitarBlock(block_if)
-                block_else = statement.get("senao")
-                if block_else:
-                    self.visitarBlock(block_else)
     
     def visitarExpression(self, noExpression):
-        print("noExpression: " + str(noExpression.op))
+
+        # print("noExpression: " + str(noExpression.op))
 
         esq_node = noExpression.get("esquerda")
 
-        if not esq_node.get("oper"):
-            return self.visitarSumExpression(esq_node)
+        if noExpression.get("oper"):
+            self.visitarSumExpression(esq_node)
+            dir_node = noExpression.get("direita")
+            resultado = self.visitarSumExpression(dir_node)
+            return NoTabela(resultado.value, "log")
         
         else:
+            return self.visitarSumExpression(esq_node)
+        
 
-            esq_node = noExpression.get("esquerda")
-            dir_node = noExpression.get("direita")
-            self.visitarSumExpression(dir_node)
-            return NoTabela(None, "log")
-        
-        
     def visitarSumExpression(self, no):
-        if no is not None:
-            if no.get("esquerda"):
-                val1 = self.visitarSumExpression(no.get("esquerda"))
-                val2 = self.visitarSumExpression(no.get("direita"))
 
-                if no.op in ("sumExpression", "multiplicativeTerm", "powerTerm"):
+        # print("noSumExpression: " + str(no))
+
+        if no != None:
+            val1 = self.visitarSumExpression(no.get("esquerda"))
+            val2 = self.visitarSumExpression(no.get("direita"))
+
+            if no.op in ("sumExpression", "multiplicativeTerm", "powerTerm"):
+                print("val1: " + str(val1)) 
+                print("val2: " + str(val2))
+                if not (val1.tipo == "INTEGER" and val2.tipo == "BOOLEAN") or (val2.tipo == "INTEGER" and val1.tipo == "BOOLEAN"):
                     if val1.tipo != val2.tipo:
-                        raise SemanticException(f"Tipos incompatíveis: {no.get('esquerda').get('factor').valor} e {no.get('direita').get('factor').valor}")
+                        raise SemanticException(f"Tipos incompatíveis: {no.get('esquerda').get('factor').value} e {no.get('direita').get('factor').value} na linha {no.get('direita').get('factor').line}")
 
-                    if no.op == ":" and val2.tipo == "num" and val2.value == "0":
-                        raise SemanticException(f"Divisão por zero na linha {no.get('line')}")
+                if no.get("oper") == "/" and val2.tipo == "INTEGER" and no.get('direita').get('factor'):
+                    if no.get('direita').get('factor').value == "0":
+                        raise SemanticException(f"Divisão por zero na linha {no.get('direita').get('factor').line}")
+                
+                if no.get("oper") ==   "^" and val2.tipo == "INTEGER" and no.get('direita').get('sinal') == "-":
+                    raise SemanticException(f"Expoente negativo na linha {no.get('direita').get('factor').line}")
+                
+                if val1 != None:
+                    return NoTabela(val1.valor, val1.tipo)
+                else:
+                    return NoTabela(val2.valor, val2.tipo)
 
-                    if no.op == "^" and val2.tipo == "num" and int(val2.value) < 0:
-                        raise SemanticException(f"Expoente negativo na linha {no.get('line')}")
+            elif no.op == "factor" and not no.get("expression"):
+                factor = no.get("factor")
 
-                    return val1 if val1 else val2
+                if factor.op == "ID":
+                    if factor.value not in self.tabela:
+                        raise SemanticException(f"O identificador '{factor.value}' na linha {factor.line} não foi declarado")
+                    else:
+                        return NoTabela(valor=self.tabela[factor.value].valor, tipo=self.tabela[factor.value].tipo)
 
-                elif no.op == "factor" and not no.get("expression"):
-                    if no.op == "ID":
-                        identificador = no.get("value")
-                        if identificador not in self.tabela:
-                            raise SemanticException(f"O identificador '{identificador}' na linha {no.get('line')} não foi declarado")
-                        elif self.tabela[identificador].value is None:
-                            raise SemanticException(f"O identificador '{identificador}' na linha {no.get('line')} não foi inicializado")
-                        else:
-                            return NoTabela(value=self.tabela[identificador].value, tipo=self.tabela[identificador].tipo)
+                elif factor.op == "BOOLEAN":
+                    if factor.value == "verdade":
+                        return NoTabela(valor=1, tipo="BOOLEAN")
+                    else:
+                        return NoTabela(valor=0, tipo="BOOLEAN")
 
-                    elif no.op == "BOOLEAN":
-                        return NoTabela(value=no.get("value"), tipo="log")
+                elif factor.op == "INTEGER":
+                    sinal = no.get("sinal")
 
-                    elif no.op == "INTEGER":
-                        valor = no.get("value")
-                        valor_com_sinal = valor if valor >= 0 else f"-{abs(valor)}"
-                        return NoTabela(value=valor_com_sinal, tipo="num")
+                    if sinal == "-":
+                       return NoTabela("-" + factor.value, "INTEGER")
+                   
+                    else:
+                       return NoTabela(factor.value, "INTEGER")
 
-                elif no.op == "factor" and no.get("expression"):
-                    return self.visitarExpression(no.get("expression"))
+
+            elif no.op == "factor" and no.get("expression"):
+                return self.visitarExpression(no.get("expression"))
         
 
     def print_tabela(self):

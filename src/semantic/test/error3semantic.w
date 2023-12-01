@@ -1,4 +1,4 @@
 programa "teste semântico 1":
 inicio
-      x = y
+      x = 1 - 1
 fim.

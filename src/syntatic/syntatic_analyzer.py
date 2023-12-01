@@ -191,7 +191,7 @@ class Syntatic:
         """
         esq = self.sum_expression()
         if self.current_token.type == "OPREL":
-            op = self.match("OPREL")
+            op = self.relop()
             right_node = self.sum_expression()
             return NoInterno(op="expression", oper=op.value, esquerda=esq, direita=right_node)
         else:
@@ -211,7 +211,7 @@ class Syntatic:
         """
             Processes a relational operator, which is used to compare two values.
         """
-        self.match("OPREL")
+        return self.match("OPREL")
 
     def sum_expression2(self, esq=None):
         """
@@ -288,7 +288,7 @@ class Syntatic:
         else:
             i = self.index - 1
             raise Exception(f"Syntatic error: expected factor line {self.tokens[i].line}")
-        return node
+        
         
 
     # def boolean(self):
