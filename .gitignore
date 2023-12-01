@@ -1,3 +1,5 @@
 .vscode
 target
 *.pdf
+# Python cache
+__pycache__
