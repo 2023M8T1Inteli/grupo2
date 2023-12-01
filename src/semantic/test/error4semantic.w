@@ -1,6 +1,6 @@
 programa "teste semântico 2":
 inicio
-      x = 1
+      x = 1 + 1
       y = 2
       mostrar(z)
       z = y
