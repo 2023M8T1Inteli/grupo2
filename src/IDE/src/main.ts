@@ -19,7 +19,6 @@ import {
 
 import { codeBridge } from "./bridge/Python.bridge";
 
-
 if (require("electron-squirrel-startup")) {
   app.quit();
 }

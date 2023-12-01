@@ -1,7 +1,3 @@
-from compiler.compiler import Compiler
-from syntatic.semantyc import AnalisadorSemantico
-from syntatic.TreeGenerator import NoInterno, NoFolha
-
 import sys
 
 from compiler.compiler import Compiler
