@@ -1,3 +1,14 @@
+// Tela de programação em blocos, projetada para ser utilizada pela terapeuta.
+// Inclui:
+// - Uso do pacote `react-beautiful-dnd` para funcionalidades de arrastar e soltar.
+// - Estado inicial com tarefas pré-definidas divididas em diferentes paletas.
+// - Função `onDragEnd` para lidar com a lógica de arrastar e soltar entre as paletas.
+// - Função `renderTask` para renderizar tarefas arrastáveis individualmente.
+// - Construção de código a partir das tarefas arrastadas para a paleta de resultado.
+// - Botão para exibir o código gerado e processá-lo com a lógica de compilação. (integrado com o compilador em python)
+// - Estilização através do arquivo `styles.css`.
+
+
 import React, { useState, useCallback } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Button from "../../components/Button";

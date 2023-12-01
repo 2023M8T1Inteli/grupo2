@@ -1,3 +1,11 @@
+// Este serviço tem como objetivo gerenciar os usuários do sistema
+// Inclui:
+// - Tipo `User` para modelar a estrutura de dados de um usuário.
+// - Objeto `users` com funções CRUD para usuários.
+// - Uma função adicional `getByUsername` para buscar usuários pelo nome de usuário.
+// - Cada função utiliza a função `connect` do módulo `Database.service` para interagir com o banco de dados.
+
+
 import { connect } from "./Database.service";
 
 export type User = {

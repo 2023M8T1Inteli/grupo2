@@ -1,3 +1,9 @@
+// Este arquivo TypeScript define um módulo que fornece funcionalidades de ponte para processamento de código.
+// Inclui:
+// - Importação do módulo axios para fazer requisições HTTP.
+// - Objeto `codeBridge` com a função `processCode` para processar código.
+// - A função `processCode` faz uma requisição POST para um endpoint de compilação, enviando o código e retornando a resposta.
+
 import axios from "axios";
 
 export const codeBridge = {

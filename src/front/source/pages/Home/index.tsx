@@ -1,3 +1,12 @@
+// Tela Home da aplicação.
+// Inclui:
+// - Utilização do componente `AutoRedirect` para redirecionamento automático caso não esteja autenticado.
+// - Estrutura da página inicial com cabeçalho e cards interativos.
+// - Dois cards com imagens e textos descritivos, representando diferentes seções da aplicação. (Acompanhamento e Projetos)
+// - Uso de `infoToast` para feedback ao clicar em elementos ainda em desenvolvimento.
+// - Estilização através do arquivo `styles.css`.
+
+
 import { infoToast } from "../../components/Toast";
 import { AutoRedirect } from "../../contexts/AuthContext";
 import "./styles.css";
@@ -38,6 +47,3 @@ export default function Home() {
     </div>
   );
 }
-
-//<span className="register" onClick={() => {infoToast("Trabalho em progresso! 🚀")}}>
-

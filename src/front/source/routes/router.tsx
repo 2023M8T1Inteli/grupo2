@@ -1,3 +1,13 @@
+// Componente Router, responsável por gerenciar as rotas e a navegação.
+// Inclui:
+// - Importação de estilos globais e específicos para notificações (react-toastify).
+// - Uso do React Router para definir as rotas e renderizar componentes de páginas específicas.
+// - Componentes de páginas como Login, Home, Projects, Patients, Game (DragDrop), Editor.
+// - Contexto de autenticação (`AuthProvider`) envolvendo as rotas.
+// - Lógica para exibir ou ocultar a Navbar com base na rota atual.
+// - Contêiner para notificações Toast.
+
+
 import '../assets/styles/global.css';
 import { Routes, Route, useLocation } from "react-router-dom";
 import Login from '../pages/Login';

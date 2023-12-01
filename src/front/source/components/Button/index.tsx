@@ -1,3 +1,10 @@
+// É um componente de botão para React com várias variantes e comportamentos. 
+// Inclui:
+// - Interface `ButtonProps` para definir propriedades como 'value', 'variant', 'onClick'.
+// - Importação de estilos e ícones.
+// - Renderização condicional para criar diferentes tipos de botões, incluindo botões de navegação e ação.
+
+
 import './styles.css'
 import back from '/back.svg'
 import settings from '/settings.svg'

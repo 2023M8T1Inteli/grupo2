@@ -1,3 +1,10 @@
+// Este serviço tem como objetivo gerenciar sessões de terapia no banco de dados.
+// Inclui:
+// - Tipo `Session` para modelar a estrutura de dados de uma sessão.
+// - Objeto `sessions` com funções CRUD para sessões.
+// - Cada função utiliza a função `connect` do módulo `Database.service` para interagir com o banco de dados.
+
+
 import { connect } from "./Database.service";
 
 export type Session = {

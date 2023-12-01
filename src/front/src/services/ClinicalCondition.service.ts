@@ -1,3 +1,11 @@
+// Este serviço define módulos para gerenciar tipos de condições clínicas e sua conexão com os pacientes, no banco de dados.
+// Inclui:
+// - Tipos `ClinicalCondition` e `PatientsClinicalCondition` para modelar as estruturas de dados.
+// - Objeto `clinicalConditions` com funções CRUD (criar, ler, atualizar, deletar) para condições clínicas.
+// - Objeto `patientsClinicalConditions` com funções CRUD para condições clínicas de pacientes.
+// - Cada função nos objetos utiliza a função `connect` do módulo `Database.service` para interagir com o banco de dados.
+
+
 import { connect } from "./Database.service";
 
 export type ClinicalCondition = {

@@ -1,3 +1,11 @@
+// Tela Pacientes destinado à visualização e gestão de pacientes.
+// Inclui:
+// - Uso do componente Button personalizado e infoToast para feedback.
+// - Estrutura da página com uma seção de opções contendo botões para voltar e configurações.
+// - Lista de pacientes apresentada com imagens, nomes e idades, cada um linkando para uma página específica.
+// - Opção para adicionar um novo paciente (ainda em desenvolvimento).
+// - Estilização através do arquivo 'styles.css.'
+
 import Button from "../../components/Button";
 import { infoToast } from "../../components/Toast";
 import "./styles.css";

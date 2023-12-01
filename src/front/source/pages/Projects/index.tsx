@@ -1,3 +1,12 @@
+// Tela Projetos, para visualizar e gerenciar projetos.
+// Inclui:
+// - Uso do contexto de autenticação "useAuth" para acessar o nome do usuário autenticado.
+// - Estrutura da página com uma seção de opções contendo botões para voltar e configurações.
+// - Lista de projetos com detalhes como nome, data de criação e autor.
+// - Botão para adicionar novos projetos (ainda em desenvolvimento).
+// - Cada projeto é um link que direciona para uma página de pacientes.
+// - Estilização através do arquivo 'styles.css.'
+
 import React from "react";
 import Button from "../../components/Button";
 import "./styles.css";

@@ -1,3 +1,9 @@
+// Este serviço define um módulo para gerenciar projetos no banco de dados.
+// Inclui:
+// - Tipo `Project` para modelar a estrutura de dados de um projeto.
+// - Objeto `projects` com funções CRUD para projetos.
+// - Cada função utiliza a função `connect` do módulo `Database.service` para interagir com o banco de dados.
+
 import { connect } from "./Database.service";
 
 export type Project = {

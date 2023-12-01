@@ -1,3 +1,11 @@
+// Tela focada na criação e manipulação de cenas do projeto.
+// Inclui:
+// - Utilização do componente Button para navegação.
+// - Estrutura dividida em colunas e linhas para organizar o layout da página.
+// - Uso da biblioteca `react-rnd` para criar um bloco redimensionável e arrastável.
+// - Botões e links para adicionar elementos e editar blocos, com redirecionamento para outras páginas.
+// - Estilização através do arquivo `styles.css`.
+
 import React, { useState, useEffect } from "react";
 import { Rnd } from "react-rnd";
 import Button from "../../components/Button";

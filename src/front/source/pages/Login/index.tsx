@@ -1,3 +1,14 @@
+// Componente de login para uma aplicação React, com integração de autenticação e navegação.
+// Inclui:
+// - Uso do React Router (`useNavigate`) para redirecionamento após o login.
+// - Uso do contexto de autenticação "useAuth" para acessar a função de login.
+// - Estados locais para gerenciar os campos de usuário e senha.
+// - Função `handleLogin` para processar o login, incluindo validação e armazenamento de dados do usuário.
+// - Uso de toasts para feedback de ações (erro, informação, sucesso).
+// - Formulário de login com campos para usuário e senha e botão de entrada.
+// - Opção para registrar uma nova conta (ainda em desenvolvimento).
+
+
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useState, useEffect } from "react";

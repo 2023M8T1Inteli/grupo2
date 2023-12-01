@@ -1,3 +1,10 @@
+// Este serviço define um módulo para gerenciar os pacientes no banco de dados.
+// Inclui:
+// - Tipo `Patient` para modelar a estrutura de dados de um paciente.
+// - Objeto `patients` com funções CRUD para pacientes.
+// - Cada função utiliza a função `connect` do módulo `Database.service` para interagir com o banco de dados.
+
+
 import { connect } from "./Database.service";
 
 export type Patient = {

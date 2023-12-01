@@ -1,5 +1,11 @@
-// See the Electron documentation for details on how to use preload scripts:
-// https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
+// Este arquivo do electron define um manipulador para a integração entre processos do "frontend" e do "backend".
+// Inclui:
+// - Importações do Electron, como contextBridge e ipcRenderer, para comunicação entre processos.
+// - Definição de tipos importados de serviços, como Patient, Project, User, etc.
+// - Objeto `electronHandler` que encapsula métodos para comunicação interprocesso usando ipcRenderer:
+//    - Métodos para enviar e receber mensagens através de canais específicos.
+//    - Métodos CRUD para diferentes entidades (usuários, sessões, projetos, pacientes, condições clínicas, condições clínicas de pacientes).
+//    - Método `processCode` para processar código usando o módulo `Python.bridge` (compilador).
 
 import {
   contextBridge,
@@ -35,7 +41,7 @@ const electronHandler = {
     },
   },
 
-  // User methods
+  // Métodos do usuário
   users: {
     getAll: () => ipcRenderer.invoke("db:user.getAll"),
     get: (id: string) => ipcRenderer.invoke("db:user.get", id),
@@ -46,7 +52,7 @@ const electronHandler = {
     delete: (id: string) => ipcRenderer.invoke("db:user.delete", id),
   },
 
-  // Session methods
+  // Métodos de uma sessão
   sessions: {
     getAll: () => ipcRenderer.invoke("db:session.getAll"),
     get: (id: string) => ipcRenderer.invoke("db:session.get", id),
@@ -57,7 +63,7 @@ const electronHandler = {
     delete: (id: string) => ipcRenderer.invoke("db:session.delete", id),
   },
 
-  // Project methods
+  // Métodos de um projeto
   projects: {
     getAll: () => ipcRenderer.invoke("db:project.getAll"),
     get: (id: string) => ipcRenderer.invoke("db:project.get", id),
@@ -68,7 +74,7 @@ const electronHandler = {
     delete: (id: string) => ipcRenderer.invoke("db:project.delete", id),
   },
 
-  // Patient methods
+  // Métodos de um paciente
   patients: {
     getAll: () => ipcRenderer.invoke("db:patient.getAll"),
     get: (id: string) => ipcRenderer.invoke("db:patient.get", id),
@@ -79,7 +85,7 @@ const electronHandler = {
     delete: (id: string) => ipcRenderer.invoke("db:patient.delete", id),
   },
 
-  // ClinicalCondition methods
+  // Método de condições clínicas
   clinicalConditions: {
     getAll: () => ipcRenderer.invoke("db:clinicalCondition.getAll"),
     get: (id: string) => ipcRenderer.invoke("db:clinicalCondition.get", id),
@@ -91,7 +97,7 @@ const electronHandler = {
       ipcRenderer.invoke("db:clinicalCondition.delete", id),
   },
 
-  // PatientsClinicalCondition methods
+  // Método de condições clínicas de pacientes
   patientsClinicalConditions: {
     getAll: () => ipcRenderer.invoke("db:patientsClinicalCondition.getAll"),
     get: (id: string) =>
@@ -110,7 +116,7 @@ const electronHandler = {
       ipcRenderer.invoke("db:patientsClinicalCondition.delete", id),
   },
 
-  // Code methods
+  // Método para processar código no compilador
   codeBridge: {
     processCode: (code: string) => ipcRenderer.invoke("code:process", code),
   },
@@ -118,4 +124,3 @@ const electronHandler = {
 
 contextBridge.exposeInMainWorld("electron", electronHandler);
 export type ElectronHandler = typeof electronHandler;
-

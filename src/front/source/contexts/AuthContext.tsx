@@ -1,3 +1,11 @@
+// Define um contexto de autenticação utilizando a Context API do React. 
+// Ele inclui:
+// 1. Interface `AuthContextType` - define a estrutura do contexto de autenticação, incluindo estado e funções para login e logout.
+// 2. `AuthContext` - cria um contexto React para o estado de autenticação.
+// 3. Componente `AutoRedirect` - redireciona usuários não autenticados para a página de login.
+// 4. `AuthProvider` - um componente que fornece o contexto de autenticação para os componentes filhos, gerenciando o estado de login.
+// 5. `useAuth` - um hook personalizado para acessar o contexto de autenticação.
+
 import React, { createContext, useContext, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { successToast } from "../components/Toast";
