@@ -10,6 +10,5 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Router />
     </BrowserRouter>
-  </React.Fragment>
+  </React.Fragment>,
 );
-

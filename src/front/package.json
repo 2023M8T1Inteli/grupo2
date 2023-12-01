@@ -34,6 +34,7 @@
   "dependencies": {
     "@djpfs/react-vlibras": "^2.0.2",
     "@types/better-sqlite3": "^7.6.8",
+    "axios": "^1.6.2",
     "better-sqlite3": "^9.1.1",
     "electron-squirrel-startup": "^1.0.0",
     "react-beautiful-dnd": "^13.1.1",

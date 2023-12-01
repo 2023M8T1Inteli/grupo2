@@ -12,6 +12,8 @@ import {
   PatientsClinicalCondition,
 } from "./services/ClinicalCondition.service";
 
+import { codeBridge } from "./bridge/Python.bridge";
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   app.quit();
@@ -191,6 +193,10 @@ app.whenReady().then(() => {
 
   ipcMain.handle("db:patientsClinicalCondition.getAll", async () => {
     return patientsClinicalConditions.getAll();
+  });
+
+  ipcMain.handle("code:process", async (_, code: string) => {
+    return codeBridge.processCode(code);
   });
 });
 

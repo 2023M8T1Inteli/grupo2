@@ -109,7 +109,13 @@ const electronHandler = {
     delete: (id: string) =>
       ipcRenderer.invoke("db:patientsClinicalCondition.delete", id),
   },
+
+  // Code methods
+  codeBridge: {
+    processCode: (code: string) => ipcRenderer.invoke("code:process", code),
+  },
 };
 
 contextBridge.exposeInMainWorld("electron", electronHandler);
 export type ElectronHandler = typeof electronHandler;
+

@@ -26,21 +26,21 @@ export default function Patients() {
         >
           <img src={plus} />
         </a>
-        <a className="patient" href="">
+        <a className="patient" href="/editor">
           <img src={child_smile} />
           <div>
             <p>Luquinhas</p>
             <p>7 anos</p>
           </div>
         </a>
-        <a className="patient" href="">
+        <a className="patient" href="/editor">
           <img src={child_smile} />
           <div>
             <p>Luquinhas</p>
             <p>7 anos</p>
           </div>
         </a>
-        <a className="patient" href="">
+        <a className="patient" href="/editor">
           <img src={child_smile} />
           <div>
             <p>Luquinhas</p>
@@ -51,4 +51,3 @@ export default function Patients() {
     </div>
   );
 }
-
