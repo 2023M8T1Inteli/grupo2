@@ -124,4 +124,3 @@ const electronHandler = {
 
 contextBridge.exposeInMainWorld("electron", electronHandler);
 export type ElectronHandler = typeof electronHandler;
-
