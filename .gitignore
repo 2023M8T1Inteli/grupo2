@@ -8,3 +8,5 @@ __pycache__/
 *$py.class
 
 node_modules
+# Python cache
+__pycache__
