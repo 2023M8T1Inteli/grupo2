@@ -91,8 +91,6 @@ class AnalisadorSemantico:
     
     def visitarExpression(self, noExpression):
 
-        # print("expression: " + str(noExpression))
-
         esq_node = noExpression.get("esquerda")
 
         if noExpression.get("oper"):

@@ -1,5 +1,7 @@
-programa "teste semântico 1":
+programa "teste semântico 2":
 inicio
-      y = falso
-      mostrar(x)
+x = 1
+y = 2
+mostrar(z)
+z = y
 fim.
