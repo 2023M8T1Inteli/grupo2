@@ -62,28 +62,20 @@ class AnalisadorSemantico:
                 self.visitarExpression(exp)
                 entao = declaracao.get("entao")
                 self.visitarBloco(entao)
-                senao = declaracao.get("senao")
-                self.visitarBloco(senao)
-
+                if declaracao.get("senao"):
+                    senao = declaracao.get("senao")
+                    self.visitarBloco(senao)
+                    
             ## OUTPUT E AWAIT
             elif declaracao.op == "mostrar" or declaracao.op == "tocar" or declaracao.op == "esperar":
                 param = declaracao.get("param")
-                if param.get("factor").op == "ID":
-                    if param.get("factor").value not in self.tabela:
-                        x = param.get("factor")
-                        raise SemanticException(f"O identificador '{x.value}' na linha {x.line} não foi declarado")
-            
+                self.visitarSumExpression(param)
+
             elif declaracao.op == "mostar_tocar":
                 param1 = declaracao.get("param1")
                 param2 = declaracao.get("param2")
-                if param1.get("factor").op == "ID":
-                    if param1.get("factor").value not in self.tabela:
-                        x = param1.get("factor")
-                        raise SemanticException(f"O identificador '{x.value}' na linha {x.line} não foi declarado")
-                if param2.get("factor").op == "ID":
-                    if param2.get("factor").value not in self.tabela:
-                        x = param2.get("factor")
-                        raise SemanticException(f"O identificador '{x.value}' na linha {x.line} não foi declarado")
+                self.visitarSumExpression(param1)
+                self.visitarSumExpression(param2)
                     
             declaracoes = declaracoes.get("prox")
 
