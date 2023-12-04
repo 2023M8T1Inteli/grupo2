@@ -14,21 +14,18 @@ class AnalisadorSemantico:
         self.visitarAlg(self.arvore)
     
     def visitarAlg(self, no):
-        # print("arvore: " + str(self.arvore))    
+        print("arvore: " + str(self.arvore))    
 
         nome_programa = no.get("nome")
         self.tabela[nome_programa] = NoTabela(None, "alg")
-        # self.visitarDeclarations(no.get("bloco"))
         self.visitarBloco(no.get("bloco"))
     
     def visitarBloco(self, bloco):
-        # print("bloco: " + str(bloco.op))
 
         declaracoes = bloco.get("listaAtribuicao")
         while declaracoes:
             declaracao = declaracoes.get("atribuicao")
 
-            ## ASSIGN STATEMENT
             if declaracao.op == "atribuicao":
                 id_token = declaracao.get("id")
                 if id_token.value not in self.tabela:
@@ -41,6 +38,8 @@ class AnalisadorSemantico:
                         raise SemanticException(f"Tipos incompatíveis: {id_token.value} e {exp.valor} na linha {id_token.line}")
                     else:
                         self.tabela[id_token.value].valor = exp.valor
+
+            ## OTHER STATEMENTS
                         
 
             declaracoes = declaracoes.get("prox")
@@ -68,12 +67,9 @@ class AnalisadorSemantico:
         # print("noSumExpression: " + str(no))
 
         if no != None:
-            val1 = self.visitarSumExpression(no.get("esquerda"))
-            val2 = self.visitarSumExpression(no.get("direita"))
-
             if no.op in ("sumExpression", "multiplicativeTerm", "powerTerm"):
-                print("val1: " + str(val1)) 
-                print("val2: " + str(val2))
+                val1 = self.visitarSumExpression(no.get("esquerda"))
+                val2 = self.visitarSumExpression(no.get("direita"))
                 if not (val1.tipo == "INTEGER" and val2.tipo == "BOOLEAN") or (val2.tipo == "INTEGER" and val1.tipo == "BOOLEAN"):
                     if val1.tipo != val2.tipo:
                         raise SemanticException(f"Tipos incompatíveis: {no.get('esquerda').get('factor').value} e {no.get('direita').get('factor').value} na linha {no.get('direita').get('factor').line}")

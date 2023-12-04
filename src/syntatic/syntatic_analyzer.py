@@ -51,7 +51,6 @@ class Syntatic:
         if self.current_token.type == expected:
             self.next_token()
         else:
-            # print(self.current_token)
             raise Exception(f"Syntatic error: expected {expected} line {self.current_token.line}")
         
         return curr_token
@@ -216,7 +215,9 @@ class Syntatic:
     def sum_expression2(self, esq=None):
         """
             Continues processing a sum expression, allowing for multiple additions or subtractions in sequence.
+
         """
+
         if self.current_token.type == "OPSUM":
             token_sum = self.match("OPSUM")
             right = self.mult_term()
@@ -249,6 +250,7 @@ class Syntatic:
         """
             Processes an exponentiation term within an expression.
         """
+
         factor_node = self.factor()
         if self.current_token.type == "OPPOW":
             oppow = self.match("OPPOW")
@@ -265,15 +267,20 @@ class Syntatic:
         if self.current_token.type == "ID":
             token_id = self.match("ID")
             return NoInterno(op="factor", sinal=sinal, esquerda=None, direita=None, factor=NoFolha("ID", token_id.value, token_id.line))
+        
         elif self.current_token.type == "INTEGER":
             num = self.match("INTEGER")
-            return NoInterno(op="factor", sinal=sinal, esquerda=None, direita=None, factor=NoFolha("INTEGER", num.value, num.line))
+            x = NoInterno(op="factor", sinal=sinal, esquerda=None, direita=None, factor=NoFolha("INTEGER", num.value, num.line))
+            return x
+        
         elif self.current_token.type == "BOOLEAN":
             tokenBool = self.match("BOOLEAN")
             return NoInterno(op="factor", sinal=sinal, esquerda=None, direita=None, factor=NoFolha("BOOLEAN", tokenBool.value, tokenBool.line))
+        
         elif self.current_token.value in ["+", "-"]:
             op = self.match("OPSUM")
-            self.factor(op)
+
+            return self.factor(op.value)
 
         elif self.current_token.type == "NAO":
             self.match("NAO")
