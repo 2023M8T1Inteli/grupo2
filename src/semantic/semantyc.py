@@ -30,7 +30,7 @@ class AnalisadorSemantico:
                 id_token = declaracao.get("id")
                 if id_token.value not in self.tabela:
 
-                    if declaracao.get("inStatement"): # LER VARIOS OU LER
+                    if declaracao.get("inStatement"): # INPUT
                         in_statement = declaracao.get("inStatement")
                         self.visitarInStatement(in_statement, id_token)
                         
@@ -39,7 +39,7 @@ class AnalisadorSemantico:
                         self.tabela[id_token.value] = NoTabela(exp.valor, exp.tipo)
                     
                 else:
-                    if declaracao.get("inStatement"): # LER VARIOS OU LER
+                    if declaracao.get("inStatement"): # INPUT
                         in_statement = declaracao.get("inStatement")
                         self.visitarInStatement(in_statement, id_token)
                     else:
@@ -65,14 +65,33 @@ class AnalisadorSemantico:
                 senao = declaracao.get("senao")
                 self.visitarBloco(senao)
 
-
+            ## OUTPUT E AWAIT
+            elif declaracao.op == "mostrar" or declaracao.op == "tocar" or declaracao.op == "esperar":
+                param = declaracao.get("param")
+                if param.get("factor").op == "ID":
+                    if param.get("factor").value not in self.tabela:
+                        x = param.get("factor")
+                        raise SemanticException(f"O identificador '{x.value}' na linha {x.line} não foi declarado")
+            
+            elif declaracao.op == "mostar_tocar":
+                param1 = declaracao.get("param1")
+                param2 = declaracao.get("param2")
+                if param1.get("factor").op == "ID":
+                    if param1.get("factor").value not in self.tabela:
+                        x = param1.get("factor")
+                        raise SemanticException(f"O identificador '{x.value}' na linha {x.line} não foi declarado")
+                if param2.get("factor").op == "ID":
+                    if param2.get("factor").value not in self.tabela:
+                        x = param2.get("factor")
+                        raise SemanticException(f"O identificador '{x.value}' na linha {x.line} não foi declarado")
+                    
             declaracoes = declaracoes.get("prox")
 
 
     
     def visitarExpression(self, noExpression):
 
-        print("expression: " + str(noExpression))
+        # print("expression: " + str(noExpression))
 
         esq_node = noExpression.get("esquerda")
 
@@ -80,7 +99,7 @@ class AnalisadorSemantico:
             self.visitarSumExpression(esq_node)
             dir_node = noExpression.get("direita")
             resultado = self.visitarSumExpression(dir_node)
-            return NoTabela(resultado.valor, "log")
+            return NoTabela(resultado.valor, "BOOLEAN")
         
         else:
             return self.visitarSumExpression(esq_node)
