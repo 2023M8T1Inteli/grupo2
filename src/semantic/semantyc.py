@@ -39,7 +39,7 @@ class AnalisadorSemantico:
                             self.tabela[id_token.value] = NoTabela(None, "BOOLEAN")
                         else:
                             self.tabela[id_token.value] = NoTabela(None, "INTEGER")
-                            
+
                     else:   
                         exp = self.visitarExpression(declaracao.get("expression"))
                         self.tabela[id_token.value] = NoTabela(exp.valor, exp.tipo)
@@ -110,12 +110,6 @@ class AnalisadorSemantico:
             if no.op in ("sumExpression", "multiplicativeTerm", "powerTerm"):
                 val1 = self.visitarSumExpression(no.get("esquerda"))
                 val2 = self.visitarSumExpression(no.get("direita"))
-
-                ## TALVEZ NAO PRECISE CHECAR O TIPO
-
-                # if not (val1.tipo == "INTEGER" and val2.tipo == "BOOLEAN") or (val2.tipo == "INTEGER" and val1.tipo == "BOOLEAN"):
-                #     if val1.tipo != val2.tipo:
-                #         raise SemanticException(f"Tipos incompatíveis: {no.get('esquerda').get('factor').value} e {no.get('direita').get('factor').value} na linha {no.get('direita').get('factor').line}")
 
                 if no.get("oper") == "/" and val2.tipo == "INTEGER" and no.get('direita').get('factor'):
                     if no.get('direita').get('factor').value == "0":
