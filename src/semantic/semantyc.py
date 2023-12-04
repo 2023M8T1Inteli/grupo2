@@ -65,7 +65,7 @@ class AnalisadorSemantico:
                 if declaracao.get("senao"):
                     senao = declaracao.get("senao")
                     self.visitarBloco(senao)
-                    
+
             ## OUTPUT E AWAIT
             elif declaracao.op == "mostrar" or declaracao.op == "tocar" or declaracao.op == "esperar":
                 param = declaracao.get("param")
@@ -152,25 +152,11 @@ class AnalisadorSemantico:
 
 
     def visitarInStatement(self, in_statement, id_token):
+        
         if in_statement.op == "ler_varios":
             for i in range(1, 4):
-                if in_statement.get(f"param{i}").get("factor").op == "ID":
-                    if in_statement.get(f"param{i}").get("factor").value not in self.tabela:
-                        raise SemanticException(f"O identificador '{in_statement.get(f'param{i}').get('factor').value}' na linha {in_statement.get(f'param{i}').get('factor').line} não foi declarado")
-                    
-                    ## TALVEZ NAO PRECISE CHECAR O TIPO
-                    # else:
-                    #     if self.tabela[in_statement.get(f"param{i}").get("factor").value].tipo != "INTEGER":
-                    #         raise SemanticException(f"O identificador '{in_statement.get(f'param{i}').get('factor').value}' na linha {in_statement.get(f'param{i}').get('factor').line} não é do tipo INTEGER")
-                        
-                    #     else:
-                    #         self.tabela[id_token.value] = NoTabela(None, "INTEGER")
-                else:
-                    if in_statement.get(f"param{i}").get("factor").op == "INTEGER":
-                        self.tabela[id_token.value] = NoTabela(None, "BOOLEAN")
-                    else:
-                        raise SemanticException(f"Os parâmetros de entrada devem ser inteiros na linha {id_token.line}")
-                    
+                self.visitarSumExpression(in_statement.get(f"param{i}"))
+
         elif in_statement.op == "ler":
             self.tabela[id_token.value] = NoTabela(None, "INTEGER")
 
