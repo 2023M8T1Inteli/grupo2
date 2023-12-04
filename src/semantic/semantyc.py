@@ -29,18 +29,42 @@ class AnalisadorSemantico:
             if declaracao.op == "atribuicao":
                 id_token = declaracao.get("id")
                 if id_token.value not in self.tabela:
-                    exp = self.visitarExpression(declaracao.get("expression"))
-                    self.tabela[id_token.value] = NoTabela(exp.valor, exp.tipo)
+
+                    if declaracao.get("inStatement"): # LER VARIOS OU LER
+                        in_statement = declaracao.get("inStatement")
+                        self.visitarInStatement(in_statement, id_token)
+                        
+                    else:   
+                        exp = self.visitarExpression(declaracao.get("expression"))
+                        self.tabela[id_token.value] = NoTabela(exp.valor, exp.tipo)
                     
                 else:
-                    exp = self.visitarExpression(declaracao.get("expression"))
-                    if self.tabela[id_token.value].tipo != exp.tipo:
-                        raise SemanticException(f"Tipos incompatíveis: {id_token.value} e {exp.valor} na linha {id_token.line}")
+                    if declaracao.get("inStatement"): # LER VARIOS OU LER
+                        in_statement = declaracao.get("inStatement")
+                        self.visitarInStatement(in_statement, id_token)
                     else:
-                        self.tabela[id_token.value].valor = exp.valor
+                        exp = self.visitarExpression(declaracao.get("expression"))
+                        if self.tabela[id_token.value].tipo != exp.tipo:
+                            raise SemanticException(f"Tipos incompatíveis: {id_token.value} e {exp.valor} na linha {id_token.line}")
+                        else:
+                            self.tabela[id_token.value].valor = exp.valor
 
-            ## OTHER STATEMENTS
-                        
+            ## ENQUANTO STATEMENT
+            elif declaracao.op == "whileStatement":    
+                exp = declaracao.get("expression")
+                self.visitarExpression(exp)
+                faca = declaracao.get("faca")
+                self.visitarBloco(faca)
+
+            ## SE STATEMENT
+            elif declaracao.op == "ifStatement":
+                exp = declaracao.get("expression")
+                self.visitarExpression(exp)
+                entao = declaracao.get("entao")
+                self.visitarBloco(entao)
+                senao = declaracao.get("senao")
+                self.visitarBloco(senao)
+
 
             declaracoes = declaracoes.get("prox")
 
@@ -48,7 +72,7 @@ class AnalisadorSemantico:
     
     def visitarExpression(self, noExpression):
 
-        # print("noExpression: " + str(noExpression.op))
+        print("expression: " + str(noExpression))
 
         esq_node = noExpression.get("esquerda")
 
@@ -56,7 +80,7 @@ class AnalisadorSemantico:
             self.visitarSumExpression(esq_node)
             dir_node = noExpression.get("direita")
             resultado = self.visitarSumExpression(dir_node)
-            return NoTabela(resultado.value, "log")
+            return NoTabela(resultado.valor, "log")
         
         else:
             return self.visitarSumExpression(esq_node)
@@ -64,15 +88,17 @@ class AnalisadorSemantico:
 
     def visitarSumExpression(self, no):
 
-        # print("noSumExpression: " + str(no))
 
         if no != None:
             if no.op in ("sumExpression", "multiplicativeTerm", "powerTerm"):
                 val1 = self.visitarSumExpression(no.get("esquerda"))
                 val2 = self.visitarSumExpression(no.get("direita"))
-                if not (val1.tipo == "INTEGER" and val2.tipo == "BOOLEAN") or (val2.tipo == "INTEGER" and val1.tipo == "BOOLEAN"):
-                    if val1.tipo != val2.tipo:
-                        raise SemanticException(f"Tipos incompatíveis: {no.get('esquerda').get('factor').value} e {no.get('direita').get('factor').value} na linha {no.get('direita').get('factor').line}")
+
+                ## TALVEZ NAO PRECISE CHECAR O TIPO
+
+                # if not (val1.tipo == "INTEGER" and val2.tipo == "BOOLEAN") or (val2.tipo == "INTEGER" and val1.tipo == "BOOLEAN"):
+                #     if val1.tipo != val2.tipo:
+                #         raise SemanticException(f"Tipos incompatíveis: {no.get('esquerda').get('factor').value} e {no.get('direita').get('factor').value} na linha {no.get('direita').get('factor').line}")
 
                 if no.get("oper") == "/" and val2.tipo == "INTEGER" and no.get('direita').get('factor'):
                     if no.get('direita').get('factor').value == "0":
@@ -113,7 +139,33 @@ class AnalisadorSemantico:
 
             elif no.op == "factor" and no.get("expression"):
                 return self.visitarExpression(no.get("expression"))
-        
+            
+
+
+    def visitarInStatement(self, in_statement, id_token):
+        if in_statement.op == "ler_varios":
+            for i in range(1, 4):
+                if in_statement.get(f"param{i}").get("factor").op == "ID":
+                    if in_statement.get(f"param{i}").get("factor").value not in self.tabela:
+                        raise SemanticException(f"O identificador '{in_statement.get(f'param{i}').get('factor').value}' na linha {in_statement.get(f'param{i}').get('factor').line} não foi declarado")
+                    
+                    ## TALVEZ NAO PRECISE CHECAR O TIPO
+                    # else:
+                    #     if self.tabela[in_statement.get(f"param{i}").get("factor").value].tipo != "INTEGER":
+                    #         raise SemanticException(f"O identificador '{in_statement.get(f'param{i}').get('factor').value}' na linha {in_statement.get(f'param{i}').get('factor').line} não é do tipo INTEGER")
+                        
+                    #     else:
+                    #         self.tabela[id_token.value] = NoTabela(None, "INTEGER")
+                else:
+                    if in_statement.get(f"param{i}").get("factor").op == "INTEGER":
+                        self.tabela[id_token.value] = NoTabela(None, "BOOLEAN")
+                    else:
+                        raise SemanticException(f"Os parâmetros de entrada devem ser inteiros na linha {id_token.line}")
+                    
+        elif in_statement.op == "ler":
+            self.tabela[id_token.value] = NoTabela(None, "INTEGER")
+
+
 
     def print_tabela(self):
         print(self.tabela)

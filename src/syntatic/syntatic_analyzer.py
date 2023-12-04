@@ -178,10 +178,10 @@ class Syntatic:
             self.match("COMMA")
             param3_node = self.sum_expression()
             self.match("RPAR")
-            return NoInterno(op=command, param1=param1_node, param2=param2_node, param3=param3_node)
+            return NoInterno(op=command.value, param1=param1_node, param2=param2_node, param3=param3_node)
         else:
             self.match("RPAR")
-            return NoInterno(op=command)
+            return NoInterno(op=command.value)
 
     
     def expression(self):

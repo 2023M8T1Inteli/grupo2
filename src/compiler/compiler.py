@@ -18,5 +18,5 @@ class Compiler:
         # self.print_tree(tree)  # linha comentada
         analiseSemantica = AnalisadorSemantico(tree)
         analiseSemantica.analisar()
-        print(analiseSemantica.tabela)  # imprime apenas a tabela de símbolos
+        # print(analiseSemantica.tabela)  # imprime apenas a tabela de símbolos
 
