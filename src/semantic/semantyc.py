@@ -32,8 +32,14 @@ class AnalisadorSemantico:
 
                     if declaracao.get("inStatement"): # INPUT
                         in_statement = declaracao.get("inStatement")
-                        self.visitarInStatement(in_statement, id_token)
+                        if in_statement.op == "ler_varios":
+                            for i in range(1, 4):
+                                self.visitarSumExpression(in_statement.get(f"param{i}"))
                         
+                            self.tabela[id_token.value] = NoTabela(None, "BOOLEAN")
+                        else:
+                            self.tabela[id_token.value] = NoTabela(None, "INTEGER")
+                            
                     else:   
                         exp = self.visitarExpression(declaracao.get("expression"))
                         self.tabela[id_token.value] = NoTabela(exp.valor, exp.tipo)
@@ -41,7 +47,9 @@ class AnalisadorSemantico:
                 else:
                     if declaracao.get("inStatement"): # INPUT
                         in_statement = declaracao.get("inStatement")
-                        self.visitarInStatement(in_statement, id_token)
+                        if in_statement.op == "ler_varios":
+                            for i in range(1, 4):
+                                self.visitarSumExpression(in_statement.get(f"param{i}"))
                     else:
                         exp = self.visitarExpression(declaracao.get("expression"))
                         if self.tabela[id_token.value].tipo != exp.tipo:
@@ -151,14 +159,11 @@ class AnalisadorSemantico:
             
 
 
-    def visitarInStatement(self, in_statement, id_token):
-        
+    def visitarInStatement(self, in_statement):
+
         if in_statement.op == "ler_varios":
             for i in range(1, 4):
                 self.visitarSumExpression(in_statement.get(f"param{i}"))
-
-        elif in_statement.op == "ler":
-            self.tabela[id_token.value] = NoTabela(None, "INTEGER")
 
 
 
