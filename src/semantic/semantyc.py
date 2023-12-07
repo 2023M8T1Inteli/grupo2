@@ -14,7 +14,7 @@ class AnalisadorSemantico:
         self.visitarAlg(self.arvore)
     
     def visitarAlg(self, no):
-        print("arvore: " + str(self.arvore))    
+        # print("arvore: " + str(self.arvore))    
 
         nome_programa = no.get("nome")
         self.tabela[nome_programa] = NoTabela(None, "alg")
@@ -62,7 +62,9 @@ class AnalisadorSemantico:
                 exp = declaracao.get("expression")
                 self.visitarExpression(exp)
                 faca = declaracao.get("faca")
-                self.visitarBloco(faca)
+                block = self.visitarBloco(faca)
+                if not block:
+                    raise SemanticException(f"Loop infinito ")
 
             ## SE STATEMENT
             elif declaracao.op == "ifStatement":

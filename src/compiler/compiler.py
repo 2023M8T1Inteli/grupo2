@@ -21,6 +21,6 @@ class Compiler:
         analiseSemantica.analisar()
         # print(analiseSemantica.tabela)  # imprime apenas a tabela de símbolos
         generator = CodeGenerator(tree)
-        generator.generate()
-        print(generator.generate())  # imprime o código gerado
+        print(generator.generate())
+        # print(generator.generate())  # imprime o código gerado
 
