@@ -19,6 +19,9 @@ class AnalisadorSemantico:
         nome_programa = no.get("nome")
         self.tabela[nome_programa] = NoTabela(None, "alg")
         self.visitarBloco(no.get("bloco"))
+
+        print("Tabela de símbolos:")
+        self.print_tabela()
     
     def visitarBloco(self, bloco):
 
@@ -161,7 +164,7 @@ class AnalisadorSemantico:
             for i in range(1, 4):
                 self.visitarSumExpression(in_statement.get(f"param{i}"))
 
-
+\
 
     def print_tabela(self):
         print(self.tabela)

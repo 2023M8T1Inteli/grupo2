@@ -1,30 +1,80 @@
-
+import re
 
 class CodeGenerator:
 
     def __init__(self, tree):
         self.tree = tree
         self.code = ""
-        self.indent = - 1
+        self.indent = 0
         self.indent_str = "    "
         self.var_sum = 0
         self.var_mul = 0
         self.var_pow = 0
         self.var_minus = 0
+        self.imgs = []
+        self.audios = []
 
     
     def generate(self):
 
         self.code += "import math\n"
         self.code += "import time\n"
-        self.code += f"\n# Código gerado a partir do programa \"{self.tree.get('nome')}\"\n"
+        self.code += "import pygame\n"
+        self.code += "pygame.init()\n"
+        self.code += "pygame.mixer.init()\n"
+        self.code += "width, height = 800, 600\n"
+        self.code += "screen = pygame.display.set_mode((width, height))\n"
+        self.code += f"pygame.display.set_caption('{self.tree.get('nome')}')\n"
+
+        self.visitarParams()
+
+        self.funcs()
+
+        self.code += "running = True\n"
+        self.code += "while running:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}for event in pygame.event.get():\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}if event.type == pygame.QUIT:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}pygame.quit()\n"
+        self.indent -= 3
+
+
         self.visitarBlock(self.tree.get("bloco"))
+
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}pygame.display.update()\n"
+        self.indent -= 1
+        self.code += "pygame.quit()\n"
 
         # print(self.code)
         return self.code
     
-    def visitarBlock(self, block):
+    def funcs(self):
+        self.code += "\n\n"
+        self.code += "def play_audio(audio):\n"
         self.indent += 1
+        self.code += f"{self.indent_str * self.indent}audio.play()\n"
+        self.code += f"{self.indent_str * self.indent}time.sleep(5)\n"
+        self.code += f"{self.indent_str * self.indent}audio.stop()\n"
+        self.indent -= 1
+
+        self.code += "\n\n"
+        self.code += "def show_image(image):\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}screen.fill((0, 0, 0))\n"
+        self.code += f"{self.indent_str * self.indent}screen.blit(image, (300, 200))\n\n"
+        self.indent -= 1
+
+
+    def visitarParams(self):
+        self.code += "\n\n"
+        self.code += "img = {1: pygame.image.load('src/pygame/1.jpg'), 2: pygame.image.load('src/pygame/2.jpg') }\n"
+        self.code += "audio = {1: pygame.mixer.Sound('src/pygame/1.mp3')}\n"
+
+    def visitarBlock(self, block):
+        self.indent += 2
 
         listaAtribuicao = block.get("listaAtribuicao")
 
@@ -33,13 +83,42 @@ class CodeGenerator:
 
             if atribuicao.op == "atribuicao":
                 id_token = atribuicao.get("id")
-                expression = atribuicao.get("expression")
-                exp = self.visitarExpression(expression)
-                self.code += f"{self.indent_str * self.indent}{id_token.value} = {exp}\n"
+                if atribuicao.get("expression"):
+                    expression = atribuicao.get("expression")
+                    exp = self.visitarExpression(expression)
+                    self.code += f"{self.indent_str * self.indent}{id_token.value} = {exp}\n"
+
+
+                elif atribuicao.get("inStatement"):
+                    id_token = atribuicao.get("id")
+                    self.code += f"{self.indent_str * self.indent}{id_token.value} = int(input())\n"
+
+            elif atribuicao.op == "esperar":
+                exp_param = self.visitarSumExpression(atribuicao.get("param"))
+                self.code += f"{self.indent_str * self.indent}time.sleep({exp_param})\n"
+
+            elif atribuicao.op == "mostrar":
+                exp = self.visitarSumExpression(atribuicao.get("param"))
+
+                self.code += f'{self.indent_str * self.indent}show_image(img[{exp}])\n'
+
+
+            elif atribuicao.op == "tocar":
+                exp = self.visitarSumExpression(atribuicao.get("param"))
+                self.code += f"{self.indent_str * self.indent}play_audio(audio{exp})\n"
+
+
+            elif atribuicao.op == "ifStatement":
+                exp = self.visitarExpression(atribuicao.get("expression"))
+                self.code += f"{self.indent_str * self.indent}if {exp}:\n"
+                self.visitarBlock(atribuicao.get("entao"))
+                if atribuicao.get("senao"):
+                    self.code += f"{self.indent_str * self.indent}else:\n"
+                    self.visitarBlock(atribuicao.get("senao"))
 
             listaAtribuicao = listaAtribuicao.get("prox")
 
-        self.indent -= 1
+        self.indent -= 2
 
     def visitarExpression(self, expression):
         E = self.visitarSumExpression(expression.get("esquerda"))
