@@ -21,6 +21,7 @@ import DragDrop from '../pages/Game';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Editor from '../pages/Editor';
+import FabricPage from '../pages/Fabric';
 
 export default function Router() {
 
@@ -44,6 +45,7 @@ export default function Router() {
                     <Route path='/' element={<Home />} />
                     <Route path='/projects' element={<Projects />} />
                     <Route path='/patients' element={<Patients />} />
+                    <Route path='/fabric' element={<FabricPage />} />
                 </Routes>
             </AuthProvider>
     )
