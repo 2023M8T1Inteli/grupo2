@@ -4,18 +4,17 @@ import pygame
 pygame.init()
 pygame.mixer.init()
 width, height = 800, 600
+ticks = 0
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption('geracao_codigo1')
 
 
 img = {1: pygame.image.load('src/pygame/1.jpg'), 2: pygame.image.load('src/pygame/2.jpg') }
-audio = {1: pygame.mixer.Sound('src/pygame/1.mp3')}
+audio = {1: pygame.mixer.Sound('src/pygame/1.mp3'), 2: pygame.mixer.Sound('src/pygame/2.mp3')}
 
 
 def play_audio(audio):
     audio.play()
-    time.sleep(5)
-    audio.stop()
 
 
 def show_image(image):
@@ -28,7 +27,16 @@ while running:
         if event.type == pygame.QUIT:
             pygame.quit()
         a = 1
-        b = 1
-        show_image(img[b])
+        b = 2
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_1:
+                # a = 1
+                show_image(img[b])
+                play_audio(audio[b])
+
+            if event.key == pygame.K_2:
+                # b = 2
+                show_image(img[a])
+                play_audio(audio[a])
     pygame.display.update()
 pygame.quit()
