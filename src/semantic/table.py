@@ -10,8 +10,8 @@ class NoTabela:
     Por simplicidade, mantenha os atributos públicos.
     """
 
-    def __init__(self, value, tipo, **kwargs):
-        self.value = value
+    def __init__(self, valor, tipo, **kwargs):
+        self.valor = valor
         self.tipo = tipo
         self.d = {}
         for k, v in kwargs.items():
@@ -21,5 +21,5 @@ class NoTabela:
         return self.d.get(k)
 
     def __repr__(self):
-        return f'NoTabela(value={self.tipo}, type={self.tipo}, kwargs={self.d})'
+        return f'NoTabela(value={self.valor}, type={self.tipo}, kwargs={self.d})'
     

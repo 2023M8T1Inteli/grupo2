@@ -2,6 +2,8 @@ from lexic.lexic_analyzer import Lexic
 from syntatic.syntatic_analyzer import Syntatic
 from syntatic.TreeGenerator import NoInterno, NoFolha
 from semantic.semantyc import AnalisadorSemantico
+from code_generator.CodeGenerator import CodeGenerator
+
 
 class Compiler:
 

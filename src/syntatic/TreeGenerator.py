@@ -44,7 +44,7 @@ class NoInterno:
         return f'NoInterno(op="{self.op}"{parametrosStr})'
     
     def __str__(self):
-        return f'NoInterno({self.op}, {self.d})'
+        return f'NoInterno(op={self.op}, {self.d})'
 
 
 class NoFolha:

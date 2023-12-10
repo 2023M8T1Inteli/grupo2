@@ -1,4 +1,9 @@
-programa "teste semântico 1":
+programa "geracao_codigo1":
 inicio
-      x = y
+
+a = 1
+b = 2
+
+mostrar(b)
+tocar(b)
 fim.
