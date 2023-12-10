@@ -5,6 +5,7 @@ from semantic.semantyc import AnalisadorSemantico
 
 class Compiler:
 
+
     def __init__(self, code):
         self.code = code
         self.tokens = []
@@ -17,4 +18,8 @@ class Compiler:
         # self.print_tree(tree)  # linha comentada
         analiseSemantica = AnalisadorSemantico(tree)
         analiseSemantica.analisar()
-        print(analiseSemantica.tabela)  # imprime apenas a tabela de símbolos
+        # print(analiseSemantica.tabela)  # imprime apenas a tabela de símbolos
+        generator = CodeGenerator(tree)
+        print(generator.generate())
+        # print(generator.generate())  # imprime o código gerado
+
