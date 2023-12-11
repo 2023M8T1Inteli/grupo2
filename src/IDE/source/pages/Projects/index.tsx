@@ -1,14 +1,7 @@
-// Tela Projetos, para visualizar e gerenciar projetos.
-// Inclui:
-// - Uso do contexto de autenticação "useAuth" para acessar o nome do usuário autenticado.
-// - Estrutura da página com uma seção de opções contendo botões para voltar e configurações.
-// - Lista de projetos com detalhes como nome, data de criação e autor.
-// - Botão para adicionar novos projetos (ainda em desenvolvimento).
-// - Cada projeto é um link que direciona para uma página de pacientes.
-// - Estilização através do arquivo 'styles.css.'
-
-import React from "react";
+// Projects.js
+import React, { useState } from "react";
 import Button from "../../components/Button";
+import SearchBar from "../../components/Search/index";
 import "./styles.css";
 import play from "/play.svg";
 import plus from "/plus.svg";
@@ -17,19 +10,28 @@ import { infoToast } from "../../components/Toast";
 
 export default function Projects() {
   const { userName } = useAuth();
+  const [searchTerm, setSearchTerm] = useState(""); // Novo estado para o termo de pesquisa
+
+  const handleSearch = () => {
+    // Implemente a lógica de pesquisa
+    console.log("Termo de pesquisa:", searchTerm);
+    // Aqui você pode adicionar a lógica para filtrar os projetos com base no termo de pesquisa
+  };
 
   return (
     <div className="projects-container">
-      <div className="options">
-        <Button
+    <Button
           variant="back"
           onClick={() => {
             console.log("A");
           }}
         />
-        <h1>Projetos</h1>
-        <Button variant="settings" />
+    <h1>Projetos</h1>
+      <div className="centered-content">
+        <SearchBar onSearch={handleSearch} /> {/* Barra de pesquisa agora vem primeiro */}
+        
       </div>
+
       <div className="projects-list">
         <a
           className="project add"
@@ -37,164 +39,26 @@ export default function Projects() {
             infoToast("Trabalho em progresso! 🚀");
           }}
         >
-          <img src={plus} />
+          
+          <img src={plus} alt="Adicionar Projeto" />
+          <p>Criar Nova Aventura</p>
         </a>
+        
+
+        {/* Exemplo de um projeto */}
         <div className="project">
           <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
+            
           </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
+          
         </div>
         <div className="project">
           <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
+            
           </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
+          
         </div>
-        <div className="project">
-          <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
-          </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
-        </div>
-        <div className="project">
-          <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
-          </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
-        </div>
-        <div className="project">
-          <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
-          </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
-        </div>
-        <div className="project">
-          <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
-          </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
-        </div>
-        <div className="project">
-          <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
-          </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
-        </div>
-        <div className="project">
-          <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
-          </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
-        </div>
-        <div className="project">
-          <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
-          </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
-        </div>
-        <div className="project">
-          <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
-          </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
-        </div>
-        <div className="project">
-          <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
-          </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
-        </div>
-        <div className="project">
-          <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
-          </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
-        </div>
-        <div className="project">
-          <div>
-            <p className="project-name">Nome do projeto</p>
-            <p className="created-at">Criado em 27/10</p>
-            <p className="project-author">
-              por <b>{userName()}</b>
-            </p>
-          </div>
-          <a href="/patients">
-            <img src={play} />
-          </a>
-        </div>
+        {/* Outros projetos... */}
       </div>
     </div>
   );
