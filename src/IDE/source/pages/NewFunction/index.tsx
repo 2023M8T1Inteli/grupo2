@@ -18,26 +18,32 @@ import imageIcon from "/image-solid.svg";
 
 function App() {
   return (
-    <div class="Main">
-      <div class="TopHalf">
-        <h1>Projeto 01</h1>
-      </div>
-      <div class="BottomHalf">
-        <a  class="MakeNew" href="/new-function">
-          <button>
-            <img src={plus} alt="Sinal de soma" />
-          </button>
+    <div class="MainEditor">
+      <div class="Progress">
+        <a class="Steps">
+          <button>1</button>
         </a>
-        <div class="Blocks">
-            <button class="Edit">
-              <div class="Event">
-                <img src={touchHand} alt="Icone indicando toque singular"/>
-                <img src={rugButton1} alt="Icone indicando botão do tapete"/>
-              </div>
-              <div class="Element">
-                <img src={imageIcon} alt="Icone indicando toque singular"/>
-              </div>
-            </button> 
+        <a class="Steps">
+          <button>2</button>
+        </a>
+        <a class="Steps">
+          <button>3</button>
+        </a>
+        <a class="Steps">
+          <button>4</button>
+        </a>
+      </div>
+      <div class="Form">
+        <div class="Question">
+          <h1>Qual botão será utilizado?</h1>
+        </div>
+        <div class="Choice">
+          <button>
+            <img src={rugButton1} alt="Icone indicando botão do tapete" />
+          </button>
+          <button>
+            <img src={rugButton2} alt="Icone indicando botão do tapete" />
+          </button>
         </div>
       </div>
     </div>
