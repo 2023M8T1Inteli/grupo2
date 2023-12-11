@@ -67,6 +67,57 @@ class CodeGenerator:
         self.code += f"{self.indent_str * self.indent}screen.blit(image, (300, 200))\n\n"
         self.indent -= 1
 
+    def ler(self):
+        self.code += f"{self.indent_str * self.indent}def ler():\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}return int(input())\n"
+        self.indent -= 1
+
+    def ler_varios(self):
+        self.code += f"{self.indent_str * self.indent}def ler_varios(quad, qtd, tol):\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}count = 0\n"
+        self.code += f"{self.indent_str * self.indent}while count < qtd:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}click = ler()\n"
+        self.code += f"{self.indent_str * self.indent}if click == quad:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}count += 1\n"
+        self.indent -= 2
+        self.code += f"{self.indent_str * self.indent}if tol > 0:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}tol -= 1\n"
+        self.indent -= 1
+        self.code += f"{self.indent_str * self.indent}return True\n"
+        self.indent -= 1
+        self.code += f"{self.indent_str * self.indent}return False\n"
+
+    def mostrar(self):
+        self.code += f"{self.indent_str * self.indent}def mostrar(cod):\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}image = pygame.image.load(f'src/pygame/{cod}.jpg')\n"
+        self.code += f"{self.indent_str * self.indent}show_image(image)\n"
+        self.indent -= 1
+
+    def tocar(self):
+        self.code += f"{self.indent_str * self.indent}def tocar(cod):\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}audio = pygame.mixer.Sound(f'src/pygame/{cod}.mp3')\n"
+        self.code += f"{self.indent_str * self.indent}play_audio(audio)\n"
+        self.indent -= 1
+
+    def mostrar_tocar(self):
+        self.code += f"{self.indent_str * self.indent}def mostrar_tocar(cod_img, cod_aud):\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}mostrar(cod_img)\n"
+        self.code += f"{self.indent_str * self.indent}tocar(cod_aud)\n"
+        self.indent -= 1
+
+    def esperar(self):
+        self.code += f"{self.indent_str * self.indent}def esperar(t):\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}time.sleep(t / 1000)\n"
+        self.indent -= 1
 
     def visitarParams(self):
         self.code += "\n\n"
