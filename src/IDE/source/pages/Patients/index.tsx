@@ -1,60 +1,72 @@
-// Tela Pacientes destinado à visualização e gestão de pacientes.
-// Inclui:
-// - Uso do componente Button personalizado e infoToast para feedback.
-// - Estrutura da página com uma seção de opções contendo botões para voltar e configurações.
-// - Lista de pacientes apresentada com imagens, nomes e idades, cada um linkando para uma página específica.
-// - Opção para adicionar um novo paciente (ainda em desenvolvimento).
-// - Estilização através do arquivo 'styles.css.'
-
+// Projects.js
+import React, { useState } from "react";
 import Button from "../../components/Button";
-import { infoToast } from "../../components/Toast";
+import SearchBar from "../../components/Search/index";
 import "./styles.css";
-import child_smile from "/child-smile.png";
+import play from "/play.svg";
 import plus from "/plus.svg";
+import { useAuth } from "../../contexts/AuthContext";
+import { infoToast } from "../../components/Toast";
+import profilePhoto from "../../assets/img/profilePhoto.png";
 
-export default function Patients() {
+export default function Projects() {
+  const { userName } = useAuth();
+  const [searchTerm, setSearchTerm] = useState(""); // Novo estado para o termo de pesquisa
+
+  const handleSearch = () => {
+    // Implemente a lógica de pesquisa
+    console.log("Termo de pesquisa:", searchTerm);
+    // Aqui você pode adicionar a lógica para filtrar os projetos com base no termo de pesquisa
+  };
+
   return (
+
     <div className="patients-container">
-      <div className="options">
-        <Button
+      <Button
           variant="back"
           onClick={() => {
             console.log("A");
           }}
         />
-        <h1>Pacientes</h1>
-        <Button variant="settings" />
+      <h1>Pacientes</h1>
+      <div className="centered-content">
+        <SearchBar onSearch={handleSearch} />
       </div>
+  
       <div className="patients-list">
-        <a
-          className="patient add"
-          onClick={() => {
-            infoToast("Trabalho em progresso! 🚀");
-          }}
-        >
-          <img src={plus} />
-        </a>
-        <a className="patient" href="/editor">
-          <img src={child_smile} />
-          <div>
-            <p>Luquinhas</p>
-            <p>7 anos</p>
+        <a href="/RegisterPatient" className="patient add" onClick={() => {
+          infoToast("Trabalho em progresso! 🚀");
+        }}>
+          {/* Altere a cor do círculo para outra cor aqui */}
+          <div style={{ backgroundColor: "black" }}>
+            <img src={plus} alt="Adicionar Paciente" style={{ color: "red" }} />
           </div>
         </a>
-        <a className="patient" href="/editor">
-          <img src={child_smile} />
+  
+        {/* Exemplo de um paciente */}
+        <div className="patient">
           <div>
-            <p>Luquinhas</p>
-            <p>7 anos</p>
+            {/* Conteúdo do card redondo */}
           </div>
-        </a>
-        <a className="patient" href="/editor">
-          <img src={child_smile} />
+          {/* Texto abaixo do card redondo */}
+          <img src={profilePhoto} alt="Foto do Paciente" style={{ width: "100%", height: "100%", borderRadius: "50%" }} />
+        </div>
+        <div className="patient">
           <div>
-            <p>Luquinhas</p>
-            <p>7 anos</p>
+            {/* Conteúdo do card redondo */}
           </div>
-        </a>
+          {/* Texto abaixo do card redondo */}
+          <img src={profilePhoto} alt="Foto do Paciente" style={{ width: "100%", height: "100%", borderRadius: "50%" }} />
+        </div>
+        <div className="patient">
+          
+            {/* Conteúdo do card redondo */}
+            <img src={profilePhoto} alt="Foto do Paciente" style={{ width: "100%", height: "100%", borderRadius: "50%" }} />
+          
+          {/* Texto abaixo do card redondo */}
+          <p>{userName}</p>
+        </div>
+        {/* Outros pacientes... */}
       </div>
     </div>
   );
