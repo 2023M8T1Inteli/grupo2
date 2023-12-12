@@ -1,47 +1,41 @@
-// Tela Home da aplicação.
-// Inclui:
-// - Utilização do componente `AutoRedirect` para redirecionamento automático caso não esteja autenticado.
-// - Estrutura da página inicial com cabeçalho e cards interativos.
-// - Dois cards com imagens e textos descritivos, representando diferentes seções da aplicação. (Acompanhamento e Projetos)
-// - Uso de `infoToast` para feedback ao clicar em elementos ainda em desenvolvimento.
-// - Estilização através do arquivo `styles.css`.
-
-
-import { infoToast } from "../../components/Toast";
+import React from "react";
 import { AutoRedirect } from "../../contexts/AuthContext";
 import "./styles.css";
-import child from "/child-having-an-idea.jpg";
-import folder from "/folder.jpg";
+import child from "../../assets/img/kid_image.png";
+import folder from "../../assets/img/kid_toy.png";
+import Button from "../../components/Button";
 
 export default function Home() {
   console.log("TESTE");
 
   return (
-    <div className="home-container">
+    <div className="home-container red-screen">
+    <Button
+          variant="back"
+          onClick={() => {
+            console.log("A");
+          }}
+        />
       <AutoRedirect />
-      <h1>O que vamos fazer?</h1>
-      <div>
-        <div className="card">
-          <img src={child} />
-          <div>
-            <p>Acompanhe as crianças</p>
-            <p>Veja o histórico das sessões e seus resultados</p>
-            <a
-              onClick={() => {
-                infoToast("Trabalho em progresso! 🚀");
-              }}
-            >
-              Acompanhamento
-            </a>
-          </div>
-        </div>
-        <div className="card">
-          <img src={folder} />
-          <div>
-            <p>Projetos</p>
-            <p>Crie, execute e visualize projetos</p>
-            <a href="/projects">Meus Projetos</a>
-          </div>
+      <div className="content">
+        <h1 className="title">Qual tarefa deseja realizar hoje?</h1>
+        <p className="subtitle">Você quer acompanhar o desenvolvimento das crianças e iniciar novas experiências?</p>
+
+        <div className="card-container">
+
+          <a href="/patients" className="card"> {/* Adiciona o link para "/patients" */}
+            <img src={child} alt="Child" />
+            <div className="card-text">
+              <p>Imagem 1</p>
+            </div>
+          </a>
+
+          <a href="/projects" className="card red-card">
+            <img src={folder} alt="Folder" className="red-card-image" />
+            <div className="card-text">
+              <p>Imagem 2</p>
+            </div>
+          </a>
         </div>
       </div>
     </div>
