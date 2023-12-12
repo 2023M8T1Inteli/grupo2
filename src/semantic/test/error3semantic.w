@@ -1,4 +1,0 @@
-programa "teste semântico 1":
-inicio
-      x = y
-fim.

@@ -1,81 +1,49 @@
-.patients-container .options{
+/* styles.css */
+.patients-container {
+    /* Adicione estilos de contêiner conforme necessário */
+}
+
+.centered-content {
+    /* Adicione estilos conforme necessário */
+}
+
+.patients-list {
     display: flex;
-    margin: 2rem 0;
-    padding: var(--layout-padding);
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-end; /* Alinhe os itens no final (parte inferior) do contêiner */
+    height: 100vh; /* Defina a altura para 100% da altura da janela (viewport) */
+    margin-top: -40vh;
+}
+
+.patient {
+    width: 400px; /* Ajuste o tamanho do círculo conforme necessário */
+    height: 400px; /* Ajuste o tamanho do círculo conforme necessário */
+    background-color: white;
+    border-radius: 50%;
+    margin: 10px;
+    display: flex;
     align-items: center;
-    justify-content: space-between;
-}
-
-.patients-container .patients-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
     justify-content: center;
-    gap: 1rem;
-    padding: var(--layout-padding);
-    overflow-y: auto; 
-    height: 60vh;
-}
-
-.patients-container .patients-list .patient {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    text-align: center;
     text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    height: max-content;
-    max-height: 12rem;
-    align-items: center;
-    gap: 1rem;
-    padding: 0 1rem 1rem 1rem;
-    background: var(--white);
-    border-radius: 1rem;
-    transition: .2s ease-in-out;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    color: #333;
+    overflow: hidden; /* Garante que o conteúdo dentro do círculo seja cortado corretamente */
 }
 
-.patients-container .patients-list .add {
-    height: 11rem;
-    font-size: 12rem;
-    justify-content: center;
-    padding: 1rem;
-    background: var(--primary);
-    color: var(--white);
+.patient img {
+    width: 100%; /* Ajusta a largura da imagem para 100% do contêiner pai */
+    height: auto; /* Mantém a proporção da altura da imagem */
+    border-radius: 50%; /* Garante que a imagem seja exibida como um círculo */
 }
 
-.patients-container .patients-list .add  img {
-    height: 50%;
-}
-
-.patients-container .patients-list .patient:hover {
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, .25);
-}
-
-.patients-container .patients-list .patient img {
-    border-radius: 1rem 1rem 0 0;
-}
-
-.patients-container .patients-list .patient > div {
-    display: flex;
-    flex-direction: column;
+/* Aplica as mesmas alterações para as fotos do perfil */
+.profile-photo {
     width: 100%;
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-align: left;
+    height: auto;
+    border-radius: 50%;
 }
 
-.patients-container .patients-list .patient > div p {
-    font-weight: 500;
-    margin: 0;
-    font-size: 1rem;
-    color: var(--secondary);
-}
-
-.patients-container .patients-list .patient > div p:first-child {
-    font-weight: 700;
-    color: var(--black);
-    font-size: 1.2rem;
-}
-
-@media (max-width: 768px) {
-    .patients-container .patients-list {
-        grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
-    }
-}
+/* Outros estilos conforme necessário */

@@ -3,60 +3,86 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
-}
-
-.home-container h1 {
-  font-size: 1.728rem;
+  justify-content: flex-start;
   text-align: center;
-  margin: 2rem;
+  height: 100vh;
 }
 
-.home-container > div {
+.red-screen {
+  background-color: #CA1133;
+  padding-top: 3rem;
+}
+
+.content {
+  color: white;
+  padding: 2rem;
+}
+
+.title {
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  margin-bottom: 2rem;
+}
+
+.card-container {
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
+  justify-content: center;
 }
 
-.home-container .card {
-  display: flex;
-  border-radius: 2rem;
-  flex-direction: column;
-  width: 30vw;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+.card {
+  position: relative;
+  width: 300px;
+  border: 1px solid #000; /* Adiciona a borda preta */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona sombreado leve */
+  transition: border 0.3s ease, box-shadow 0.3s ease; /* Adiciona transição para efeito de clique */
+  cursor: pointer; /* Adiciona o cursor de mão para indicar que os cards são clicáveis */
+  background-color: white;
 }
 
-.home-container .card p {
-  margin: 0.3rem;
+.card:hover {
+  border: 1px solid #000; /* Adiciona a borda preta ao passar o mouse */
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); /* Aumenta o sombreado ao passar o mouse */
+}
+
+.card img {
   width: 100%;
-  text-align: center;
-  color: var(--secondary);
+  height: 400px;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  border: none;
+  
 }
 
-.home-container .card p:first-of-type {
-  font-weight: 600;
-  color: var(--black);
-  font-size: 1.2rem;
-}
-
-.home-container .card img {
-  width: 100%;
-  border-radius: 2rem 2rem 0 0;
-}
-
-.home-container .card > div {
-  display: flex;
-  flex-direction: column;
+.card-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 1rem;
-}
-
-.home-container .card a {
-  background-color: var(--primary);
-  padding: 1rem;
-  margin: 0.5rem 0;
   text-align: center;
-  text-decoration: none;
-  color: var(--white);
-  font-weight: 600;
-  border-radius: 0.6rem;
 }
 
+.card-text p {
+  margin: 0;
+  color: #CA1133; /* Define a cor vermelha para o texto do primeiro card */
+  font-size: 1.2em; /* Aumenta o tamanho da fonte para o primeiro card */
+}
+
+.red-card {
+  background-color: #CA1133;
+}
+
+.red-card img {
+  background-color: #CA1133;
+  width: 70%; /* Reduz a largura em 30% */
+  height: 70%; /* Reduz a altura em 30% */
+  margin-top: 50px;
+  object-fit: cover;
+}
+
+.red-card .card-text p {
+  color: white; /* Define a cor branca para o texto do segundo card */
+}

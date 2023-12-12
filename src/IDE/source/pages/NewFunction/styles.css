@@ -1,0 +1,82 @@
+.MainEditor {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Progress {
+    display: flex;
+    flex-direction: row;
+    width: 40%;
+    height: 10%;
+}
+
+.Steps {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.Steps button {
+    width: 4em;
+    height: 4em;
+    border-radius: 100%;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.Steps button:hover {
+    background-color: rgba(202, 17, 51, 0.8);
+}
+
+.Steps.active button{
+    background-color: #CA1133;
+}
+
+.Form {
+    width: 80%;
+    height: 55%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.Question {
+    height: 20%;
+    width: 100%;
+    text-align: center;
+}
+
+.Choice {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.Footer {
+    width: 80%;
+    height: 15%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Footer button {
+    width: 15%;
+    height: 30%;
+    background-color: #CA1133;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+

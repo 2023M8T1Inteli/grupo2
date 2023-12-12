@@ -15,6 +15,8 @@ import Navbar from '../components/Navbar';
 import Home from '../pages/Home';
 import Projects from '../pages/Projects';
 import Patients from '../pages/Patients';
+import Register from '../pages/Register';
+import RegisterPatient from '../pages/RegisterPatient';
 import { AuthProvider } from '../contexts/AuthContext';
 import { useState, useEffect } from 'react';
 import DragDrop from '../pages/Game';
@@ -22,6 +24,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Editor from '../pages/Editor';
 import FabricPage from '../pages/Fabric';
+import NewFunction from '../pages/NewFunction';
 
 export default function Router() {
 
@@ -31,7 +34,7 @@ export default function Router() {
     const [showNavbar, setShowNavbar] = useState(false);
 
     useEffect(() => {
-        setShowNavbar(location.pathname !== '/login');
+        setShowNavbar(location.pathname !== '/login' && location.pathname !== '/register' && location.pathname !== '/registerPatient');
     }, [location]);
 
     return (
@@ -46,6 +49,9 @@ export default function Router() {
                     <Route path='/projects' element={<Projects />} />
                     <Route path='/patients' element={<Patients />} />
                     <Route path='/fabric' element={<FabricPage />} />
+                    <Route path='/new-function' element={<NewFunction />} />
+                    <Route path='/registerPatient' element={<RegisterPatient />} />
+                    <Route path='/register' element={<Register />} />
                 </Routes>
             </AuthProvider>
     )
