@@ -23,6 +23,7 @@ import DragDrop from '../pages/Game';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Editor from '../pages/Editor';
+import NewFunction from '../pages/NewFunction';
 
 export default function Router() {
 
@@ -46,6 +47,7 @@ export default function Router() {
                     <Route path='/' element={<Home />} />
                     <Route path='/projects' element={<Projects />} />
                     <Route path='/patients' element={<Patients />} />
+                    <Route path='/new-function' element={<NewFunction />} />
                     <Route path='/registerPatient' element={<RegisterPatient />} />
                     <Route path='/register' element={<Register />} />
                 </Routes>

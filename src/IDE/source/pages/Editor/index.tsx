@@ -10,68 +10,34 @@ import React, { useState, useEffect } from "react";
 import { Rnd } from "react-rnd";
 import Button from "../../components/Button";
 import "./styles.css";
-import play from "/play.svg";
-
-const modelRectangleStyle = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  border: "solid 1px #ddd",
-  background: "green",
-  textAlign: "center",
-  color: "#fff",
-};
+import plus from "/plus.svg";
+import touchHand from "/touch-hand.svg";
+import rugButton1 from "/rugButton1.svg";
+import rugButton2 from "/rugButton2.svg";
+import imageIcon from "/image-solid.svg";
 
 function App() {
   return (
     <div class="Main">
-      <div class="UpperColumn">
-        <div>
-          <Button
-            variant="back"
-            onClick={() => {
-              console.log("A");
-            }}
-          />
-          <h1>Cenas</h1>
-        </div>
-        <div>
-          <a>
-            <img src={play} />
-          </a>
-        </div>
+      <div class="TopHalf">
+        <h1>Projeto 01</h1>
       </div>
-      <div class="LowerColumn">
-        <div class="LeftRow">
-          <div class="Square"></div>
-          <div class="AddSquare">
-            <p>+</p>
-          </div>
-        </div>
-        <div class="RightRow">
-          <div class="MainSquare">
-            <div>
-              <Rnd
-                style={modelRectangleStyle}
-                default={{
-                  x: 0,
-                  y: 0,
-                  width: 320,
-                  height: 200,
-                }}
-              >
-                Bloco Redimensionável e Arrastável
-              </Rnd>
-            </div>
-          </div>
-          <div class="ActionButtons">
-            <a class="AddElement">
-              <p>Adicionar Elemento</p>
-            </a>
-            <a class="BlockEdit" href="/game">
-              <p>Editar Blocos</p>
-            </a>
-          </div>
+      <div class="BottomHalf">
+        <a  class="MakeNew" href="/new-function">
+          <button>
+            <img src={plus} alt="Sinal de soma" />
+          </button>
+        </a>
+        <div class="Blocks">
+            <button class="Edit">
+              <div class="Event">
+                <img src={touchHand} alt="Icone indicando toque singular"/>
+                <img src={rugButton1} alt="Icone indicando botão do tapete"/>
+              </div>
+              <div class="Element">
+                <img src={imageIcon} alt="Icone indicando toque singular"/>
+              </div>
+            </button> 
         </div>
       </div>
     </div>
