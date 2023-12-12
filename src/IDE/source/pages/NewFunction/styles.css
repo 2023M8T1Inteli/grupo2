@@ -51,15 +51,29 @@
 }
 
 .Question {
-    height: 20%;
+    height: 50%;
     width: 100%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .Choice {
     width: 100%;
+    height: 50%;
     display: flex;
     justify-content: space-evenly;
+}
+
+.Choice button {
+    height: 50%;
+    width: 25%;
+}
+
+.Choice .selected {
+    background-color: #CA1133;
 }
 
 .Footer {
@@ -71,8 +85,8 @@
 }
 
 .Footer button {
-    width: 15%;
-    height: 30%;
+    width: 10em;
+    height: 3em;
     background-color: #CA1133;
     color: #fff;
     font-size: 1em;

@@ -20,16 +20,15 @@ import imageLogin from "../../assets/img/imageLogin.png";
 import profilePhoto from "../../assets/img/profilePhoto.png";
 
 export default function Login() {
-  // useEffect(() => {
-  //   infoToast(`
-  //   Caro avaliador, temos um usuário para testes:
-  //   \nmaria456 | senha456
-  //   `);
-
-  //   infoToast(`
-  //   Para atualizar a página, basta pressionar CTRL + R
-  //   `);
-  // }, []);
+  useEffect(() => {
+    infoToast(`
+    Caro avaliador, temos um usuário para testes:
+    \nmaria456 | senha456
+    `);
+    infoToast(`
+    Para atualizar a página, basta pressionar CTRL + R
+    `);
+  }, []);
 
   const { login } = useAuth();
   const navigate = useNavigate();
