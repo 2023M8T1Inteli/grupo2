@@ -20,10 +20,22 @@ import {
   faTrash,
   faCaretUp,
   faDownload,
+  faSave,
 } from "@fortawesome/free-solid-svg-icons";
 import { fabric } from "fabric";
 import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
 import "./styles.css";
+
+const serializeCanvas = (editor?) => {
+  const canvas = editor?.canvas;
+  const serializedCanvas = JSON.stringify(canvas);
+  return serializedCanvas;
+}
+
+const loadCanvas = (editor?, serializedCanvas?) => {
+  const canvas = editor?.canvas;
+  canvas.loadFromJSON(serializedCanvas, canvas.renderAll.bind(canvas));
+}
 
 function FabricPage() {
   const [color, setColor] = useState("#35363a");
@@ -106,6 +118,16 @@ function FabricPage() {
     link.download = "image.png";
     link.click();
   };
+
+  const onSaveScene = () => {
+    const serializedCanvas = serializeCanvas(editor);
+    localStorage.setItem("canvas", serializedCanvas);
+    editor?.canvas.clear();
+    // wait for 5 seconds
+    setTimeout(() => {
+      loadCanvas(editor, serializedCanvas);
+    }, 5000);
+  }
 
   const handleDivKeyPressed = (e: any) => {
     switch (e.key) {
@@ -354,6 +376,11 @@ function FabricPage() {
          <button onClick={onGenerateImageFromCanvas}>
           <FontAwesomeIcon icon={faDownload} className="fa-icon" />
           Gerar Imagem
+        </button>
+
+        <button onClick={onSaveScene}>
+          <FontAwesomeIcon icon={faSave} className="fa-icon" />
+          Salvar Cena
         </button>
       </div>
       <div
