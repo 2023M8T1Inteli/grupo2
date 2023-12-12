@@ -20,30 +20,28 @@ export default function Projects() {
 
   return (
     <div className="projects-container">
-    <Button
-          variant="back"
-          onClick={() => {
-            console.log("A");
-          }}
-        />
-    <h1>Projetos</h1>
-      <div className="centered-content">
-        <SearchBar onSearch={handleSearch} /> {/* Barra de pesquisa agora vem primeiro */}
-        
-      </div>
-
-      <div className="projects-list">
-        <a
-          className="project add"
-          onClick={() => {
-            infoToast("Trabalho em progresso! 🚀");
-          }}
-        >
+      <Button
+            variant="back"
+            onClick={() => {
+              console.log("A");
+            }}
+          />
+      <h1>Projetos</h1>
+        <div className="centered-content">
+          <SearchBar onSearch={handleSearch} /> {/* Barra de pesquisa agora vem primeiro */}
           
-          <img src={plus} alt="Adicionar Projeto" />
-          <p>Criar Nova Aventura</p>
-        </a>
-        
+        </div>
+
+        <div className="projects-list">
+          <a
+            className="project add"
+            href="/editor"
+          >
+            
+            <img src={plus} alt="Adicionar Projeto" />
+            <p>Criar Nova Aventura</p>
+          </a>
+          
 
         {/* Exemplo de um projeto */}
         <div className="project">
