@@ -10,8 +10,8 @@ pygame.display.set_caption('geracao_codigo2')
 
 img = {1: pygame.image.load('src/pygame/1.jpg'), 2: pygame.image.load('src/pygame/2.jpg') }
 audio = {1: pygame.mixer.Sound('src/pygame/1.mp3')}
-inputs = {pygame.K_KP_ENTER : 0, pygame.K_SPACE: 1, pygame.K_UP: 2, pygame.K_DOWN: 3, pygame.K_RIGHT: 4, pygame.K_LEFT: 5} 
-keys = {0 : pygame.K_KP_ENTER, 1: pygame.K_SPACE, 2: pygame.K_UP, 3: pygame.K_DOWN, 4: pygame.K_RIGHT, 5: pygame.K_LEFT}
+inputs = {pygame.K_KP_ENTER : 6, pygame.K_SPACE: 2, pygame.K_UP: 4, pygame.K_DOWN: 1, pygame.K_RIGHT: 3, pygame.K_LEFT: 5} 
+keys = {6 : pygame.K_KP_ENTER, 2: pygame.K_SPACE, 4: pygame.K_UP, 1: pygame.K_DOWN, 3: pygame.K_RIGHT, 5: pygame.K_LEFT}
 
 
 def play_audio(audio):
