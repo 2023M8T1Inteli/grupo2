@@ -52,7 +52,63 @@ class CodeGenerator:
         self.code += f"{self.indent_str * self.indent}screen.fill((0, 0, 0))\n"
         self.code += f"{self.indent_str * self.indent}screen.blit(image, (300, 200))\n\n"
         self.code += f"{self.indent_str * self.indent}pygame.display.flip()\n"
+        self.indent -= 1
+
+        self.code += "\n\n"
+        self.code += "def get_input():\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}while True:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}for event in pygame.event.get():\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}if event.type == pygame.KEYDOWN:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}if event.key in inputs:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}return inputs[event.key]\n"
+        self.indent -= 4
+
+        self.code += "\n\n"
+        self.code += "def mult_input(quad, qtd, tol):\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}quad_cont = 0\n"
+        self.code += f"{self.indent_str * self.indent}tol_cont = 0\n"
+        self.code += f"{self.indent_str * self.indent}while True:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}for event in pygame.event.get():\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}if event.type == pygame.KEYDOWN:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}if event.key == keys[quad]:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}quad_cont += 1\n"
+        self.indent -= 1
+        self.code += f"{self.indent_str * self.indent}else:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}if tol > 0:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}tol_cont += 1\n"
+        self.indent -= 1
+        self.code += f"{self.indent_str * self.indent}else:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}return False\n"
         self.indent -= 2
+        self.code += f"{self.indent_str * self.indent}if quad_cont == qtd:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}return True\n"
+        self.indent -= 1
+        self.code += f"{self.indent_str * self.indent}else:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}if tol_cont == tol:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}if tol > 0:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}return False\n"
+        self.indent -= 1
+        self.code += f"{self.indent_str * self.indent}time.sleep(1)\n"
+        self.indent -= 8
+
+
 
 
     def visitarParams(self):
@@ -60,6 +116,8 @@ class CodeGenerator:
         self.code += "\n\n"
         self.code += "img = {1: pygame.image.load('src/pygame/1.jpg'), 2: pygame.image.load('src/pygame/2.jpg') }\n"
         self.code += "audio = {1: pygame.mixer.Sound('src/pygame/1.mp3')}\n"
+        self.code += "inputs = {pygame.K_KP_ENTER : 0, pygame.K_SPACE: 1, pygame.K_UP: 2, pygame.K_DOWN: 3, pygame.K_RIGHT: 4, pygame.K_LEFT: 5} \n"
+        self.code += "keys = {0 : pygame.K_KP_ENTER, 1: pygame.K_SPACE, 2: pygame.K_UP, 3: pygame.K_DOWN, 4: pygame.K_RIGHT, 5: pygame.K_LEFT}\n"
         self.indent -= 1
 
     def visitarBlock(self, block):
@@ -81,51 +139,13 @@ class CodeGenerator:
                 elif atribuicao.get("inStatement"):
                     id_token = atribuicao.get("id")
                     if atribuicao.get("inStatement").op == "ler":
-                        self.code += f"{self.indent_str * self.indent}{id_token.value} = 0\n"
-                        self.code += f"{self.indent_str * self.indent}running = True\n"
-                        self.code += f"{self.indent_str * self.indent}while running:\n"
-                        self.indent += 1
-                        self.code += f"{self.indent_str * self.indent}for event in pygame.event.get():\n"
-                        self.indent += 1
-                        self.code += f"{self.indent_str * self.indent}if event.type == pygame.KEYDOWN:\n"
-                        self.indent += 1
-                        self.code += f"{self.indent_str * self.indent}{id_token.value} = event.key\n"
-                        self.code += f"{self.indent_str * self.indent}running = False\n"
-                        self.indent -= 3
+                        self.code += f"{self.indent_str * self.indent}{id_token.value} = get_input()\n"
                     else:
                         print(atribuicao.get("inStatement"))
                         quad = self.visitarSumExpression(atribuicao.get("inStatement").get("param1"))
                         qtd = self.visitarSumExpression(atribuicao.get("inStatement").get("param2"))
                         tol = self.visitarSumExpression(atribuicao.get("inStatement").get("param3"))
-                        self.code += f"{self.indent_str * self.indent}quad_cont{self.var_qtd} = 0\n"
-                        self.code += f"{self.indent_str * self.indent}tol_cont{self.var_qtd} = 0\n"
-                        self.code += f"{self.indent_str * self.indent}{id_token.value} = False\n"
-                        self.code += f"{self.indent_str * self.indent}running = True\n"
-                        self.code += f"{self.indent_str * self.indent}while running:\n"
-                        self.indent += 1
-                        self.code += f"{self.indent_str * self.indent}for event in pygame.event.get():\n"
-                        self.indent += 1
-                        self.code += f"{self.indent_str * self.indent}if event.type == pygame.KEYDOWN:\n"
-                        self.indent += 1
-                        self.code += f"{self.indent_str * self.indent}if event.key == {quad}:\n"
-                        self.indent += 1
-                        self.code += f"{self.indent_str * self.indent}quad_cont{self.var_qtd} += 1\n"
-                        self.indent -= 1
-                        self.code += f"{self.indent_str * self.indent}else:\n"
-                        self.indent += 1
-                        self.code += f"{self.indent_str * self.indent}tol_cont{self.var_qtd} += 1\n"
-                        self.indent -= 1
-                        self.code += f"{self.indent_str * self.indent}if quad_cont{self.var_qtd} == {qtd}:\n"
-                        self.indent += 1
-                        self.code += f"{self.indent_str * self.indent}{id_token.value} = True\n"
-                        self.code += f"{self.indent_str * self.indent}running = False\n"
-                        self.indent -= 1
-                        self.code += f"{self.indent_str * self.indent}elif tol_cont{self.var_qtd} == {tol}:\n"
-                        self.indent += 1
-                        self.code += f"{self.indent_str * self.indent}running = False\n"
-                        self.indent -= 1
-                        self.var_qtd += 1
-
+                        self.code += f"{self.indent_str * self.indent}{id_token.value} = mult_input({quad}, {qtd}, {tol})\n"
 
 
             elif atribuicao.op == "esperar":
