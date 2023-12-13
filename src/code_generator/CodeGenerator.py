@@ -116,8 +116,8 @@ class CodeGenerator:
         self.code += "\n\n"
         self.code += "img = {1: pygame.image.load('src/pygame/1.jpg'), 2: pygame.image.load('src/pygame/2.jpg') }\n"
         self.code += "audio = {1: pygame.mixer.Sound('src/pygame/1.mp3')}\n"
-        self.code += "inputs = {pygame.K_KP_ENTER : 0, pygame.K_SPACE: 1, pygame.K_UP: 2, pygame.K_DOWN: 3, pygame.K_RIGHT: 4, pygame.K_LEFT: 5} \n"
-        self.code += "keys = {0 : pygame.K_KP_ENTER, 1: pygame.K_SPACE, 2: pygame.K_UP, 3: pygame.K_DOWN, 4: pygame.K_RIGHT, 5: pygame.K_LEFT}\n"
+        self.code += "inputs = {pygame.K_KP_ENTER : 6, pygame.K_SPACE: 2, pygame.K_UP: 4, pygame.K_DOWN: 1, pygame.K_RIGHT: 3, pygame.K_LEFT: 5} \n"
+        self.code += "keys = {6 : pygame.K_KP_ENTER, 2: pygame.K_SPACE, 4: pygame.K_UP, 1: pygame.K_DOWN, 3: pygame.K_RIGHT, 5: pygame.K_LEFT}\n"
         self.indent -= 1
 
     def visitarBlock(self, block):
