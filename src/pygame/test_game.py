@@ -55,7 +55,7 @@ def mult_input(quad, qtd, tol):
                             time.sleep(1)
 a = get_input()
 print(a)
-b = mult_input(a, 3, 5)
+b = mult_input(a + 1, 3, 5)
 if b:
     show_image(img[2])
     time.sleep(1)
