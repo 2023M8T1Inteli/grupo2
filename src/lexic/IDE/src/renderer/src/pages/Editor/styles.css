@@ -1,0 +1,78 @@
+
+.Main {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Main .TopHalf {
+    height: 10%;
+    width: 80%;
+}
+
+.Main .BottomHalf {
+    height: 70%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.MakeNew {
+    height: 10%;
+    width: 80%;
+    display: flex;
+    align-items: center;
+}
+
+.Main .BottomHalf button {
+    border: none;
+    border-radius: 15px;
+}
+
+.MakeNew button {
+    width: 100%;
+    background-color: #CA1133;
+}
+
+.MakeNew img {
+    height: 3em;
+    width: 3em;
+}
+
+.Blocks {
+    width: 80%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    overflow-y: visible;
+}
+
+.Edit {
+    background-color: #CA1133;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Edit img {
+    height: 3em;
+    width: 3em;
+    margin: 10px;
+}
+
+.Edit .Event {
+    height: 100%;
+    width: 50%;
+}
+
+.Edit .Element {
+    height: 100%;
+    width: 50%;
+}
