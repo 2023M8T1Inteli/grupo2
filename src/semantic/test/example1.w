@@ -1,9 +1,10 @@
-programa "exemplo_semantico1":
+programa "geracao_codigo2":
 inicio
-      valor = ler()
-      se valor >= 10 entao
-      inicio
-            x = x + 1
-            mostrar(x)
-      fim
+a = ler()
+b = ler_varios(a, 3, 5)
+
+se b entao inicio
+mostrar(2)
+fim
+
 fim.
