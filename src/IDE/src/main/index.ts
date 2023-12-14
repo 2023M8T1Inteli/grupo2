@@ -149,23 +149,18 @@ ipcMain.handle('read-file', async (event, filePath: string) => {
 })
 
 ipcMain.handle('write-file', async (event, filePath, content) => {
-  // Construct the full path to the Documents directory
-  const documentsPath = path.join(os.homedir(), 'Documents')
-  // Construct the full path to the file
-  const fullFilePath = path.join(documentsPath, filePath)
 
-  // Ensure the directory exists
-  const directory = path.dirname(fullFilePath)
+  const directory = path.dirname(filePath)
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true })
   }
 
   try {
-    fs.writeFileSync(fullFilePath, content)
+    fs.writeFileSync(filePath, content)
     return true
   } catch (error) {
     console.error('Error writing file:', error)
-    return false // ou manipule o erro como preferir
+    return false
   }
 })
 
@@ -287,8 +282,8 @@ ipcMain.handle('upload-and-save-image', async (event, base64Data, imageName) => 
 
     const filePath = path.join(projectFolderPath, imageName)
 
-    const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, '');
-    const buffer = Buffer.from(base64Image, 'base64');
+    const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, '')
+    const buffer = Buffer.from(base64Image, 'base64')
     fs.writeFileSync(filePath, buffer)
 
     // Convert image file to Data URL
@@ -303,9 +298,9 @@ ipcMain.handle('upload-and-save-image', async (event, base64Data, imageName) => 
 
 ipcMain.handle('readFileAsBuffer', async (event, filePath) => {
   try {
-    return fs.readFileSync(filePath);
+    return fs.readFileSync(filePath)
   } catch (error) {
-    console.error('Error reading file as buffer:', error);
-    return null;
+    console.error('Error reading file as buffer:', error)
+    return null
   }
-});
+})
