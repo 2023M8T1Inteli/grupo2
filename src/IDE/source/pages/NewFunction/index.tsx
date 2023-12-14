@@ -54,7 +54,7 @@ function App() {
     if (currentStep > 1) {
       return (
         <button onClick={resetOrGoBack}>
-          <a>Anterior</a> {/* Change text to "Anterior" */}
+          <a>Anterior</a>
         </button>
       );
     } else {
@@ -139,7 +139,18 @@ function App() {
           </div>
         ); // Replace with actual content for step 2
       case 3:
-        return <p>Conteúdo do Passo 3</p>; // Replace with actual content for step 3
+        const secondChoice = selections[2]; // Choice made in step 2
+
+        if (secondChoice === 'imageIcon') {
+          // If the user chose 'imageIcon' in step 2
+          return <p>Output for Image Choice</p>;
+        } else if (secondChoice === 'sound') {
+          // If the user chose 'sound' in step 2
+          return <p>Output for Audio Choice</p>;
+        } else {
+          // Default case or handle other situations
+          return <p>Default Output or Error Message</p>;
+        } ; // Replace with actual content for step 3
       case 4:
         return <p>Conteúdo do Passo 4</p>; // Replace with actual content for step 4
     }
