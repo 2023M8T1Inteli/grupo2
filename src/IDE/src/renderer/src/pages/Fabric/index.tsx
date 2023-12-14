@@ -21,6 +21,7 @@ import {
 import { fabric } from 'fabric'
 import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react'
 import './styles.css'
+import { useNavigate } from 'react-router-dom'
 
 const serializeCanvas = (editor?) => {
   const canvas = editor?.canvas
@@ -38,6 +39,7 @@ function FabricPage() {
   const [backgroundColor, setBackgroundColor] = useState('#ffffff')
   const [selectedImage, setSelectedImage] = useState(null)
   const { editor, onReady } = useFabricJSEditor()
+  const navigate = useNavigate()
 
   const fileInputRef = useRef(null)
 
@@ -101,19 +103,24 @@ function FabricPage() {
     editor?.addText("I'm a normal text")
   }
 
-  const onGenerateImageFromCanvas = () => {
-    const img_data = editor?.canvas.toDataURL({
+  const onGenerateImageFromCanvas = async () => {
+    const imgData = editor?.canvas.toDataURL({
       format: 'png',
       quality: 0.8,
       multiplier: 2
-    })
-
-    // download image
-    const link = document.createElement('a')
-    link.href = img_data
-    link.download = 'image.png'
-    link.click()
+    });
+  
+    // Defina o caminho do arquivo onde a imagem será salva
+    const filePath = 'C:/Users/Inteli/Documents/GitHub/grupo2/src/IDE/resources/image.png'; // Ajuste o caminho conforme necessário
+  
+    try {
+      await window.electronAPI.saveImage(filePath, imgData);
+      console.log("Imagem salva com sucesso!");
+    } catch (err) {
+      console.error("Erro ao salvar a imagem:", err);
+    }
   }
+  
 
   const onSaveScene = () => {
     const serializedCanvas = serializeCanvas(editor)

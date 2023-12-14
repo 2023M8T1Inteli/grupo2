@@ -7,6 +7,9 @@ import { users, User } from './services/User.service'
 import { Patient, patients } from './services/Patient.service'
 import { Project, projects } from './services/Project.service'
 
+import fs from 'fs';
+import path from 'path';
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -133,6 +136,75 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+ipcMain.handle('read-file', async (event, filePath: string) => {
+  try {
+    const content = fs.readFileSync(filePath, 'utf-8');
+    return content;
+  } catch (error) {
+    console.error('Error reading file:', error);
+    return null; // ou manipule o erro como preferir
+  }
+});
+
+ipcMain.handle('write-file', async (event, filePath: string, content: string) => {
+  try {
+    fs.writeFileSync(filePath, content);
+    return true;
+  } catch (error) {
+    console.error('Error writing file:', error);
+    return false; // ou manipule o erro como preferir
+  }
+});
+
+ipcMain.handle('save-image', async (event, filePath, base64Data) => {
+  const buffer = Buffer.from(base64Data.replace(/^data:image\/png;base64,/, ""), 'base64');
+  try {
+    fs.writeFileSync(filePath, buffer);
+    return true;
+  } catch (error) {
+    console.error('Error saving image:', error);
+    return false;
+  }
+});
+
+ipcMain.handle('create-new-folder', async (event, folderName) => {
+  const baseDirectory = 'C:/Users/Inteli/Documents/MeusProjetos'; // Caminho base
+  const folderPath = path.join(baseDirectory, folderName); // Caminho completo da pasta
+
+  if (!fs.existsSync(folderPath)){
+    fs.mkdirSync(folderPath, { recursive: true }); // Cria a pasta
+  }
+
+  global.myGlobalVariable = folderPath; // Armazenando o caminho globalmente
+  return folderPath;
+});
+
+ipcMain.handle('read-project-folders', async (event, baseDirectory) => {
+  try {
+    const folders = fs.readdirSync(baseDirectory, { withFileTypes: true })
+                      .filter(dirent => dirent.isDirectory())
+                      .map(dirent => dirent.name);
+    return folders;
+  } catch (error) {
+    console.error('Error reading project folders:', error);
+    return []; // Retorna uma lista vazia em caso de erro
+  }
+});
+
+ipcMain.handle('create-project-info', async (event, projectFolderPath) => {
+  const filePath = path.join(projectFolderPath, 'project-info.json');
+  if (!fs.existsSync(filePath)) {
+    fs.writeFileSync(filePath, JSON.stringify({}));
+  }
+});
+
+// Handler to update the JSON file
+ipcMain.handle('update-project-info', async (event, projectFolderPath, data) => {
+  const filePath = path.join(projectFolderPath, 'project-info.json');
+  fs.writeFileSync(filePath, JSON.stringify(data));
+});
+
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.

@@ -6,7 +6,7 @@
 // - Botões e links para adicionar elementos e editar blocos, com redirecionamento para outras páginas.
 // - Estilização através do arquivo `styles.css`.
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Rnd } from 'react-rnd'
 import Button from '../../components/Button'
@@ -19,12 +19,32 @@ import imageIcon from '../../assets/image-solid.svg'
 import sound from '../../assets/sound-solid.svg'
 
 function App() {
-  // Step 1: Add a piece of state to track the current step
-  const [currentStep, setCurrentStep] = useState(1)
-  const totalSteps = 2 // Define how many steps you have
-  const [selectedButton, setSelectedButton] = useState(null)
+  const navigate = useNavigate()
 
+  const [currentStep, setCurrentStep] = useState(1)
+  const totalSteps = 4 // Define how many steps you have
+  const [selectedButton, setSelectedButton] = useState(null)
   const [selections, setSelections] = useState({})
+
+  const saveState = async () => {
+    const stateToSave = {
+      currentStep: currentStep + 1,
+      selections: selections,
+      selectedButton: selectedButton
+    }
+
+    localStorage.setItem('editorState', JSON.stringify(stateToSave))
+
+    // Caminho para o arquivo JSON
+    const filePath = 'caminho/para/selections.json' // ajuste o caminho conforme necessário
+
+    try {
+      await window.electronAPI.writeFile(filePath, JSON.stringify(stateToSave))
+      console.log('Arquivo salvo com sucesso!')
+    } catch (err) {
+      console.error('Erro ao salvar o arquivo:', err)
+    }
+  }
 
   const selectButton = (buttonId) => {
     setSelectedButton(buttonId)
@@ -67,8 +87,6 @@ function App() {
   }
 
   const renderDoneButton = () => {
-    const navigate = useNavigate() // import this from 'react-router-dom'
-
     const completeAndNavigate = () => {
       // Navigate to the new page and pass the selected button ID as a URL parameter
       navigate(`/editor?selectedButton=${selectedButton}`)
@@ -83,7 +101,7 @@ function App() {
     } else {
       return (
         <a href="/editor">
-          <button onClick={goToNextStep}>
+          <button onClick={completeAndNavigate}>
             <a>Concluir</a>
           </button>
         </a>
@@ -126,26 +144,51 @@ function App() {
             </div>
             <div className="Choice">
               <button
-                className={selectedButton === 'rugButton1' ? 'selected' : ''}
-                onClick={() => selectButton('rugButton1')}
+                className={selectedButton === 'sound' ? 'selected' : ''}
+                onClick={() => selectButton('sound')}
               >
                 <img src={sound} alt="Icone indicando botão do tapete" />
               </button>
               <button
-                className={selectedButton === 'rugButton2' ? 'selected' : ''}
-                onClick={() => selectButton('rugButton2')}
+                className={selectedButton === 'imageIcon' ? 'selected' : ''}
+                onClick={() => selectButton('imageIcon')}
               >
                 <img src={imageIcon} alt="Icone indicando botão do tapete" />
               </button>
             </div>
           </div>
         ) // Replace with actual content for step 2
-      case 3:
-        return <p>Conteúdo do Passo 3</p> // Replace with actual content for step 3
+      case 3: {
+        const secondChoice = selections[2] // Choice made in step 2
+        if (secondChoice === 'imageIcon') {
+          saveState()
+          navigate('/Fabric')
+        } else if (secondChoice === 'sound') {
+          return <p>Output for Audio Choice</p>
+        } else {
+          return <p>Default Output or Error Message</p>
+        }
+      }
       case 4:
         return <p>Conteúdo do Passo 4</p> // Replace with actual content for step 4
     }
   }
+
+  React.useEffect(() => {
+    const loadState = async () => {
+      const savedState = localStorage.getItem('editorState')
+      if (savedState) {
+        const { currentStep, selections, selectedButton } = JSON.parse(savedState)
+        setCurrentStep(currentStep)
+        setSelections(selections)
+        setSelectedButton(selectedButton)
+
+        localStorage.removeItem('editorState')
+      }
+    }
+
+    loadState()
+  }, [])
 
   return (
     <div className="MainEditor">
