@@ -1,4 +1,3 @@
-import math
 import time
 import pygame
 pygame.init()
@@ -23,6 +22,8 @@ def show_image(image):
     screen.blit(image, (300, 200))
 
     pygame.display.flip()
+
+    time.sleep(1)
 
 
 def get_input():
@@ -53,10 +54,12 @@ def mult_input(quad, qtd, tol):
                             if tol > 0:
                                 return False
                             time.sleep(1)
-a = get_input()
-print(a)
-b = mult_input(a + 1, 3, 5)
-if b:
-    show_image(img[2])
+
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+    show_image(img[1])
     time.sleep(1)
-pygame.quit()
+    pygame.quit()

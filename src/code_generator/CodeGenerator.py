@@ -31,10 +31,21 @@ class CodeGenerator:
 
         self.funcs()
 
+        self.code += "\n\n"
+        self.indent += 1
+        self.code += "while True:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}for event in pygame.event.get():\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}if event.type == pygame.QUIT:\n"
+        self.indent += 1
+        self.code += f"{self.indent_str * self.indent}pygame.quit()\n"
+        self.indent -= 3
+
         self.visitarBlock(self.tree.get("bloco"))
 
         self.indent += 1
-        self.code += "pygame.quit()\n"
+        self.code += f"{self.indent_str * self.indent}pygame.quit()\n"
 
         return self.code
     
@@ -52,6 +63,7 @@ class CodeGenerator:
         self.code += f"{self.indent_str * self.indent}screen.fill((0, 0, 0))\n"
         self.code += f"{self.indent_str * self.indent}screen.blit(image, (300, 200))\n\n"
         self.code += f"{self.indent_str * self.indent}pygame.display.flip()\n"
+        self.code += f"{self.indent_str * self.indent}time.sleep(1)\n"
         self.indent -= 1
 
         self.code += "\n\n"
