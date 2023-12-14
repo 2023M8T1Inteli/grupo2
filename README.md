@@ -34,9 +34,13 @@ Este é um dos repositórios do projeto de alunos do Inteli em parceria com a AA
 
 # Configuração de desenvolvimento
 
-*Procedimento para baixar e executar o código deste projeto.*
+Necessário para execução da IDE: 
 
-# Releases
+* Seguir o [tutorial de instalação do Node-Canvas](https://github.com/Automattic/node-canvas/wiki/Installation:-Windows)
+* npm i (Provavelmente vai dar erro, mas é só ignorar)
+* npm run dev
+
+Releases
 
 * SPRINT1: *descrição*
 * SPRINT2: *descrição*
