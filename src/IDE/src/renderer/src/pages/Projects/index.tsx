@@ -1,60 +1,58 @@
 // Projects.js
 import React, { useState, useEffect } from 'react'
 import Button from '../../components/Button'
-import SearchBar from '../../components/Search/index'
 import './styles.css'
-import play from '../../assets/play.svg'
 import plus from '../../assets/plus.svg'
 import { useAuth } from '../../contexts/AuthContext'
 import { infoToast } from '../../components/Toast'
 import { useNavigate } from 'react-router-dom'
 
 export default function Projects() {
-  const { userName } = useAuth()
-  const [searchTerm, setSearchTerm] = useState('') // Novo estado para o termo de pesquisa
   const [folders, setFolders] = useState([])
   const navigate = useNavigate()
 
-
   const createNewProject = async () => {
-    const folderName = 'NomeDaNovaPasta' // Gere ou obtenha o nome da pasta
+
+    const folderName = 'NomeDaNovaPasta'; // Generate or obtain the folder name
     try {
-      const folderPath = await window.electronAPI.createNewFolder(folderName)
-      console.log('Pasta criada:', folderPath)
-      // Aqui você pode salvar folderPath em um estado ou contexto global, conforme necessário
+      const folderPath = await window.electronAPI.createNewFolder(folderName);
+      console.log('Folder created:', folderPath);
+  
+      // Create project-info.json inside the new folder
+      await window.electronAPI.createProjectInfo(folderPath);
+  
+      localStorage.setItem('currentProjectPath', folderPath); // Store the path
+      navigate('/editor'); // Navigate to the editor
     } catch (error) {
-      console.error('Erro ao criar a pasta:', error)
+      console.error('Error creating folder:', error);
     }
-  }
+  };
 
-  const handleSearch = () => {
-    console.log('Termo de pesquisa:', searchTerm)
-  }
-
-  const loadProjectFolders = async () => {
-    const baseDirectory = 'C:/Users/Inteli/Documents/MeusProjetos' // Ajuste conforme necessário
+  const selectProject = async (folderName) => {
+    console.log('Project selected:', folderName)
     try {
-      const projectFolders = await window.electronAPI.readProjectFolders(baseDirectory)
-      setFolders(projectFolders)
+      const folderPath = await window.electronAPI.getFolderPath(folderName)
+
+      localStorage.setItem('currentProjectPath', folderPath)
+      navigate('/editor')
     } catch (error) {
-      console.error('Erro ao ler pastas do projeto:', error)
+      console.error('Error fetching folder path:', error)
     }
   }
 
   useEffect(() => {
-    loadProjectFolders()
-  }, [])
-
-  const selectProject = (folderName) => {
-    console.log('Projeto selecionado:', folderName)
-    const folderPath = `C:/Users/Inteli/Documents/MeusProjetos/${folderName}`
-
-    // Option 2: Store in local storage
-    localStorage.setItem('currentProjectPath', folderPath)
-
-    // Additional actions can be added here, such as navigation or state updates
-    navigate('/editor')
-  }
+    const fetchFolders = async () => {
+      try {
+        const response = await window.electronAPI.readProjectFolders();
+        setFolders(response);
+      } catch (error) {
+        console.error('Error fetching folders:', error);
+      }
+    };
+  
+    fetchFolders();
+  }, []);
+  
 
   return (
     <div className="projects-container">
@@ -66,7 +64,6 @@ export default function Projects() {
       />
       <h1>Projetos</h1>
       <div className="centered-content">
-        <SearchBar onSearch={handleSearch} />
       </div>
 
       <div className="projects-list">

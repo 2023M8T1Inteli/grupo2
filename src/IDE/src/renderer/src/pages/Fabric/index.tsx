@@ -53,11 +53,42 @@ function FabricPage() {
   }
 
   // Function to add image to canvas
-  const addImageToCanvas = (imageURL) => {
-    fabric.Image.fromURL(imageURL, function (oImg) {
-      editor?.canvas.add(oImg)
-    })
+  const addImageToCanvas = async (imageURL) => {
+    try {
+      // Fetch the image and convert it to Base64
+      const response = await fetch(imageURL);
+      const blob = await response.blob();
+      const reader = new FileReader();
+      reader.readAsDataURL(blob); 
+      reader.onloadend = async function() {
+        const base64data = reader.result;
+        
+        // Define the path for the cloned image
+        const projectFolderPath = localStorage.getItem('currentProjectPath');
+        if (!projectFolderPath) {
+          throw new Error('Project path not found');
+        }
+        const imageName = 'clonedImage.png';
+        const imageFolderPath = `${projectFolderPath}/canvas`;
+        const filePath = `${imageFolderPath}/${imageName}`;
+  
+        // Save the cloned image using IPC
+        const result = await window.electronAPI.saveImage(filePath, base64data);
+        if (result) {
+          console.log("Cloned image saved successfully at", filePath);
+          // Add the cloned image to the canvas
+          fabric.Image.fromURL(filePath, function (oImg) {
+            editor?.canvas.add(oImg);
+          });
+        } else {
+          console.error("Failed to save cloned image");
+        }
+      }
+    } catch (err) {
+      console.error("Error processing the image:", err);
+    }
   }
+  
 
   const onAddCircle = () => {
     const circle = new fabric.Circle({
@@ -110,27 +141,84 @@ function FabricPage() {
       multiplier: 2
     });
   
-    // Defina o caminho do arquivo onde a imagem será salva
-    const filePath = 'C:/Users/Inteli/Documents/GitHub/grupo2/src/IDE/resources/image.png'; // Ajuste o caminho conforme necessário
-  
     try {
-      await window.electronAPI.saveImage(filePath, imgData);
-      console.log("Imagem salva com sucesso!");
+      const projectFolderPath = localStorage.getItem('currentProjectPath');
+      if (!projectFolderPath) {
+        throw new Error('Project path not found');
+      }
+  
+      // Assuming you want to save inside a folder called 'imagens' in the project folder
+      const imageName = 'image.png';
+      const imageFolderPath = `${projectFolderPath}/imagens`;
+      const filePath = `${imageFolderPath}/${imageName}`;
+  
+      // Call the IPC method to save the image
+      const result = await window.electronAPI.saveImage(filePath, imgData);
+      if (result) {
+        console.log("Image saved successfully at", filePath);
+        // Handle success, such as showing a message to the user
+      } else {
+        console.error("Failed to save image");
+        // Handle failure, such as showing an error message
+      }
     } catch (err) {
-      console.error("Erro ao salvar a imagem:", err);
+      console.error("Error during image generation:", err);
+      // Handle errors, such as showing an error message
     }
-  }
+  };
+  
   
 
-  const onSaveScene = () => {
-    const serializedCanvas = serializeCanvas(editor)
-    localStorage.setItem('canvas', serializedCanvas)
-    editor?.canvas.clear()
-    // wait for 5 seconds
-    setTimeout(() => {
-      loadCanvas(editor, serializedCanvas)
-    }, 5000)
-  }
+  const onSaveScene = async () => {
+    const serializedCanvas = serializeCanvas(editor);
+  
+    try {
+      // Request the file path from the main process
+      const projectFolderPath = localStorage.getItem('currentProjectPath');
+      if (!projectFolderPath) {
+        throw new Error('Project path not found');
+      }
+      const canvasName = 'canvasState.json';
+      const canvasFolderPath = `${projectFolderPath}/canvas`;
+      const filePath = `${canvasFolderPath}/${canvasName}`;
+  
+      // Use IPC to tell the main process to save this data
+      const result = await window.electronAPI.saveCanvasState(filePath, serializedCanvas);
+      if (result) {
+        console.log('Canvas state saved successfully to', filePath);
+      } else {
+        console.error('Failed to save canvas state');
+      }
+    } catch (err) {
+      console.error('Error saving canvas state:', err);
+    }
+  };
+
+  const onLoadScene = async () => {
+    try {
+      const projectFolderPath = localStorage.getItem('currentProjectPath');
+      if (!projectFolderPath) {
+        throw new Error('Project path not found');
+      }
+      const canvasName = 'canvasState.json';
+      const canvasFolderPath = `${projectFolderPath}/canvas`;
+      const filePath = `${canvasFolderPath}/${canvasName}`;
+  
+      // Use IPC to request the main process to read this data
+      const serializedCanvas = await window.electronAPI.readCanvasState(filePath);
+      if (serializedCanvas) {
+        console.log('Canvas state loaded successfully from', filePath);
+        loadCanvas(editor, serializedCanvas); // Assuming loadCanvas is your method to deserialize
+      } else {
+        console.error('Failed to load canvas state');
+      }
+    } catch (err) {
+      console.error('Error loading canvas state:', err);
+    }
+  };
+  
+  
+  
 
   const handleDivKeyPressed = (e: any) => {
     switch (e.key) {
@@ -379,6 +467,11 @@ function FabricPage() {
         <button onClick={onSaveScene}>
           <FontAwesomeIcon icon={faSave} className="fa-icon" />
           Salvar Cena
+        </button>
+
+        <button onClick={onLoadScene}>
+          <FontAwesomeIcon icon={faSave} className="fa-icon" />
+          Carregar JSON
         </button>
       </div>
       <div className="canvas-container" onDragOver={(e) => e.preventDefault()} onDrop={onDrop}>

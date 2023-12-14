@@ -7,118 +7,104 @@
 // - Estilização através do arquivo `styles.css`.
 
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Rnd } from 'react-rnd'
 import Button from '../../components/Button'
 import './styles.css'
-import plus from '../../assets/plus.svg'
+import plusIcon from '../../assets/plus.svg'
 import touchHand from '../../assets/touch-hand.svg'
 import rugButton1 from '../../assets/rugButton1.svg'
 import rugButton2 from '../../assets/rugButton2.svg'
 import imageIcon from '../../assets/image-solid.svg'
 import sound from '../../assets/sound-solid.svg'
 
+function Editor() {
+  const navigate = useNavigate()
 
-function App() {
-  
-  const [selections, setSelections] = useState([]);
-  const [icons, setIcons] = useState([]);
-  const [filename, setFilename] = useState("Projeto"); // Default filename
+  const [selections, setSelections] = useState([])
+  const [icons, setIcons] = useState([])
+  const [projectName, setProjectName] = useState('') // Initialize projectName state
 
+  // In Editor component
+  const editBlock = (blockId) => {
+    console.log(`EditBlock Called - BlockId: ${blockId}`)
+
+    navigate(`/new-function?blockId=${blockId}`)
+    // Or if you're using state to navigate (this depends on your router setup)
+    // navigate('/new-function', { state: { blockId } });
+  }
+
+  // In Editor component
+  const addNewBlock = () => {
+    // Navigate to NewFunction with no parameters to indicate a new block
+    console.log('AddNewBlock Called')
+
+    navigate('/new-function')
+  }
 
   const getImageSource = (imageName) => {
     switch (imageName) {
       case 'touchHand':
-        return touchHand;
+        return touchHand
       case 'rugButton1':
-        return rugButton1;
+        return rugButton1
       case 'rugButton2':
-        return rugButton2;
+        return rugButton2
       case 'imageIcon':
-        return imageIcon;
+        return imageIcon
       case 'sound':
-        return sound;
-      default:
-        return plusIcon; // default image if none matches
+        return sound
     }
-  };
-
+  }
 
   useEffect(() => {
-    const projectFolderPath = localStorage.getItem('currentProjectPath');
+    // Load the project data on component mount
+    const projectFolderPath = localStorage.getItem('currentProjectPath')
+    console.log('Component Mounted - Editor')
 
     if (projectFolderPath) {
-      console.log("Project Folder Path:", projectFolderPath);
-
-      // Call ipcMain handler to create project-info.json
-      window.electronAPI.createProjectInfo(projectFolderPath);
-
-      const loadSelections = async () => {
-        try {
-          // Call ipcMain handler to read file
-          const data = await window.electronAPI.readFile(`${projectFolderPath}/project-info.json`);
-          const selectionsData = JSON.parse(data);
-          setSelections(selectionsData.selections || []);
-          console.log("Loaded Selections:", selectionsData.selections);
-        } catch (error) {
-          console.error("Error reading file:", error);
-        }
-      };
-
-      loadSelections();
+      console.log('Project Folder Path:', projectFolderPath)
+      loadBlockSelections(projectFolderPath)
+      const pathParts = projectFolderPath.split(/[\/\\]/)
+      const extractedName = pathParts[pathParts.length - 1]
+      setProjectName(extractedName)
     } else {
-      console.error("Project folder path not found");
+      console.error('Project folder path not found')
     }
-  }, []);
+  }, [])
 
-  useEffect(() => {
-    const projectFolderPath = localStorage.getItem('currentProjectPath');
-
-    if (projectFolderPath) {
-      console.log("Project Folder Path:", projectFolderPath);
-
-      // Extracting filename from the project path
-      const pathParts = projectFolderPath.split('/');
-      const projectName = pathParts[pathParts.length - 1];
-      setFilename(projectName);
-
-      // ... existing useEffect logic ...
-    } else {
-      console.error("Project folder path not found");
+  const loadBlockSelections = async (projectFolderPath) => {
+    try {
+      const data = await window.electronAPI.readFile(`${projectFolderPath}/project-info.json`)
+      const projectData = JSON.parse(data)
+      setSelections(Object.values(projectData.Blocks || {}))
+    } catch (error) {
+      console.error('Error reading file:', error)
     }
-  }, []);
-  
+  }
 
-
-
-  const updateSelections = (newSelections) => {
-    setSelections(newSelections);
-
-    // Assuming 'projectFolderPath' is known
-    const projectFolderPath = 'path/to/project/folder';
-    window.electronAPI.updateProjectInfo(projectFolderPath, newSelections);
-  };
-  
   return (
     <div className="Main">
       <div className="TopHalf">
-      <h1>{filename}</h1>
+        <h1>{projectName}</h1>
       </div>
       <div className="BottomHalf">
-        <a className="MakeNew" href="/new-function">
+        <a className="MakeNew" onClick={addNewBlock}>
           <button>
-            <img src={plus} alt="Sinal de soma" />
+            <img src={plusIcon} alt="Sinal de soma" />
           </button>
         </a>
         <div className="Blocks">
-        {selections.map((selection, index) => (
-            <div key={index} className="Block">
-              <div className="Event">
-                <img src={getImageSource(selection.event)} alt={selection.event} />
+          {selections.map((selection, index) => (
+            <button key={index} className="Block" onClick={() => editBlock(index)}>
+              <div className="Button">
+                <img src={touchHand} alt="" />
+                <img src={getImageSource(selection.button)} alt={selection.button} />
               </div>
               <div className="Element">
                 <img src={getImageSource(selection.element)} alt={selection.element} />
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>
@@ -126,4 +112,4 @@ function App() {
   )
 }
 
-export default App
+export default Editor

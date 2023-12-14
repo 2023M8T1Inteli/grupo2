@@ -7,8 +7,9 @@ import { users, User } from './services/User.service'
 import { Patient, patients } from './services/Patient.service'
 import { Project, projects } from './services/Project.service'
 
-import fs from 'fs';
-import path from 'path';
+import os from 'os'
+import fs from 'fs'
+import path from 'path'
 
 function createWindow(): void {
   // Create the browser window.
@@ -139,72 +140,172 @@ app.on('window-all-closed', () => {
 
 ipcMain.handle('read-file', async (event, filePath: string) => {
   try {
-    const content = fs.readFileSync(filePath, 'utf-8');
-    return content;
+    const content = fs.readFileSync(filePath, 'utf-8')
+    return content
   } catch (error) {
-    console.error('Error reading file:', error);
-    return null; // ou manipule o erro como preferir
+    console.error('Error reading file:', error)
+    return null // ou manipule o erro como preferir
   }
-});
+})
 
-ipcMain.handle('write-file', async (event, filePath: string, content: string) => {
-  try {
-    fs.writeFileSync(filePath, content);
-    return true;
-  } catch (error) {
-    console.error('Error writing file:', error);
-    return false; // ou manipule o erro como preferir
+ipcMain.handle('write-file', async (event, filePath, content) => {
+  // Construct the full path to the Documents directory
+  const documentsPath = path.join(os.homedir(), 'Documents')
+  // Construct the full path to the file
+  const fullFilePath = path.join(documentsPath, filePath)
+
+  // Ensure the directory exists
+  const directory = path.dirname(fullFilePath)
+  if (!fs.existsSync(directory)) {
+    fs.mkdirSync(directory, { recursive: true })
   }
-});
+
+  try {
+    fs.writeFileSync(fullFilePath, content)
+    return true
+  } catch (error) {
+    console.error('Error writing file:', error)
+    return false // ou manipule o erro como preferir
+  }
+})
 
 ipcMain.handle('save-image', async (event, filePath, base64Data) => {
-  const buffer = Buffer.from(base64Data.replace(/^data:image\/png;base64,/, ""), 'base64');
+  const buffer = Buffer.from(base64Data.replace(/^data:image\/png;base64,/, ''), 'base64')
   try {
-    fs.writeFileSync(filePath, buffer);
-    return true;
+    // Ensure the directory exists
+    const dir = path.dirname(filePath)
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true })
+    }
+    // Write the file
+    fs.writeFileSync(filePath, buffer)
+    return true
   } catch (error) {
-    console.error('Error saving image:', error);
-    return false;
+    console.error('Error saving image:', error)
+    return false
   }
-});
+})
 
 ipcMain.handle('create-new-folder', async (event, folderName) => {
-  const baseDirectory = 'C:/Users/Inteli/Documents/MeusProjetos'; // Caminho base
-  const folderPath = path.join(baseDirectory, folderName); // Caminho completo da pasta
+  const homeDirectory = os.homedir()
+  const documentsPath = path.join(homeDirectory, 'Documents') // Adjust if the Documents folder has a different name on some systems
+  const baseDirectory = path.join(documentsPath, 'MeusProjetos') // Final base directory
+  const folderPath = path.join(baseDirectory, folderName) // Full folder path
 
-  if (!fs.existsSync(folderPath)){
-    fs.mkdirSync(folderPath, { recursive: true }); // Cria a pasta
+  if (!fs.existsSync(folderPath)) {
+    fs.mkdirSync(folderPath, { recursive: true }) // Create the folder
   }
 
-  global.myGlobalVariable = folderPath; // Armazenando o caminho globalmente
-  return folderPath;
-});
+  global.myGlobalVariable = folderPath // Storing the path globally
+  return folderPath
+})
 
-ipcMain.handle('read-project-folders', async (event, baseDirectory) => {
+ipcMain.handle('read-project-folders', async () => {
   try {
-    const folders = fs.readdirSync(baseDirectory, { withFileTypes: true })
-                      .filter(dirent => dirent.isDirectory())
-                      .map(dirent => dirent.name);
-    return folders;
+    const homeDirectory = os.homedir()
+    const documentsPath = path.join(homeDirectory, 'Documents')
+    const baseDirectory = path.join(documentsPath, 'MeusProjetos')
+
+    const folders = fs
+      .readdirSync(baseDirectory, { withFileTypes: true })
+      .filter((dirent) => dirent.isDirectory())
+      .map((dirent) => dirent.name)
+    return folders
   } catch (error) {
-    console.error('Error reading project folders:', error);
-    return []; // Retorna uma lista vazia em caso de erro
+    console.error('Error reading project folders:', error)
+    return [] // Return an empty list in case of an error
   }
-});
+})
 
 ipcMain.handle('create-project-info', async (event, projectFolderPath) => {
-  const filePath = path.join(projectFolderPath, 'project-info.json');
+  const filePath = path.join(projectFolderPath, 'project-info.json')
   if (!fs.existsSync(filePath)) {
-    fs.writeFileSync(filePath, JSON.stringify({}));
+    fs.writeFileSync(filePath, JSON.stringify({}))
   }
-});
+})
 
 // Handler to update the JSON file
 ipcMain.handle('update-project-info', async (event, projectFolderPath, data) => {
-  const filePath = path.join(projectFolderPath, 'project-info.json');
-  fs.writeFileSync(filePath, JSON.stringify(data));
+  const filePath = path.join(projectFolderPath, 'project-info.json')
+  fs.writeFileSync(filePath, JSON.stringify(data))
+})
+
+ipcMain.handle('get-folder-path', async (event, folderName) => {
+  // Implement the logic to get the folder path based on folderName
+  // This is an example assuming folderName is the name of the folder in the base directory
+  const homeDirectory = os.homedir()
+  const documentsPath = path.join(homeDirectory, 'Documents')
+  const baseDirectory = path.join(documentsPath, 'MeusProjetos')
+  const folderPath = path.join(baseDirectory, folderName)
+
+  // Check if the folder exists and return its path
+  if (fs.existsSync(folderPath)) {
+    return folderPath
+  } else {
+    throw new Error('Folder not found')
+  }
+})
+
+ipcMain.handle('save-canvas-state', async (event, filePath, data) => {
+  try {
+    // Ensure the canvas directory exists
+    const canvasDir = path.dirname(filePath)
+    if (!fs.existsSync(canvasDir)) {
+      fs.mkdirSync(canvasDir, { recursive: true })
+    }
+
+    // Write the canvas state file
+    fs.writeFileSync(filePath, data)
+    return true
+  } catch (error) {
+    console.error('Error saving canvas state:', error)
+    return false
+  }
+})
+
+ipcMain.handle('read-canvas-state', async (event, filePath) => {
+  try {
+    if (fs.existsSync(filePath)) {
+      const data = fs.readFileSync(filePath, 'utf8')
+      return data
+    } else {
+      console.error('File not found:', filePath)
+      return null
+    }
+  } catch (error) {
+    console.error('Error reading canvas state:', error)
+    return null
+  }
+})
+
+ipcMain.handle('upload-and-save-image', async (event, base64Data, imageName) => {
+  try {
+    const projectFolderPath = path.join(os.homedir(), 'YourAppFolder', 'ProjectImages')
+    if (!fs.existsSync(projectFolderPath)) {
+      fs.mkdirSync(projectFolderPath, { recursive: true })
+    }
+
+    const filePath = path.join(projectFolderPath, imageName)
+
+    const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, '');
+    const buffer = Buffer.from(base64Image, 'base64');
+    fs.writeFileSync(filePath, buffer)
+
+    // Convert image file to Data URL
+    const imageBuffer = fs.readFileSync(filePath)
+    const dataUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`
+    return dataUrl
+  } catch (error) {
+    console.error('Error in upload-and-save-image:', error)
+    return null
+  }
+})
+
+ipcMain.handle('readFileAsBuffer', async (event, filePath) => {
+  try {
+    return fs.readFileSync(filePath);
+  } catch (error) {
+    console.error('Error reading file as buffer:', error);
+    return null;
+  }
 });
-
-
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and require them here.
