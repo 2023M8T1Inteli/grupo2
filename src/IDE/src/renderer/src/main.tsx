@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './assets/index.css'
 
 import { BrowserRouter } from 'react-router-dom'
 import VLibras from '@djpfs/react-vlibras'

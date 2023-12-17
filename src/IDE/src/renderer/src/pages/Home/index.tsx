@@ -1,42 +1,36 @@
 import React from "react";
 import { AutoRedirect } from "../../contexts/AuthContext";
 import "./styles.css";
-import child from "../../assets/img/kid_image.png";
+import child from "../../assets/img/baby.svg";
 import folder from "../../assets/img/kid_toy.png";
 import Button from "../../components/Button";
 
 export default function Home() {
-  console.log("TESTE");
 
   return (
-    <div className="home-container red-screen">
-    <Button
-          variant="back"
-          onClick={() => {
-            console.log("A");
-          }}
-        />
+    <div className="home-container">
       <AutoRedirect />
-      <div className="content">
-        <h1 className="title">Qual tarefa deseja realizar hoje?</h1>
-        <p className="subtitle">Você quer acompanhar o desenvolvimento das crianças e iniciar novas experiências?</p>
-
-        <div className="card-container">
-
-          <a href="/patients" className="card"> {/* Adiciona o link para "/patients" */}
-            <img src={child} alt="Child" />
-            <div className="card-text">
-              <p>Imagem 1</p>
-            </div>
-          </a>
-
-          <a href="/projects" className="card red-card">
-            <img src={folder} alt="Folder" className="red-card-image" />
-            <div className="card-text">
-              <p>Imagem 2</p>
-            </div>
-          </a>
-        </div>
+      <div>
+        <h1>
+          O que vamos fazer hoje?
+        </h1>
+        <h2>
+          Você quer acompanhar o desenvolvimento das crianças iniciar novas experiências?
+        </h2>
+      </div>
+      <div className="options">
+        <a href="/patients" className="option">
+            <img src={child} />
+            <p>
+              Acompanhar Desenvolvimento
+            </p>
+        </a>
+        <a href="/projects " className="option">
+            <img src={folder} />
+            <p>
+              Visualizar Projetos
+            </p>
+        </a>
       </div>
     </div>
   );
