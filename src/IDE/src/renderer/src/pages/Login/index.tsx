@@ -8,15 +8,15 @@
 // - Formulário de login com campos para usuário e senha e botão de entrada.
 // - Opção para registrar uma nova conta (ainda em desenvolvimento).
 
+import './styles.css'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 import { useState, useEffect } from 'react'
 import Button from '../../components/Button'
-import './styles.css'
 import { errorToast, infoToast, successToast } from '../../components/Toast'
-import RecLogin from '../../assets/img/recLogin.png'
-import imageLogin from '../../assets/img/imageLogin.png'
-import profilePhoto from '../../assets/img/profilePhoto.png'
+import childHands from '../../assets/img/child-hands.png'
+import loginBg from '../../assets/img/login-bg.png'
+import profilePhoto from '../../assets/img/profile-photo.png'
 
 export default function Login() {
   useEffect(() => {
@@ -34,10 +34,20 @@ export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
+  const handleUsername = (e) => {
+    setUsername(e.target.value)
+  }
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value)
+  }
+
   async function handleLogin(e) {
     e.preventDefault()
 
     const user = await window.electron.ipcRenderer.invoke('db:user.getByUsername', username)
+
+    console.log(user)
 
     if (!user) {
       errorToast('Usuário não encontrado')
@@ -56,82 +66,23 @@ export default function Login() {
   }
 
   return (
-    <div className="login-container">
-      <div style={{ position: 'relative' }}>
-        <img className="rec-login" src={RecLogin} alt="Logo" />
-        <div
-          style={{
-            position: 'absolute',
-            top: '35rem',
-            left: '30rem',
-            width: '35rem',
-            gap: '3rem',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 1,
-            color: 'white',
-            fontSize: '18px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-around',
-            alignItems: 'center'
-          }}
-        >
-          <img src={imageLogin} alt="Image Login" />
-          <span style={{ fontSize: '2rem', wordSpacing: '0.3rem', fontWeight: 'normal' }}>
-            Toda terapia é uma aventura quando a criatividade encontra as maravilhas da curiosidade
-            infantil
-          </span>
+    <div className="container">
+      <div className="img-container">
+        <img className='login-bg' src={loginBg} />
+        <div className='text-container'>
+          <img className='child-hands-img' src={childHands} />
+          <p>Toda terapia é uma aventura quando a criatividade encontra as maravilhas da curiosidade infantil</p>
         </div>
+        <p></p>
       </div>
-      <div>
-        <img className="profile-photo" src={profilePhoto} alt="Profile Photo" />
-        <form className="inputs" onSubmit={handleLogin}>
-          <input
-            required
-            type="text"
-            placeholder="Nome"
-            onChange={(e) => {
-              setUsername(e.target.value)
-            }}
-            style={{ marginBottom: '2rem', padding: '0.5rem' }}
-          />
-          <input
-            required
-            type="password"
-            placeholder="Senha"
-            onChange={(e) => {
-              setPassword(e.target.value)
-            }}
-            style={{ marginBottom: '3rem', padding: '0.5rem' }}
-          />
-          <input
-            type="submit"
-            value="LOGIN"
-            style={{ marginBottom: '3rem', width: '21rem', height: '3rem' }}
-          />
-          <div style={{ marginBottom: '2rem' }}>
-            <span
-              className="register"
-              style={{ fontSize: '1rem', fontWeight: 'normal', color: 'white' }}
-            >
-              Esqueceu sua senha? Recupere ela aqui
-            </span>
-          </div>
-          <div>
-            <span
-              className="register"
-              style={{ fontSize: '1rem', fontWeight: 'normal', color: 'white' }}
-            >
-              <a
-                href="/register"
-                style={{ fontSize: '1rem', fontWeight: 'normal', color: 'white' }}
-              >
-                Registrar usuário
-              </a>
-            </span>
-          </div>
-        </form>
-      </div>
+      <form className="login-container" onSubmit={handleLogin}>
+        <img src={profilePhoto} />
+        <input type="text" onChange={handleUsername} placeholder='Seu nome de usuário aqui' />
+        <input type="password" onChange={handlePassword} placeholder='Sua senha aqui' />
+        <input type="submit" value="Entrar" />
+        <a href='' className='recover-password' >Recuperar senha</a>
+        <a href='' className='register'>ou crie sua conta aqui</a>
+      </form>
     </div>
   )
 }
