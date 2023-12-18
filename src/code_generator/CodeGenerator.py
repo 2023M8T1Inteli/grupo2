@@ -18,17 +18,8 @@ class CodeGenerator:
     
     def generate(self):
 
-        self.code += "import math\n"
-        self.code += "import time\n"
-        self.code += "import pygame\n"
-        self.code += "pygame.init()\n"
-        self.code += "pygame.mixer.init()\n"
-        self.code += "width, height = 800, 600\n"
-        self.code += "screen = pygame.display.set_mode((width, height))\n"
-        self.code += f"pygame.display.set_caption('{self.tree.get('nome')}')\n"
-
+        self.initials()
         self.visitarParams()
-
         self.funcs()
 
         self.code += "\n\n"
@@ -49,7 +40,25 @@ class CodeGenerator:
 
         return self.code
     
+
+    def initials(self):
+        self.code += "import math\n"
+        self.code += "import time\n"
+        self.code += "import pygame\n"
+        self.code += "pygame.init()\n"
+        self.code += "pygame.mixer.init()\n"
+        self.code += "width, height = 800, 600\n"
+        self.code += "screen = pygame.display.set_mode((width, height))\n"
+        self.code += f"pygame.display.set_caption('{self.tree.get('nome')}')\n"
+
     def funcs(self):
+        self.play_audio()
+        self.show_image()
+        self.get_input()
+        self.mult_input()
+
+
+    def play_audio(self):
         self.indent += 1
         self.code += "\n\n"
         self.code += "def play_audio(audio):\n"
@@ -57,6 +66,7 @@ class CodeGenerator:
         self.code += f"{self.indent_str * self.indent}audio.play()\n"
         self.indent -= 1
 
+    def show_image(self):
         self.code += "\n\n"
         self.code += "def show_image(image):\n"
         self.indent += 1
@@ -66,6 +76,7 @@ class CodeGenerator:
         self.code += f"{self.indent_str * self.indent}time.sleep(1)\n"
         self.indent -= 1
 
+    def get_input(self):
         self.code += "\n\n"
         self.code += "def get_input():\n"
         self.indent += 1
@@ -80,6 +91,8 @@ class CodeGenerator:
         self.code += f"{self.indent_str * self.indent}return inputs[event.key]\n"
         self.indent -= 4
 
+
+    def mult_input(self):
         self.code += "\n\n"
         self.code += "def mult_input(quad, qtd, tol):\n"
         self.indent += 1
@@ -119,9 +132,6 @@ class CodeGenerator:
         self.indent -= 1
         self.code += f"{self.indent_str * self.indent}time.sleep(1)\n"
         self.indent -= 8
-
-
-
 
     def visitarParams(self):
         self.indent += 1

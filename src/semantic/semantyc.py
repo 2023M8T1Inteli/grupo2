@@ -25,7 +25,7 @@ class AnalisadorSemantico:
     
     def visitarBloco(self, bloco):
 
-        print("bloco: " + str(bloco))
+        # print("bloco: " + str(bloco))
 
         declaracoes = bloco.get("listaAtribuicao")
         while declaracoes:
