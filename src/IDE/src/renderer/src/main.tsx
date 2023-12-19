@@ -9,12 +9,10 @@ import RootClassManager from './components/RootClassManager';
 const rootClasses = ['light'];
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
     <RootClassManager classNames={rootClasses}>
       <VLibras forceOnload={true} />
       <BrowserRouter>
         <Router />
       </BrowserRouter>
     </RootClassManager>
-  </React.StrictMode>
 );
