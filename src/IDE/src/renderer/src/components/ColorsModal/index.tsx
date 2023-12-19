@@ -1,6 +1,6 @@
-export default function ColorsModal(props: { onClose: void }) {
+export default function ColorsModal(props: { onClose: () => any }) {
 
-  console.log("TESTE")
+  console.log("TESTEs")
 
   return (
     <div className='modal'>
@@ -9,10 +9,10 @@ export default function ColorsModal(props: { onClose: void }) {
           <h4 className="modal-title">Adicionar bloco</h4>
         </div>
         <div className="modal-body">
-
+          
         </div>
         <div className="modal-footer">
-          <button onClick={() => {props.onClose}}>Fechar</button>
+          <button onClick={() => {props.onClose()}}>Fechar</button>
         </div>
       </div>
     </div>

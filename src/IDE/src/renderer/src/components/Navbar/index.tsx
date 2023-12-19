@@ -38,7 +38,10 @@ export default function Navbar(props: NavbarProps) {
             <a href="/">Início</a>
           </li>
           <li>
-            <button onClick={ () => {setModalVisible(true)}}>Cores</button>
+            <button onClick={ () => {
+              console.log("TESTE")
+              setModalVisible(true)
+            }}>Cores</button>
           </li>
           <li>
             <a href="" onClick={handleLogout}>
@@ -55,8 +58,8 @@ export default function Navbar(props: NavbarProps) {
         <img src={profile} alt="Profile" />
       </div>
       {
-        modalVisible && 
-          <ColorsModal onClose={setModalVisible(false)} />
+        modalVisible &&
+      <ColorsModal onClose={() => {setModalVisible(false)}} />
       }
     </nav>
   )
