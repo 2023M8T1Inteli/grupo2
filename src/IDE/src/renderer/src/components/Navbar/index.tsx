@@ -36,6 +36,9 @@ export default function Navbar(props: NavbarProps) {
             <a href="">Início</a>
           </li>
           <li>
+            <button>Cores</button>
+          </li>
+          <li>
             <a href="" onClick={handleLogout}>
               Sair
             </a>

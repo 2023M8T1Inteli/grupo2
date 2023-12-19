@@ -44,7 +44,7 @@ export default function Router(): ReactElement {
       {showNavbar && <Navbar name="Maria Júlia" role="Terapeuta ocupacional" />}
       <Routes>
         <Route path="/game" element={<DragDrop />} />
-        <Route path="/login" element={<BlockEditor />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/editor" element={<Editor />} />
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
