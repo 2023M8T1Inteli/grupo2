@@ -19,7 +19,7 @@
   color: var(--secondary-font-color);
 }
 
-.options {
+.home-container .options {
   width: 100%;
   display: flex;
   justify-content: space-around;
@@ -27,7 +27,7 @@
   margin: 2rem 0;
 }
 
-.options .option {
+.home-container .options .option {
   text-decoration: none;
   flex-direction: column;
   background-color: var(--primary);
@@ -37,10 +37,10 @@
   min-width: 20rem;
 }
 
-.options .option img {
+.home-container .options .option img {
   height: 10rem;
 }
 
-.options .option p {
+.home-container .options .option p {
   font-size: 1.2rem;
 }

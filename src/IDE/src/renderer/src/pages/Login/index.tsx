@@ -24,9 +24,6 @@ export default function Login() {
     Caro avaliador, temos um usuário para testes:
     \nmaria456 | senha456
     `)
-    infoToast(`
-    Para atualizar a página, basta pressionar CTRL + R
-    `)
   }, [])
 
   const { login } = useAuth()
