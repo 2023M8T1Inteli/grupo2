@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Button from '../../components/Button'
 import './styles.css'
 import plus from '../../assets/plus.svg'
-import { useAuth } from '../../contexts/AuthContext'
+import { AutoRedirect, useAuth } from '../../contexts/AuthContext'
 import { infoToast } from '../../components/Toast'
 import { useNavigate } from 'react-router-dom'
 
@@ -54,6 +54,7 @@ export default function Projects() {
 
   return (
     <div className="projects-container">
+      <AutoRedirect />
       <Button
         variant="back"
         onClick={() => {
@@ -61,12 +62,10 @@ export default function Projects() {
         }}
       />
       <h1>Projetos</h1>
-      <div className="centered-content"></div>
 
-      <div className="projects-list">
+      <div className="projects">
         <a className="project add" href="/editor" onClick={createNewProject}>
           <img src={plus} alt="Adicionar Projeto" />
-          <p>Criar Nova Aventura</p>
         </a>
         {folders.map((folder) => (
           <div key={folder} className="project" onClick={() => selectProject(folder)}>

@@ -26,6 +26,9 @@
     background-color: var(--primary);
     border-radius: .5rem;
     text-decoration: none;
+    position: absolute;
+    left: 5rem;
+    top: 6rem;
 }
 
 .button-back img {

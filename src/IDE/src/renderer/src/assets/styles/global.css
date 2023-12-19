@@ -2,12 +2,14 @@
     --primary: #C83A61;
     --primary-hover: #a1102f;
     --primary-active: #891230;
-    --font-color: #fff;
+    --font-color: #C83A61;
+    --secondary-font-color: #ABABAB;
     --white: #FFF;
+    --black: #000;
+    --layout-padding: 0 5rem;
 }
 
 #root {
-    background: var(--primary);
     height: 100vh;
     overflow: hidden;
 }
