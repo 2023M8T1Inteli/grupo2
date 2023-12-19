@@ -15,7 +15,7 @@ import { useState, useEffect } from 'react'
 import Button from '../../components/Button'
 import { errorToast, infoToast, successToast } from '../../components/Toast'
 import childHands from '../../assets/img/child-hands.png'
-import loginBg from '../../assets/img/login-bg.png'
+import loginBg from '../../assets/img/login-bg.svg'
 import profilePhoto from '../../assets/img/profile-photo.png'
 
 export default function Login() {
@@ -77,10 +77,10 @@ export default function Login() {
       </div>
       <form className="login-container" onSubmit={handleLogin}>
         <img src={profilePhoto} />
-        <input type="text" onChange={handleUsername} placeholder='Seu nome de usuário aqui' />
-        <input type="password" onChange={handlePassword} placeholder='Sua senha aqui' />
+        <input type="text" required onChange={handleUsername} placeholder='Seu nome de usuário aqui' />
+        <input type="password" required onChange={handlePassword} placeholder='Sua senha aqui' />
         <input type="submit" value="Entrar" />
-        <a href='' className='recover-password' >Recuperar senha</a>
+        <a href='' className='recover-password'>Recuperar senha</a>
         <a href='' className='register'>ou crie sua conta aqui</a>
       </form>
     </div>

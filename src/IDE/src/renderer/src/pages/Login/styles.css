@@ -67,6 +67,7 @@ img.login-bg {
 }
 
 .container form input[type="text"], .container form input[type="password"] {
+    min-width: 15rem;
     padding: .7rem 3rem .6rem .7rem;
     border-radius: .4rem;
     border: none;
