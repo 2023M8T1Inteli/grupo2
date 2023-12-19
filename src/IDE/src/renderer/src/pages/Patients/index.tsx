@@ -35,7 +35,7 @@ export default function Patients() {
   const handleSearch = (e: any) => {
     let searchTerm = e.target.value;
     console.log(searchTerm)
-    setFilteredPatients(filteredPatients.filter((patient) => {
+    setFilteredPatients(patients.filter((patient) => {
       return (
         patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         patient.surname.toLowerCase().includes(searchTerm.toLowerCase())
