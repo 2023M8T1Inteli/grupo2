@@ -13,6 +13,7 @@
 .project {
     display: flex;
     flex-direction: column;
+    cursor: pointer;
     align-items: center;
     justify-content: center;
     background-color: white;
