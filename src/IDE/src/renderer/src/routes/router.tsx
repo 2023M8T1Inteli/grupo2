@@ -17,15 +17,16 @@ import Patients from '../pages/Patients'
 import Register from '../pages/Register'
 import RegisterPatient from '../pages/RegisterPatient'
 import { AuthProvider } from '../contexts/AuthContext'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ReactElement } from 'react'
 import DragDrop from '../pages/Game'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Editor from '../pages/Editor'
 import FabricPage from '../pages/Fabric'
 import NewFunction from '../pages/NewFunction'
+import BlockEditor from '@renderer/pages/BlockEditor'
 
-export default function Router() {
+export default function Router(): ReactElement {
   const location = useLocation()
   const [showNavbar, setShowNavbar] = useState(false)
 
@@ -43,7 +44,7 @@ export default function Router() {
       {showNavbar && <Navbar name="Maria Júlia" role="Terapeuta ocupacional" />}
       <Routes>
         <Route path="/game" element={<DragDrop />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<BlockEditor />} />
         <Route path="/editor" element={<Editor />} />
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
