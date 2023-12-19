@@ -33,7 +33,7 @@ export default function Navbar(props: NavbarProps) {
         <span></span>
         <ul className="options">
           <li>
-            <a href="">Início</a>
+            <a href="/">Início</a>
           </li>
           <li>
             <a href="" onClick={handleLogout}>

@@ -10,9 +10,7 @@
 .menu {
     display: block;
     position: relative;
-
     z-index: 1;
-
     -webkit-user-select: none;
     user-select: none;
 }
@@ -46,7 +44,7 @@
     height: 4px;
     margin-bottom: 5px;
     position: relative;
-    background: var(--bg);
+    background: var(--white);
     border-radius: 3px;
 
     z-index: 1;

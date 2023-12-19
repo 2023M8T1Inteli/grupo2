@@ -2,7 +2,7 @@ import React from "react";
 import { AutoRedirect } from "../../contexts/AuthContext";
 import "./styles.css";
 import child from "../../assets/img/baby.svg";
-import folder from "../../assets/img/kid_toy.png";
+import folder from "../../assets/img/kid-toy.svg";
 import Button from "../../components/Button";
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
           O que vamos fazer hoje?
         </h1>
         <h2>
-          Você quer acompanhar o desenvolvimento das crianças iniciar novas experiências?
+          Você quer acompanhar o desenvolvimento das crianças ou iniciar novas experiências?
         </h2>
       </div>
       <div className="options">
