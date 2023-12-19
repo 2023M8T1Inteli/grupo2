@@ -7,7 +7,8 @@ import {
   faMusic,
   faHourglassHalf,
   faPlusCircle,
-  faWalking
+  faWalking,
+  faUserXmark
 } from '@fortawesome/free-solid-svg-icons'
 import BlockRow from '@renderer/components/BlockRow'
 import Modal from '@renderer/components/BlockModal'
@@ -16,7 +17,7 @@ import CanvasModal from '@renderer/components/CanvasModal'
 export interface IBaseButton {
   name: string
   icon: IconDefinition
-  type: 'input' | 'resource' | 'action' | 'graphical'
+  type: 'input' | 'resource' | 'action' | 'logical' | 'graphical'
   src?: string
   correspondingCompileCode: string
 }
@@ -71,6 +72,12 @@ const genericButtons: IBaseButton[] = [
     icon: faHourglassHalf,
     correspondingCompileCode: 'timer',
     type: 'action'
+  },
+  {
+    name: 'Caso errado',
+    icon: faUserXmark,
+    correspondingCompileCode: 'wrong',
+    type: 'logical'
   },
   {
     name: 'Quadrante 1',

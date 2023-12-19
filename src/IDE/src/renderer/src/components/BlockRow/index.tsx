@@ -17,6 +17,24 @@ interface IBlockRowProps {
   editTimeHandler: (timerIdx: number) => void
 }
 export default function BlockRow(props: IBlockRowProps): ReactElement {
+  const colorSwitch = (type: string): string => {
+    switch (type) {
+      case 'input':
+        return 'green'
+      case 'action':
+        return 'yellow'
+      case 'logical':
+        return 'darkOrange'
+      case 'resource':
+      case 'graphical':
+        return 'teal'
+      default:
+        return 'darkBlue'
+    }
+
+    console.log('BlockRow: colorSwitch: type not found')
+  }
+
   return (
     <span
       style={{
@@ -33,9 +51,7 @@ export default function BlockRow(props: IBlockRowProps): ReactElement {
           <GenericBlock
             key={idx}
             type={idx === 0 ? 'start' : 'middle'}
-            color={
-              block.type === 'input' ? 'green' : block.type === 'action' ? 'yellow' : 'darkOrange'
-            }
+            color={colorSwitch(block.type)}
             icon={block.icon}
             onClick={() => {
               if (block.type === 'input') {
