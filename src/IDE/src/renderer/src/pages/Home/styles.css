@@ -3,10 +3,11 @@
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  background: var(--bg);
   padding: 4rem 20rem;
   text-align: center;
   gap: 3rem;
-  color: var(--black);
+  color: var(--font-color);
 } 
 
 .home-container h1 {
@@ -35,6 +36,7 @@
   padding: 2rem;
   border-radius: 1.5rem;
   min-width: 20rem;
+  border: var(--option-border);
 }
 
 .home-container .options .option img {

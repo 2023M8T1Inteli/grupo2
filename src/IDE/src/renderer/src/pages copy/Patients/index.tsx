@@ -10,7 +10,7 @@ import { infoToast } from '../../components/Toast'
 import profilePhoto from '../../assets/img/profile-photo.png'
 
 export default function Projects() {
-  const { userName } = useAuth()
+  const { username } = useAuth()
   const [searchTerm, setSearchTerm] = useState('') // Novo estado para o termo de pesquisa
 
   const handleSearch = () => {
@@ -74,7 +74,7 @@ export default function Projects() {
           />
 
           {/* Texto abaixo do card redondo */}
-          <p>{userName}</p>
+          <p>{username}</p>
         </div>
         {/* Outros pacientes... */}
       </div>

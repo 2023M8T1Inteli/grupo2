@@ -1,17 +1,52 @@
 :root {
-    --primary: #C83A61;
-    --primary-hover: #a1102f;
-    --primary-active: #891230;
-    --font-color: #C83A61;
-    --secondary-font-color: #ABABAB;
+    --pink: purple;
+    --gray: #ABABAB;
     --white: #FFF;
     --black: #000;
-    --layout-padding: 0 5rem;
 }
 
 #root {
     height: 100vh;
     overflow: hidden;
+    background: var(--bg);
+    --layout-padding: 0 5rem;
+}
+
+#root.dark {
+    --primary: var(--pink);
+    --login-bg: var(--pink);
+    --login-font-color: var(--white);
+    --font-color: var(--white);
+    --secondary-font-color: #ABABAB;
+    --bg: var(--pink);
+    --primary-button-bg: var(--pink);
+    --primary-button-border: var(--white);
+    --login-button-border: var(--white);
+    --input-border: none;
+    --primary-button-hover-bg: var(--white);
+    --primary-button-hover-border: 2px solid transparent;
+    --primary-button-border: var(--white);
+    --option-border: var(--white) 1px solid;
+    --navbar-border: 1px solid var(--white);
+    --login-figure-bg: var(--white);
+}
+
+#root.light {
+    --primary: var(--pink);
+    --bg: var(--white);
+    --login-bg: var(--white);
+    --primary-button-bg: var(--pink);
+    --secondary-font-color: #ABABAB;
+    --login-button-border: var(--pink);
+    --input-border: 1px solid var(--black);
+    --primary-button-hover-bg: var(--white);
+    --primary-button-hover-border: 2px solid var(--pink);
+    --primary-button-hover-color: var(--pink);
+    --font-color: var(--black);
+    --option-border: none;
+    --login-font-color: var(--pink);
+    --navbar-border: none;
+    --login-figure-bg: var(--pink);
 }
 
 body {
@@ -21,6 +56,7 @@ body {
     color: var(--font-color);
     font-family: Roboto, sans-serif;
 }
+
 
 body * {
     box-sizing: border-box;

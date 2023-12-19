@@ -29,6 +29,7 @@
     position: absolute;
     left: 5rem;
     top: 6rem;
+    border: var(--navbar-border)
 }
 
 .button-back img {

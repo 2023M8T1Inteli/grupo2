@@ -5,11 +5,12 @@
 // - Implementação de um menu responsivo e um botão de logout com uma mensagem de sucesso.
 // - Exibição do nome do usuário e imagem de perfil no componente.
 
-import React from 'react'
+import React, { useState } from 'react'
 import './styles.css'
 import profile from '../../assets/img/profile.png'
 import { useAuth } from '../../contexts/AuthContext'
 import { successToast } from '../Toast'
+import ColorsModal from '../ColorsModal'
 
 interface NavbarProps {
   name?: string
@@ -17,7 +18,8 @@ interface NavbarProps {
 }
 
 export default function Navbar(props: NavbarProps) {
-  const { userName, logout } = useAuth()
+  const { username, logout } = useAuth()
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleLogout = () => {
     logout()
@@ -36,7 +38,7 @@ export default function Navbar(props: NavbarProps) {
             <a href="/">Início</a>
           </li>
           <li>
-            <button>Cores</button>
+            <button onClick={ () => {setModalVisible(true)}}>Cores</button>
           </li>
           <li>
             <a href="" onClick={handleLogout}>
@@ -47,11 +49,15 @@ export default function Navbar(props: NavbarProps) {
       </div>
       <div className="profile-container">
         <div>
-          <p className="user-name">{userName()}</p>
+          <p className="user-name">{username()}</p>
           <p>{props.role}</p>
         </div>
         <img src={profile} alt="Profile" />
       </div>
+      {
+        modalVisible && 
+          <ColorsModal onClose={setModalVisible(false)} />
+      }
     </nav>
   )
 }
