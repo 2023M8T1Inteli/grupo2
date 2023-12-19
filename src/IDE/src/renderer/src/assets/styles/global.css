@@ -1,15 +1,8 @@
 :root {
-<<<<<<< HEAD
-    --primary: #CA1133;
-    --primary-hover: #a1102f;
-    --primary-active: #891230;
-    --font-color: #FFF;
-=======
     --primary: #C83A61;
     --primary-hover: #a1102f;
     --primary-active: #891230;
     --font-color: #fff;
->>>>>>> 93eac925023f790faaea466316748fd7f670223e
     --white: #FFF;
 }
 
