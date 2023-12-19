@@ -5,7 +5,6 @@
 // Ideal para criações gráficas interativas e personalizadas para terapias.
 
 import React, { useState, useEffect, useRef } from 'react'
-import Button from '../../components/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCircle,
@@ -34,12 +33,11 @@ const loadCanvas = (editor?, serializedCanvas?) => {
   canvas.loadFromJSON(serializedCanvas, canvas.renderAll.bind(canvas))
 }
 
-function FabricPage() {
+function CanvasEditor() {
   const [color, setColor] = useState('#35363a')
   const [backgroundColor, setBackgroundColor] = useState('#ffffff')
   const [selectedImage, setSelectedImage] = useState(null)
   const { editor, onReady } = useFabricJSEditor()
-  const navigate = useNavigate()
 
   const fileInputRef = useRef(null)
 
@@ -475,4 +473,4 @@ function FabricPage() {
   )
 }
 
-export default FabricPage
+export default CanvasEditor

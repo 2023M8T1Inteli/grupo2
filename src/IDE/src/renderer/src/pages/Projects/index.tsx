@@ -12,21 +12,20 @@ export default function Projects() {
   const navigate = useNavigate()
 
   const createNewProject = async () => {
-
-    const folderName = 'NomeDaNovaPasta'; // Generate or obtain the folder name
+    const folderName = 'NomeDaNovaPasta' // Generate or obtain the folder name
     try {
-      const folderPath = await window.electronAPI.createNewFolder(folderName);
-      console.log('Folder created:', folderPath);
-  
+      const folderPath = await window.electronAPI.createNewFolder(folderName)
+      console.log('Folder created:', folderPath)
+
       // Create project-info.json inside the new folder
-      await window.electronAPI.createProjectInfo(folderPath);
-  
-      localStorage.setItem('currentProjectPath', folderPath); // Store the path
-      navigate('/editor'); // Navigate to the editor
+      await window.electronAPI.createProjectInfo(folderPath)
+
+      localStorage.setItem('currentProjectPath', folderPath) // Store the path
+      navigate('/editor') // Navigate to the editor
     } catch (error) {
-      console.error('Error creating folder:', error);
+      console.error('Error creating folder:', error)
     }
-  };
+  }
 
   const selectProject = async (folderName) => {
     console.log('Project selected:', folderName)
@@ -43,16 +42,15 @@ export default function Projects() {
   useEffect(() => {
     const fetchFolders = async () => {
       try {
-        const response = await window.electronAPI.readProjectFolders();
-        setFolders(response);
+        const response = await window.electronAPI.readProjectFolders()
+        setFolders(response)
       } catch (error) {
-        console.error('Error fetching folders:', error);
+        console.error('Error fetching folders:', error)
       }
-    };
-  
-    fetchFolders();
-  }, []);
-  
+    }
+
+    fetchFolders()
+  }, [])
 
   return (
     <div className="projects-container">
