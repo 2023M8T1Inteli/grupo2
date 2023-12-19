@@ -45,7 +45,7 @@ export default function Router(): ReactElement {
       <Routes>
         <Route path="/game" element={<DragDrop />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/editor" element={<Editor />} />
+        <Route path="/editor" element={<BlockEditor />} />
         <Route path="/" element={<Home />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/patients" element={<Patients />} />
