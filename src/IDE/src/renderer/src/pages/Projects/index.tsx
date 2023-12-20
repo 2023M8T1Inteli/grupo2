@@ -7,15 +7,19 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Projects() {
   const [folders, setFolders] = useState([])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [newFolderName, setNewFolderName] = useState('')
   const navigate = useNavigate()
 
   const createNewProject = async () => {
-    const folderName = 'NomeDaNovaPasta' // Generate or obtain the folder name
+    setIsModalOpen(true) // Open modal instead of directly creating a project
+  }
+
+  const handleCreateProject = async () => {
     try {
-      const folderPath = await window.electronAPI.createNewFolder(folderName)
+      const folderPath = await window.electronAPI.createNewFolder(newFolderName)
       console.log('Folder created:', folderPath)
 
-      // Create project-info.json inside the new folder
       await window.electronAPI.createProjectInfo(folderPath)
 
       localStorage.setItem('currentProjectPath', folderPath) // Store the path
@@ -23,6 +27,7 @@ export default function Projects() {
     } catch (error) {
       console.error('Error creating folder:', error)
     }
+    setIsModalOpen(false) // Close modal after creation
   }
 
   const selectProject = async (folderName) => {
@@ -53,13 +58,11 @@ export default function Projects() {
   return (
     <div className="projects-container">
       <AutoRedirect />
-      <Button
-        variant="back"
-      />
+      <Button variant="back" />
       <h1>Projetos</h1>
 
       <div className="projects">
-        <a className="project add" href="/editor" onClick={createNewProject}>
+        <a className="project add" href="#" onClick={createNewProject}>
           <img src={plus} alt="Adicionar Projeto" />
         </a>
         {folders.map((folder) => (
@@ -68,6 +71,19 @@ export default function Projects() {
           </div>
         ))}
       </div>
+
+      {isModalOpen && (
+        <div className="modal">
+          <input 
+            type="text" 
+            value={newFolderName} 
+            onChange={(e) => setNewFolderName(e.target.value)} 
+            placeholder="Enter Folder Name"
+          />
+          <button onClick={handleCreateProject}>Create Project</button>
+          <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+        </div>
+      )}
     </div>
   )
 }
