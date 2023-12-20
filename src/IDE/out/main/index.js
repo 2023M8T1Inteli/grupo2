@@ -370,8 +370,6 @@ electron.ipcMain.handle("upload-and-save-image", async (event, filePath, base64D
     const directoryPath = path.dirname(filePath);
     if (!fs$1.existsSync(directoryPath)) {
       fs$1.mkdirSync(directoryPath, { recursive: true });
-    if (!fs.existsSync(directoryPath)) {
-      fs.mkdirSync(directoryPath, { recursive: true });
     }
     const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, "");
     const buffer = Buffer.from(base64Image, "base64");
