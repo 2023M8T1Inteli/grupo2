@@ -16,10 +16,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   readCanvasState: (filePath) => ipcRenderer.invoke('read-canvas-state', filePath),
   uploadAndSaveImage: (filePath, data) =>
     ipcRenderer.invoke('upload-and-save-image', filePath, data),
-  readFileAsBuffer: (filePath) => ipcRenderer.invoke('readFileAsBuffer', filePath)
-    convertArrayBufferToBuffer: (arrayBuffer) => Buffer.from(arrayBuffer),
-    convertBlobToOgg: (buffer) => ipcRenderer.invoke('convert-blob-to-ogg', buffer),
-
+  readFileAsBuffer: (filePath) => ipcRenderer.invoke('readFileAsBuffer', filePath),
+  convertArrayBufferToBuffer: (arrayBuffer) => Buffer.from(arrayBuffer),
+  convertBlobToOgg: (buffer) => ipcRenderer.invoke('convert-blob-to-ogg', buffer),
   })
 
 // Custom APIs for renderer

@@ -397,13 +397,13 @@ electron.ipcMain.handle("convert-blob-to-ogg", async (event, buffer) => {
       await ffmpeg.load();
     }
     const tempPath = path.join(os.tmpdir(), "temp.webm");
-    fs.writeFileSync(tempPath, buffer);
+    fs$1.writeFileSync(tempPath, buffer);
     await ffmpeg.run("-i", tempPath, "output.ogg");
     const data = ffmpeg.FS("readFile", "output.ogg");
     const downloadsFolder = path.join(os.homedir(), "Downloads");
     const outputPath = path.join(downloadsFolder, "output.ogg");
-    fs.writeFileSync(outputPath, Buffer.from(data.buffer));
-    fs.unlinkSync(tempPath);
+    fs$1.writeFileSync(outputPath, Buffer.from(data.buffer));
+    fs$1.unlinkSync(tempPath);
     return outputPath;
   } catch (error) {
     console.error("Error converting audio:", error);
