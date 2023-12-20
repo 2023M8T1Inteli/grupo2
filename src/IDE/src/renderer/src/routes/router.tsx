@@ -41,7 +41,7 @@ export default function Router(): ReactElement {
   return (
     <AuthProvider>
       <ToastContainer />
-      {showNavbar && <Navbar name="Maria Júlia" role="Terapeuta ocupacional" />}
+      {showNavbar && <Navbar />}
       <Routes>
         <Route path="/game" element={<DragDrop />} />
         <Route path="/login" element={<Login />} />

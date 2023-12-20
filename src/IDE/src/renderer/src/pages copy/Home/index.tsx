@@ -6,15 +6,11 @@ import folder from "../../assets/img/kid_toy.png";
 import Button from "../../components/Button";
 
 export default function Home() {
-  console.log("TESTE");
 
   return (
     <div className="home-container red-screen">
     <Button
           variant="back"
-          onClick={() => {
-            console.log("A");
-          }}
         />
       <AutoRedirect />
       <div className="content">

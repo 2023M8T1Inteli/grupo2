@@ -11,13 +11,10 @@ import profile from '../../assets/img/profile.png'
 import { useAuth } from '../../contexts/AuthContext'
 import { successToast } from '../Toast'
 import ColorsModal from '../ColorsModal'
+import { useTheme } from '@renderer/contexts/ThemeContext'
 
-interface NavbarProps {
-  name?: string
-  role?: string
-}
+export default function Navbar(props) {
 
-export default function Navbar(props: NavbarProps) {
   const { username, logout } = useAuth()
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -39,7 +36,6 @@ export default function Navbar(props: NavbarProps) {
           </li>
           <li>
             <button onClick={ () => {
-              console.log("TESTE")
               setModalVisible(true)
             }}>Cores</button>
           </li>

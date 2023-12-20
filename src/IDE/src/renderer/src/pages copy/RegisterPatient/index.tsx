@@ -98,9 +98,6 @@ export default function RegisterPatient() {
           <div className="buttons">
             <Button
               variant="back"
-              onClick={() => {
-                console.log('A')
-              }}
             />
             <input
               type="submit"

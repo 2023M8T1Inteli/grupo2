@@ -174,9 +174,6 @@ function DragDrop() {
       <p>
         <Button
           variant="back"
-          onClick={() => {
-            console.log("A");
-          }}
         />
       </p>
       <DragDropContext onDragEnd={onDragEnd}>

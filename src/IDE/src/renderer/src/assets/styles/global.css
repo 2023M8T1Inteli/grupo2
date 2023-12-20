@@ -1,5 +1,5 @@
 :root {
-    --pink: purple;
+    --variable-color: purple;
     --gray: #ABABAB;
     --white: #FFF;
     --black: #000;
@@ -13,13 +13,13 @@
 }
 
 #root.dark {
-    --primary: var(--pink);
-    --login-bg: var(--pink);
+    --primary: var(--variable-color);
+    --login-bg: var(--variable-color);
     --login-font-color: var(--white);
     --font-color: var(--white);
     --secondary-font-color: #ABABAB;
-    --bg: var(--pink);
-    --primary-button-bg: var(--pink);
+    --bg: var(--variable-color);
+    --primary-button-bg: var(--variable-color);
     --primary-button-border: var(--white);
     --login-button-border: var(--white);
     --input-border: none;
@@ -32,21 +32,21 @@
 }
 
 #root.light {
-    --primary: var(--pink);
+    --primary: var(--variable-color);
     --bg: var(--white);
     --login-bg: var(--white);
-    --primary-button-bg: var(--pink);
+    --primary-button-bg: var(--variable-color);
     --secondary-font-color: #ABABAB;
-    --login-button-border: var(--pink);
+    --login-button-border: var(--variable-color);
     --input-border: 1px solid var(--black);
     --primary-button-hover-bg: var(--white);
-    --primary-button-hover-border: 2px solid var(--pink);
-    --primary-button-hover-color: var(--pink);
+    --primary-button-hover-border: 2px solid var(--variable-color);
+    --primary-button-hover-color: var(--variable-color);
     --font-color: var(--black);
     --option-border: none;
-    --login-font-color: var(--pink);
+    --login-font-color: var(--variable-color);
     --navbar-border: none;
-    --login-figure-bg: var(--pink);
+    --login-figure-bg: var(--variable-color);
 }
 
 body {
