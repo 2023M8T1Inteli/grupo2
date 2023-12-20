@@ -21,9 +21,11 @@ class AnalisadorSemantico:
         self.visitarBloco(no.get("bloco"))
 
         print("Tabela de símbolos:")
-        self.print_tabela()
+        # self.print_tabela()
     
     def visitarBloco(self, bloco):
+
+        # print("bloco: " + str(bloco))
 
         declaracoes = bloco.get("listaAtribuicao")
         while declaracoes:
@@ -65,9 +67,14 @@ class AnalisadorSemantico:
                 exp = declaracao.get("expression")
                 self.visitarExpression(exp)
                 faca = declaracao.get("faca")
-                block = self.visitarBloco(faca)
-                if not block:
+
+                if declaracao.get("faca").get("listaAtribuicao") == None:
                     raise SemanticException(f"Loop infinito ")
+                
+                print(faca)
+                self.visitarBloco(faca)
+                # print(block)
+
 
             ## SE STATEMENT
             elif declaracao.op == "ifStatement":
@@ -164,7 +171,7 @@ class AnalisadorSemantico:
             for i in range(1, 4):
                 self.visitarSumExpression(in_statement.get(f"param{i}"))
 
-\
+
 
     def print_tabela(self):
         print(self.tabela)
