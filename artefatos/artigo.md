@@ -100,20 +100,33 @@ O principal objetivo deste projeto é desenvolver um ambiente terapêutico assis
 
 # Resultados 
 
-O desenvolvimento do Ambiente de Desenvolvimento Integrado (IDE) para Terapeutas Ocupacionais que atendem pacientes com Paralisia Cerebral é um avanço notável no campo da Tecnologia Assistiva, marcado por um foco especial em usabilidade e acessibilidade. Este IDE, integrado com um tapete sensorial inovador, foi projetado para otimizar a experiência dos profissionais, facilitando o planejamento e a implementação de atividades terapêuticas de maneira eficiente e interativa.
+O desenvolvimento do Ambiente de Desenvolvimento Integrado (IDE) destinado a Terapeutas Ocupacionais que atendem pacientes com leves desordens Neurológicas representa um avanço notável no campo da Tecnologia Assistiva, destacando-se por seu foco especial em usabilidade e acessibilidade. O IDE, combinado com um tapete sensorial inovador, visa otimizar a experiência dos profissionais, simplificando o planejamento e a implementação de atividades terapêuticas de maneira eficiente e interativa.
 
 1. **Login e criação de usuários**
 ![Login](img/artigo/1.jpg)
+![Cadastro de Usuário](img/artigo/3.jpg)
 
-1. **Construção Iterativa**
+Desenvolvido como um sistema desktop, o IDE assegura funcionalidade independente da conectividade com a internet, uma característica crucial em ambientes hospitalares como a AACD, onde falhas de conexão são comuns. A aplicação permite a criação de perfis de usuário e o cadastro de pacientes, proporcionando uma gestão eficaz do ambiente terapêutico.
+
+2. **Construção Iterativa**
+![Perfil Terapeuta](img/artigo/2.jpg)
+A plataforma permite o terapeuta a acompanhar seus pacientes, criar novos usuários a partir de jogos já existentes ou desenvolver novos jogos de forma intuitiva. A construção iterativa de atividades terapêuticas promove uma abordagem flexível e personalizada para atender às necessidades específicas de cada paciente.
+1. **Tapete Sensorial**
+![Tapete](img/artigo/4.jpg)
+A IDE é totalmente integrada ao tapete via dispositivo Greg Maker, facilitando a programação para o terapeuta. A plataforma oferece uma visualização detalhada do tapete, proporcionando uma compreensão aprimorada e uma programação eficiente de blocos, promovendo uma terapia mais direcionada.
+
+![Vizualizador](img/artigo/5.jpg)
+Para tornar o jogo mais lúdico, a plataforma permite a criação de telas no próprio computador, integradas ao tapete, para tornar as mensagens de feedback mais personalizadas. Essa abordagem inovadora enriquece a experiência terapêutica, tornando-a envolvente e adaptada às preferências individuais de cada paciente.
+![Compilador](img/artigo/6.jpg)
+Para garantir o funcionamento harmonioso de todos os elementos, a plataforma conta com uma IDE voltada para o desenvolvimento de lógica, de forma simples e lúdica, permitindo que o terapeuta desenvolva jogos de maneira eficaz. O compilador desempenha um papel fundamental na tradução efetiva das instruções terapêuticas para o hardware, garantindo precisão e eficácia na execução das atividades propostas.
+
+Em resumo, os resultados obtidos até o momento não apenas validam a viabilidade técnica do projeto, mas também destacam seu potencial impacto positivo na melhoria da independência e qualidade de vida dos pacientes atendidos pela AACD. 
 
 # Conclusão
 
 O presente artigo representa um marco significativo na interseção entre a crescente demanda por assistência a pessoas com deficiência e os avanços contínuos em tecnologias assistivas. Ao abordar a prevalência global de deficiências e a necessidade premente de soluções inovadoras, destacamos a importância de iniciativas como a Iniciativa de Cooperação Global em Tecnologia Assistiva (GATE) da Organização Mundial da Saúde e o compromisso da Associação de Assistência à Criança Deficiente (AACD) em empregar soluções eficazes.
 
 O projeto apresentado, centrado em um tapete sensorial conectado ao dispositivo Greg Maker e um Ambiente de Desenvolvimento Integrado (IDE), visa oferecer uma solução acessível e inovadora para indivíduos com desordens neurológicas leves. Através da revisão de estudos relacionados, identificamos a relevância dessas tecnologias no contexto das necessidades de crianças com paralisia cerebral e outras condições neurológicas.
-
-O desenvolvimento do IDE, com sua capacidade de criar perfis, cadastrar pacientes, e facilitar a construção interativa de sequências de atividades terapêuticas, representa um avanço notável. A integração do IDE com o tapete sensorial inovador busca otimizar a experiência dos terapeutas, simplificando o planejamento e a implementação de atividades terapêuticas de maneira eficiente e interativa.
 
 Os resultados alcançados até o momento evidenciam não apenas a viabilidade técnica do projeto, mas também seu potencial impacto positivo na melhoria da independência e qualidade de vida dos pacientes. Ao contribuir para os esforços da AACD, o projeto está alinhado com a missão de capacitar pacientes e profissionais com as mais recentes ferramentas de tecnologia assistiva.
 
