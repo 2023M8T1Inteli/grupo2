@@ -1,10 +1,8 @@
-// Projects.js
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Button from '../../components/Button'
 import './styles.css'
 import plus from '../../assets/plus.svg'
-import { AutoRedirect, useAuth } from '../../contexts/AuthContext'
-import { infoToast } from '../../components/Toast'
+import { AutoRedirect } from '../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
 export default function Projects() {

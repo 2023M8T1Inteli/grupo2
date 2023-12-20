@@ -1,8 +1,8 @@
-// É um componente de botão para React com várias variantes e comportamentos.
-// Inclui:
-// - Interface `ButtonProps` para definir propriedades como 'value', 'variant', 'onClick'.
-// - Importação de estilos e ícones.
-// - Renderização condicional para criar diferentes tipos de botões, incluindo botões de navegação e ação.
+// It's a button component for React with various variants and behaviors.
+// Includes:
+// - `ButtonProps` interface to define properties such as 'value', 'variant', 'onClick'.
+// - Importing styles and icons.
+// - Conditional rendering to create different types of buttons, including navigation and action buttons.
 
 import CanvasEditor from '../CanvasEditor'
 import './styles.css'

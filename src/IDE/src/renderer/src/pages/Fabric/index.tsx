@@ -1,11 +1,10 @@
-// Este arquivo é um componente que implementa uma página de edição gráfica.
-// Utiliza a biblioteca `fabric.js` para adicionar e manipular elementos gráficos em um canvas.
-// Permite aos usuários adicionar formas, textos e imagens, além de editar suas cores e posições.
-// Inclui funcionalidades como arrastar e soltar, salvar o estado do canvas e gerar uma imagem do conteúdo.
-// Ideal para criações gráficas interativas e personalizadas para terapias.
+// This file is a component that implements a graphic editing page.
+// It uses the `fabric.js` library to add and manipulate graphic elements on a canvas.
+// It allows users to add shapes, texts, and images, as well as edit their colors and positions.
+// It includes features such as drag and drop, saving the canvas state, and generating an image of the content.
+// Ideal for interactive and customized graphic creations for therapies.
 
 import React, { useState, useEffect, useRef } from 'react'
-import Button from '../../components/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCircle,
