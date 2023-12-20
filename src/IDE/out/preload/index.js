@@ -16,7 +16,8 @@ electron.contextBridge.exposeInMainWorld("electronAPI", {
   uploadAndSaveImage: (filePath, data) => electron.ipcRenderer.invoke("upload-and-save-image", filePath, data),
   readFileAsBuffer: (filePath) => electron.ipcRenderer.invoke("readFileAsBuffer", filePath),
   convertArrayBufferToBuffer: (arrayBuffer) => Buffer.from(arrayBuffer),
-  convertBlobToOgg: (buffer) => electron.ipcRenderer.invoke("convert-blob-to-ogg", buffer)
+  convertBlobToOgg: (buffer) => electron.ipcRenderer.invoke("convert-blob-to-ogg", buffer),
+  saveWavFile: (filePath, soundName, wavBuffer) => electron.ipcRenderer.invoke("save-wav-file", filePath, soundName, wavBuffer)
 });
 const api = {
   readFile: (filePath) => electron.ipcRenderer.invoke("read-file", filePath),

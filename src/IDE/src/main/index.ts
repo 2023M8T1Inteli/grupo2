@@ -313,3 +313,24 @@ ipcMain.handle('upload-and-save-image', async (event, filePath, base64Data) => {
     return null;
   }
 })
+
+ipcMain.handle('save-wav-file', async (event, filePath, fileName, wavBuffer) => {
+  try {
+    const fullPath = path.join(filePath, fileName);
+
+    // Ensure the directory exists
+    const directory = path.dirname(fullPath);
+    if (!fs.existsSync(directory)) {
+      fs.mkdirSync(directory, { recursive: true });
+    }
+
+    const buffer = Buffer.from(wavBuffer);
+    await fs.promises.writeFile(fullPath, buffer);
+    return { success: true, path: fullPath };
+  } catch (error) {
+    console.error('Error saving WAV file:', error);
+    return { success: false, error: error.message };
+  }
+});
+
+
