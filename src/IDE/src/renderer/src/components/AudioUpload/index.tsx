@@ -1,6 +1,5 @@
 // This code allows the user to upload their own audio files and visualize them. The component uses the wavesurfer.js library to handle the audio visualization process. 
 
-
 import React, { useEffect, useRef, useState } from 'react'
 import WaveSurfer from 'wavesurfer.js'
 import SaveAsWav from '../SaveAudio'
