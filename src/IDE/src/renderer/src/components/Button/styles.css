@@ -6,7 +6,7 @@
 }
 
 .button-primary {
-    background: var(--primary);
+    background: var(--primary-button-bg);
     color: var(--white);
     text-decoration: none;
     width: 100%;
@@ -26,6 +26,10 @@
     background-color: var(--primary);
     border-radius: .5rem;
     text-decoration: none;
+    position: absolute;
+    left: 5rem;
+    top: 6rem;
+    border: var(--navbar-border)
 }
 
 .button-back img {

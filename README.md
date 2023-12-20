@@ -72,8 +72,3 @@ Este é um dos repositórios do projeto de alunos do Inteli em parceria com a AA
 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/">
 
 <a property="dct:title" rel="cc:attributionURL">DreamWorkers</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName">Inteli, Cristiane Coutinho, Felipe Sampaio, Gabrio Lina, João Pedro Alcaraz, Moisés Cazé, Pedro Silva, Sergio Lucas</a> is licensed under <a href="https://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
-
-## Manual de Instrução:
-
-Clique <a href="https://drive.google.com/drive/folders/1jp6ClTOCdblO-j1ru-LTOpB9WauLwAzS?usp=sharing"> aqui</a> para acessar o Manual de Instrução para entendimento completo das funcionalidades da aplicação.
-

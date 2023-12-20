@@ -1,15 +1,18 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+// index.tsx ou index.jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import VLibras from '@djpfs/react-vlibras';
+import Router from './routes/router';
+import { ThemeProvider } from './contexts/ThemeContext';
 
-import { BrowserRouter } from 'react-router-dom'
-import VLibras from '@djpfs/react-vlibras'
-import Router from './routes/router'
+
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  <ThemeProvider>
     <VLibras forceOnload={true} />
     <BrowserRouter>
       <Router />
     </BrowserRouter>
-  </React.StrictMode>
-)
+  </ThemeProvider>
+);

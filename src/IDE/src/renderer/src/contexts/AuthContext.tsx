@@ -14,7 +14,7 @@ interface AuthContextType {
   isLoggedIn: boolean,
   login: () => void,
   logout: () => void,
-  userName?: () => void
+  username?: () => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,7 +35,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     Boolean(sessionStorage.getItem("isLogged")),
   );
 
-  const userName = () => {
+  const username = () => {
     const user = JSON.parse(sessionStorage.getItem('user_data') as string);
     if (user) {
       return user.username;
@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout, userName }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, username }}>
       {children}
     </AuthContext.Provider>
   );

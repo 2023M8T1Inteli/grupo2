@@ -1,9 +1,9 @@
-// Funções auxiliares para exibir mensagens de notificação (toasts)
-// Inclui:
-// - `successToast` para exibir uma mensagem de sucesso.
-// - `errorToast` para exibir uma mensagem de erro.
-// - `infoToast` para exibir uma mensagem informativa.
-// Todas as funções aceitam uma string como conteúdo da mensagem e utilizam a biblioteca 'react-toastify'.
+// Helper functions to display notification messages (toasts)
+// Includes:
+// - `successToast` to display a success message.
+// - `errorToast` to display an error message.
+// - `infoToast` to display an informational message.
+// All functions accept a string as the message content and use the 'react-toastify' library.
 
 import { toast } from 'react-toastify'
 

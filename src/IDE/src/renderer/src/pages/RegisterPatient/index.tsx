@@ -1,12 +1,12 @@
-// Componente de login para uma aplicação React, com integração de autenticação e navegação.
-// Inclui:
-// - Uso do React Router (`useNavigate`) para redirecionamento após o login.
-// - Uso do contexto de autenticação "useAuth" para acessar a função de login.
-// - Estados locais para gerenciar os campos de usuário e senha.
-// - Função `handleLogin` para processar o login, incluindo validação e armazenamento de dados do usuário.
-// - Uso de toasts para feedback de ações (erro, informação, sucesso).
-// - Formulário de login com campos para usuário e senha e botão de entrada.
-// - Opção para registrar uma nova conta (ainda em desenvolvimento).
+// Login component for a React application, with authentication and navigation integration.
+// Includes:
+// - Usage of React Router (`useNavigate`) for redirection after login.
+// - Usage of the authentication context "useAuth" to access the login function.
+// - Local states to manage the username and password fields.
+// - `handleLogin` function to process the login, including validation and storing user data.
+// - Usage of toasts for action feedback (error, info, success).
+// - Login form with fields for username and password and a login button.
+// - Option to register a new account (still in development).
 
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
@@ -62,60 +62,60 @@ export default function RegisterPatient() {
     }
 
     successToast(`Paciente criado com sucesso!`)
-    //sessionStorage.setItem("user_data", JSON.stringify(user));
-    navigate('/login')
+    navigate('/patients')
   }
 
   return (
-    <div className="login-container">
-      <div>
-        <img src={camera} alt="Camera" />
-      </div>
-      <div>
-        <h1 style={{ color: 'white' }}>Novo Paciente</h1>
-        <form className="inputs" onSubmit={handleLogin}>
-          <h3 style={{ color: 'white' }}>Nome Completo</h3>
-
+    <div className="register-patient-container">
+      <Button
+        variant='back'
+      />
+      <img src={camera} alt="Camera" />
+      <h1>Novo Paciente</h1>
+      <form className="inputs" onSubmit={handleLogin}>
+        <div>
+          <label htmlFor='name'>Nome</label>
           <input
             required
+            id='name'
+            name='name'
             type="text"
             placeholder="Nome"
             onChange={(e) => {
               setUsername(e.target.value)
             }}
-            style={{ marginBottom: '2rem', padding: '0.3rem', width: '50rem' }}
           />
-          <h3 style={{ color: 'white' }}>Data de nascimento</h3>
+        </div>
+        <div>
+          <label htmlFor='birthdate'>Data de nascimento</label>
           <input
+            id='birthdate'
+            name='birthdate'
             required
             type="date"
             placeholder="Data de nascimento"
             onChange={(e) => {
               setBirthdayDate(e.target.value)
             }}
-            style={{ marginBottom: '3rem', padding: '0.3rem', width: '50rem' }}
           />
-          <div className="buttons">
-            <Button
-              variant="back"
-              onClick={() => {
-                console.log('A')
-              }}
-            />
-            <input
-              type="submit"
-              value="CRIAR PACIENTE"
-              style={{ padding: '0.1rem', width: '100rem' }}
-            />
-            <input
-              type="button"
-              onClick={() => navigate('/registerPatient')}
-              value="CANCELAR"
-              style={{ padding: '0.10rem' }}
-            />
-          </div>
-        </form>
-      </div>
+        </div>
+        <div className="buttons">
+          <Button
+            variant="back"
+          />
+          <input
+            className='submit'
+            type="submit"
+            value="CRIAR PACIENTE"
+          />
+          <input
+            className='cancel'
+            type="button"
+            onClick={() => navigate('/registerPatient')}
+            value="CANCELAR"
+          />
+        </div>
+      </form>
     </div>
   )
 }

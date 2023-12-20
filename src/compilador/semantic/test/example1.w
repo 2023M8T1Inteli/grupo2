@@ -1,9 +1,0 @@
-programa "exemplo_semantico1":
-inicio
-      valor = ler()
-      se valor >= 10 entao
-      inicio
-            x = x + 1
-            mostrar(x)
-      fim
-fim.

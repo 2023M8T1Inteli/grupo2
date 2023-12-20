@@ -1,3 +1,15 @@
+// This is the main process script for an Electron application that handles various backend functionalities.
+// It includes code for creating and managing the main window, handling inter-process communication (IPC) events, and performing file operations.
+// Key features of this script include:
+// - Creating the main BrowserWindow with specific dimensions, configurations, and loading the correct URL based on the environment (development or production).
+// - Setting up IPC event handlers to interact with different services like user, patient, and project management, and executing database operations (CRUD).
+// - Utilizing the 'electron-toolkit' utils for optimizing window shortcuts and setting app user model ID.
+// - Managing file operations including reading, writing, saving images, handling project folders, and maintaining canvas states.
+// - Handling special operations like compiling code using a Python bridge, converting audio files using FFmpeg, and dealing with binary data.
+// - The script ensures cross-platform compatibility (e.g., special handling for Linux icon).
+// - It includes exception handling for file operations and returns appropriate responses to the renderer process.
+// - The script also contains logic for application lifecycle management, like quitting the app when all windows are closed (except on macOS).
+
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
@@ -6,6 +18,7 @@ import icon from '../../resources/icon.png?asset'
 import { users, User } from './services/User.service'
 import { Patient, patients } from './services/Patient.service'
 import { Project, projects } from './services/Project.service'
+import { codeBridge } from './bridge/Python.bridge'
 
 import os from 'os'
 import fs from 'fs'
@@ -127,6 +140,14 @@ app.whenReady().then(() => {
   ipcMain.handle('db:project.getAll', async () => {
     return projects.getAll()
   })
+
+  ipcMain.handle('compiler:compile', async (_, code: string) => {
+    return codeBridge.compileCode(code)
+  })
+
+  ipcMain.handle('compiler:saveAndRun', async (_, code: string, filepath: string) => {
+    return codeBridge.saveCompiledCodeAndRun(code, filepath)
+  })
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -149,7 +170,6 @@ ipcMain.handle('read-file', async (event, filePath: string) => {
 })
 
 ipcMain.handle('write-file', async (event, filePath, content) => {
-
   const directory = path.dirname(filePath)
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true })
@@ -273,34 +293,23 @@ ipcMain.handle('read-canvas-state', async (event, filePath) => {
   }
 })
 
-ipcMain.handle('upload-and-save-image', async (event, base64Data, imageName) => {
+ipcMain.handle('upload-and-save-image', async (event, filePath, base64Data) => {
   try {
-    const projectFolderPath = path.join(os.homedir(), 'YourAppFolder', 'ProjectImages')
-    if (!fs.existsSync(projectFolderPath)) {
-      fs.mkdirSync(projectFolderPath, { recursive: true })
+    // Ensure the directory exists
+    const directoryPath = path.dirname(filePath);
+    if (!fs.existsSync(directoryPath)) {
+      fs.mkdirSync(directoryPath, { recursive: true });
     }
-
-    const filePath = path.join(projectFolderPath, imageName)
-
+    // Process and save the image
     const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, '')
     const buffer = Buffer.from(base64Image, 'base64')
     fs.writeFileSync(filePath, buffer)
-
-    // Convert image file to Data URL
+    // Read and return the saved image data
     const imageBuffer = fs.readFileSync(filePath)
     const dataUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`
     return dataUrl
   } catch (error) {
-    console.error('Error in upload-and-save-image:', error)
-    return null
-  }
-})
-
-ipcMain.handle('readFileAsBuffer', async (event, filePath) => {
-  try {
-    return fs.readFileSync(filePath)
-  } catch (error) {
-    console.error('Error reading file as buffer:', error)
-    return null
+    console.error('Error in upload-and-save-image:', error);
+    return null;
   }
 })

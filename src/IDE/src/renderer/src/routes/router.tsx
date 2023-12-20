@@ -1,31 +1,30 @@
-// Componente Router, responsável por gerenciar as rotas e a navegação.
-// Inclui:
-// - Importação de estilos globais e específicos para notificações (react-toastify).
-// - Uso do React Router para definir as rotas e renderizar componentes de páginas específicas.
-// - Componentes de páginas como Login, Home, Projects, Patients, Game (DragDrop), Editor.
-// - Contexto de autenticação (`AuthProvider`) envolvendo as rotas.
-// - Lógica para exibir ou ocultar a Navbar com base na rota atual.
-// - Contêiner para notificações Toast.
+// Router component, responsible for managing routes and navigation.
+// Includes:
+// - Importing global and specific styles for notifications (react-toastify).
+// - Using React Router to define routes and render specific page components.
+// - Page components such as Login, Home, Projects, Patients, Game (DragDrop), Editor.
+// - Authentication context (`AuthProvider`) wrapping the routes.
+// - Logic to show or hide the Navbar based on the current route.
+// - Toast notifications container.
 
 import '../assets/styles/global.css'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Login from '../pages/Login'
 import Navbar from '../components/Navbar'
-import Home from '../pages/Home'
-import Projects from '../pages/Projects'
 import Patients from '../pages/Patients'
 import Register from '../pages/Register'
+import Home from '../pages/Home'
+import Projects from '../pages/Projects'
 import RegisterPatient from '../pages/RegisterPatient'
 import { AuthProvider } from '../contexts/AuthContext'
-import { useState, useEffect } from 'react'
-import DragDrop from '../pages/Game'
+import { useState, useEffect, ReactElement } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import Editor from '../pages/Editor'
 import FabricPage from '../pages/Fabric'
 import NewFunction from '../pages/NewFunction'
+import BlockEditor from '@renderer/pages/BlockEditor'
 
-export default function Router() {
+export default function Router(): ReactElement {
   const location = useLocation()
   const [showNavbar, setShowNavbar] = useState(false)
 
@@ -40,17 +39,16 @@ export default function Router() {
   return (
     <AuthProvider>
       <ToastContainer />
-      {showNavbar && <Navbar name="Maria Júlia" role="Terapeuta ocupacional" />}
+      {showNavbar && <Navbar />}
       <Routes>
-        <Route path="/game" element={<DragDrop />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/editor" element={<Editor />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/editor" element={<BlockEditor />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/" element={<Home />} />
         <Route path="/patients" element={<Patients />} />
         <Route path="/fabric" element={<FabricPage />} />
         <Route path="/new-function" element={<NewFunction />} />
-        <Route path="/registerPatient" element={<RegisterPatient />} />
+        <Route path="/register-patient" element={<RegisterPatient />} />
         <Route path="/register" element={<Register />} />
       </Routes>
     </AuthProvider>
