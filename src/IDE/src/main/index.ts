@@ -278,28 +278,29 @@ ipcMain.handle('read-canvas-state', async (event, filePath) => {
   }
 })
 
-ipcMain.handle('upload-and-save-image', async (event, base64Data, imageName) => {
+ipcMain.handle('upload-and-save-image', async (event, filePath, base64Data) => {
   try {
-    const projectFolderPath = path.join(os.homedir(), 'YourAppFolder', 'ProjectImages')
-    if (!fs.existsSync(projectFolderPath)) {
-      fs.mkdirSync(projectFolderPath, { recursive: true })
+    // Ensure the directory exists
+    const directoryPath = path.dirname(filePath);
+    if (!fs.existsSync(directoryPath)) {
+      fs.mkdirSync(directoryPath, { recursive: true });
     }
 
-    const filePath = path.join(projectFolderPath, imageName)
+    // Process and save the image
+    const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, '');
+    const buffer = Buffer.from(base64Image, 'base64');
+    fs.writeFileSync(filePath, buffer);
 
-    const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, '')
-    const buffer = Buffer.from(base64Image, 'base64')
-    fs.writeFileSync(filePath, buffer)
-
-    // Convert image file to Data URL
-    const imageBuffer = fs.readFileSync(filePath)
-    const dataUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`
-    return dataUrl
+    // Read and return the saved image data
+    const imageBuffer = fs.readFileSync(filePath);
+    const dataUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`;
+    return dataUrl;
   } catch (error) {
-    console.error('Error in upload-and-save-image:', error)
-    return null
+    console.error('Error in upload-and-save-image:', error);
+    return null;
   }
-})
+});
+
 
 ipcMain.handle('readFileAsBuffer', async (event, filePath) => {
   try {
