@@ -18,6 +18,8 @@ export default function Projects() {
   const handleCreateProject = async () => {
     try {
       const folderPath = await window.electronAPI.createNewFolder(newFolderName)
+      await window.electronAPI.createNewFolder(`${newFolderName}/imgs`)
+      await window.electronAPI.createNewFolder(`${newFolderName}/audios`)
       console.log('Folder created:', folderPath)
 
       await window.electronAPI.createProjectInfo(folderPath)
@@ -27,6 +29,7 @@ export default function Projects() {
     } catch (error) {
       console.error('Error creating folder:', error)
     }
+    await fetchFolders()
     setIsModalOpen(false) // Close modal after creation
   }
 
@@ -42,16 +45,16 @@ export default function Projects() {
     }
   }
 
-  useEffect(() => {
-    const fetchFolders = async () => {
-      try {
-        const response = await window.electronAPI.readProjectFolders()
-        setFolders(response)
-      } catch (error) {
-        console.error('Error fetching folders:', error)
-      }
+  const fetchFolders = async () => {
+    try {
+      const response = await window.electronAPI.readProjectFolders()
+      setFolders(response)
+    } catch (error) {
+      console.error('Error fetching folders:', error)
     }
+  }
 
+  useEffect(() => {
     fetchFolders()
   }, [])
 
@@ -74,14 +77,20 @@ export default function Projects() {
 
       {isModalOpen && (
         <div className="modal">
-          <input 
-            type="text" 
-            value={newFolderName} 
-            onChange={(e) => setNewFolderName(e.target.value)} 
-            placeholder="Enter Folder Name"
+          <input
+            type="text"
+            value={newFolderName}
+            onChange={(e) => setNewFolderName(e.target.value)}
+            placeholder="Insira o nome do projeto"
           />
-          <button onClick={handleCreateProject}>Create Project</button>
-          <button onClick={() => setIsModalOpen(false)}>Cancel</button>
+          <button onClick={handleCreateProject}>Criar Projeto</button>
+          <button
+            onClick={() => {
+              setIsModalOpen(false)
+            }}
+          >
+            Cancelar
+          </button>
         </div>
       )}
     </div>
