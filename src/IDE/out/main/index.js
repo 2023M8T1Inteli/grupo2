@@ -364,6 +364,7 @@ electron.ipcMain.handle("read-canvas-state", async (event, filePath) => {
   }
 });
 electron.ipcMain.handle("upload-and-save-image", async (event, filePath, base64Data) => {
+electron.ipcMain.handle("upload-and-save-image", async (event, filePath, base64Data) => {
   try {
     const directoryPath = path.dirname(filePath);
     if (!fs.existsSync(directoryPath)) {

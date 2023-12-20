@@ -11,12 +11,12 @@
 
 import toWav from 'audiobuffer-to-wav'
 
-const SaveAsWav = ({ audioData }) => {
+const SaveAsWav = (props: SaveAsWavProps) => {
   const saveAsWav = async () => {
-    if (!audioData) return
+    if (!props.audioData) return
 
     const audioContext = new AudioContext()
-    const arrayBuffer = await audioData.arrayBuffer()
+    const arrayBuffer = await props.audioData.arrayBuffer()
     const audioBuffer = await audioContext.decodeAudioData(arrayBuffer)
     const wavBuffer = toWav(audioBuffer)
     const wavBlob = new Blob([wavBuffer], { type: 'audio/wav' })

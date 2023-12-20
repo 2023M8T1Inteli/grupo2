@@ -4,7 +4,8 @@
 // Includes functionalities such as drag-and-drop, saving the canvas state, and generating an image from the content.
 // Ideal for interactive and customized graphic creations for therapies.
 
-import React, { useState, useEffect, useRef } from 'react'
+import { v4 as uuidv4 } from 'uuid'
+import React, { useState, useEffect, useRef, ReactElement } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCircle,
@@ -20,7 +21,10 @@ import {
 import { fabric } from 'fabric'
 import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react'
 import './styles.css'
-import { useNavigate } from 'react-router-dom'
+
+interface ICanvasEditorProps {
+  activeSceneResourceId: string
+}
 
 const serializeCanvas = (editor?) => {
   const canvas = editor?.canvas
@@ -33,10 +37,9 @@ const loadCanvas = (editor?, serializedCanvas?) => {
   canvas.loadFromJSON(serializedCanvas, canvas.renderAll.bind(canvas))
 }
 
-function CanvasEditor() {
+function CanvasEditor(props: ICanvasEditorProps): ReactElement {
   const [color, setColor] = useState('#35363a')
   const [backgroundColor, setBackgroundColor] = useState('#ffffff')
-  const [selectedImage, setSelectedImage] = useState(null)
   const { editor, onReady } = useFabricJSEditor()
 
   const fileInputRef = useRef(null)
@@ -45,7 +48,6 @@ function CanvasEditor() {
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       const img = event.target.files[0]
-      setSelectedImage(URL.createObjectURL(img))
       addImageToCanvas(URL.createObjectURL(img))
     }
   }
@@ -60,27 +62,9 @@ function CanvasEditor() {
       reader.readAsDataURL(blob)
       reader.onloadend = async function () {
         const base64data = reader.result
-
-        // Define the path for the cloned image
-        const projectFolderPath = localStorage.getItem('currentProjectPath')
-        if (!projectFolderPath) {
-          throw new Error('Project path not found')
-        }
-        const imageName = 'clonedImage.png'
-        const imageFolderPath = `${projectFolderPath}/canvas`
-        const filePath = `${imageFolderPath}/${imageName}`
-
-        // Save the cloned image using IPC
-        const result = await window.electronAPI.saveImage(filePath, base64data)
-        if (result) {
-          console.log('Cloned image saved successfully at', filePath)
-          // Add the cloned image to the canvas
-          fabric.Image.fromURL(filePath, function (oImg) {
-            editor?.canvas.add(oImg)
-          })
-        } else {
-          console.error('Failed to save cloned image')
-        }
+        fabric.Image.fromURL(base64data, function (oImg) {
+          editor?.canvas.add(oImg)
+        })
       }
     } catch (err) {
       console.error('Error processing the image:', err)
@@ -144,9 +128,9 @@ function CanvasEditor() {
         throw new Error('Project path not found')
       }
 
+      const imageName = props.activeSceneResourceId + '.png'
       // Assuming you want to save inside a folder called 'imagens' in the project folder
-      const imageName = 'image.png'
-      const imageFolderPath = `${projectFolderPath}/imagens`
+      const imageFolderPath = `${projectFolderPath}/img`
       const filePath = `${imageFolderPath}/${imageName}`
 
       // Call the IPC method to save the image
@@ -173,7 +157,7 @@ function CanvasEditor() {
       if (!projectFolderPath) {
         throw new Error('Project path not found')
       }
-      const canvasName = 'canvasState.json'
+      const canvasName = `canvasState${props.activeSceneResourceId}.json`
       const canvasFolderPath = `${projectFolderPath}/canvas`
       const filePath = `${canvasFolderPath}/${canvasName}`
 
@@ -187,6 +171,8 @@ function CanvasEditor() {
     } catch (err) {
       console.error('Error saving canvas state:', err)
     }
+
+    await onGenerateImageFromCanvas()
   }
 
   const onLoadScene = async () => {
@@ -195,7 +181,7 @@ function CanvasEditor() {
       if (!projectFolderPath) {
         throw new Error('Project path not found')
       }
-      const canvasName = 'canvasState.json'
+      const canvasName = `canvasState${props.activeSceneResourceId}.json`
       const canvasFolderPath = `${projectFolderPath}/canvas`
       const filePath = `${canvasFolderPath}/${canvasName}`
 
@@ -313,6 +299,7 @@ function CanvasEditor() {
     if (!editor || !fabric) {
       return
     }
+    onLoadScene()
     editor.canvas.freeDrawingBrush.color = color
     editor.canvas.preserveObjectStacking = true
     editor.setStrokeColor(color)
@@ -451,19 +438,9 @@ function CanvasEditor() {
           <FontAwesomeIcon icon={faTrash} className="fa-icon" /> Limpar
         </button>
 
-        <button onClick={onGenerateImageFromCanvas}>
-          <FontAwesomeIcon icon={faDownload} className="fa-icon" />
-          Gerar Imagem
-        </button>
-
         <button onClick={onSaveScene}>
           <FontAwesomeIcon icon={faSave} className="fa-icon" />
           Salvar Cena
-        </button>
-
-        <button onClick={onLoadScene}>
-          <FontAwesomeIcon icon={faSave} className="fa-icon" />
-          Carregar JSON
         </button>
       </div>
       <div className="canvas-container" onDragOver={(e) => e.preventDefault()} onDrop={onDrop}>

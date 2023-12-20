@@ -15,6 +15,7 @@ export interface IBaseButton {
   type: 'scene' | 'sound' | 'input' | 'wait' | 'else'
   src?: string
   correspondingCompileCode: string
+  onClick?: () => void
 }
 
 export const inputButtons: IBaseButton[] = [
@@ -75,7 +76,7 @@ export const genericButtons: IBaseButton[] = [
     correspondingCompileCode: '',
     type: 'wait',
     category: 'action',
-    src: '10000'
+    src: '5000'
   },
   {
     name: 'Caso errado',

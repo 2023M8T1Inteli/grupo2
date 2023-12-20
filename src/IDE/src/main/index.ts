@@ -15,7 +15,6 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
-
 import { users, User } from './services/User.service'
 import { Patient, patients } from './services/Patient.service'
 import { Project, projects } from './services/Project.service'
@@ -293,71 +292,20 @@ ipcMain.handle('read-canvas-state', async (event, filePath) => {
 ipcMain.handle('upload-and-save-image', async (event, filePath, base64Data) => {
   try {
     // Ensure the directory exists
-    const directoryPath = path.dirname(filePath);
+    const directoryPath = path.dirname(filePath)
     if (!fs.existsSync(directoryPath)) {
-      fs.mkdirSync(directoryPath, { recursive: true });
+      fs.mkdirSync(directoryPath, { recursive: true })
     }
-
     // Process and save the image
-    const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, '');
-    const buffer = Buffer.from(base64Image, 'base64');
-    fs.writeFileSync(filePath, buffer);
-
+    const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, '')
+    const buffer = Buffer.from(base64Image, 'base64')
+    fs.writeFileSync(filePath, buffer)
     // Read and return the saved image data
-    const imageBuffer = fs.readFileSync(filePath);
-    const dataUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`;
-    return dataUrl;
+    const imageBuffer = fs.readFileSync(filePath)
+    const dataUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`
+    return dataUrl
   } catch (error) {
-    console.error('Error in upload-and-save-image:', error);
-    return null;
-  }
-});
-
-
-ipcMain.handle('readFileAsBuffer', async (event, filePath) => {
-  try {
-    return fs.readFileSync(filePath)
-  } catch (error) {
-    console.error('Error reading file as buffer:', error)
+    console.error('Error in upload-and-save-image:', error)
     return null
   }
 })
-
-ipcMain.handle('convert-blob-to-ogg', async (event, buffer) => {
-  try {
-    // Dynamically import the ffmpeg module
-    const { createFFmpeg } = await import('@ffmpeg/ffmpeg');
-    const ffmpeg = createFFmpeg({ log: true });
-
-    if (!ffmpeg.isLoaded()) {
-      await ffmpeg.load();
-    }
-
-    // Write the buffer to a temporary file
-    const tempPath = path.join(os.tmpdir(), 'temp.webm');
-    fs.writeFileSync(tempPath, buffer);
-
-    // Convert to .ogg using ffmpeg
-    await ffmpeg.run('-i', tempPath, 'output.ogg');
-
-    // Read the .ogg file from FFmpeg's filesystem
-    const data = ffmpeg.FS('readFile', 'output.ogg');
-
-    // Define the output path in the user's Downloads folder
-    const downloadsFolder = path.join(os.homedir(), 'Downloads');
-    const outputPath = path.join(downloadsFolder, 'output.ogg');
-
-    // Write the .ogg file to the Downloads folder
-    fs.writeFileSync(outputPath, Buffer.from(data.buffer));
-
-    // Optionally, delete the temporary file
-    fs.unlinkSync(tempPath);
-
-    // Return the path to the .ogg file
-    return outputPath;
-  } catch (error) {
-    console.error('Error converting audio:', error);
-    return null;
-  }
-});
-

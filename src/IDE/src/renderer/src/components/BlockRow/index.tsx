@@ -13,8 +13,9 @@ import { IBaseButton } from '@renderer/pages/BlockEditor'
 interface IBlockRowProps {
   blocks: IBaseButton[]
   addButtonHandler: () => void
-  editCanvasHandler: (canvasIdx: number) => void
+  editCanvasHandler: (canvasIdx: string) => void
   editTimeHandler: (timerIdx: number) => void
+  editMusicHandler: (musicIdx: number) => void
 }
 export default function BlockRow(props: IBlockRowProps): ReactElement {
   const colorSwitch = (category: string): string => {
@@ -52,10 +53,12 @@ export default function BlockRow(props: IBlockRowProps): ReactElement {
             color={colorSwitch(block.category)}
             icon={block.icon}
             onClick={() => {
-              if (block.type === 'input') {
-                props.editCanvasHandler(idx)
+              if (block.type === 'scene') {
+                props.editCanvasHandler(block.id)
               } else if (block.type === 'wait') {
                 props.editTimeHandler(idx)
+              } else if (block.type === 'music') {
+                props.editMusicHandler(idx)
               }
             }}
           />

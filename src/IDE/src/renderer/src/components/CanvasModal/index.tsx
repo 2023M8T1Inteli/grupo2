@@ -9,6 +9,7 @@ import './styles.css'
 import { ReactElement } from 'react'
 interface ModalProps {
   show: boolean
+  activeSceneResourceId: string
   onClose: () => void
 }
 
@@ -20,11 +21,11 @@ export default function CanvasModal(props: ModalProps): ReactElement {
           <h4 className="modal-title">Editar Cena</h4>
         </div>
         <div className="modal-body">
-          <CanvasEditor />
+          <CanvasEditor activeSceneResourceId={props.activeSceneResourceId} />
         </div>
         <div className="modal-footer">
           <button className="button" onClick={props.onClose}>
-            Close
+            Cancelar
           </button>
         </div>
       </div>

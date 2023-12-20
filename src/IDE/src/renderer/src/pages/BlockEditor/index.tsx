@@ -28,6 +28,7 @@ function BlockEditor(): ReactElement {
   const [showEditCanvasModal, setShowEditCanvasModal] = useState(false)
   const [modalType, setModalType] = useState<'input' | 'other'>('input')
   const [activeRowIndex, setActiveRowIndex] = useState<number | null>(null)
+  const [activeBlockId, setActiveBlockId] = useState<string | null>(null)
   const [rows, setRows] = useState<IBlockRow[]>([])
   const sceneProcessor = new SceneProcessor()
   const [showMusicModal, setShowMusicModal] = useState(false)
@@ -40,10 +41,6 @@ function BlockEditor(): ReactElement {
     setActiveRowIndex(rowIndex)
     setModalType(modalType as 'input' | 'other')
     setShowModal(true)
-  }
-
-  const handleOpenEditCanvasModal = (idx: active): void => {
-    setShowEditCanvasModal(true)
   }
 
   const compileCodeHandler = async (): Promise<void> => {
@@ -80,7 +77,7 @@ function BlockEditor(): ReactElement {
     setShowMusicModal(true)
   }
 
-  const handleAddBlockToRow = (newBlock: IBaseButton): void => {
+  const addBlockToRow = (newBlock: IBaseButton): void => {
     if (activeRowIndex !== null) {
       BlockUtil.remapBlockCompiledCode(
         newBlock,
@@ -88,11 +85,25 @@ function BlockEditor(): ReactElement {
         globalResourceCounter,
         setGlobalResourceCounter
       )
+      setActiveBlockId(newBlock.id ? newBlock.id : null)
       const updatedRows = appendNewBlockToRow(newBlock, rows, activeRowIndex)
       setRows(updatedRows)
     }
     setShowModal(false)
   }
+
+  const addBlockToRowHandler = (newBlock: IBaseButton): void => {
+    addBlockToRow(newBlock)
+    if (newBlock.type === 'scene') {
+      if (activeBlockId) setShowEditCanvasModal(true)
+    }
+  }
+
+  const editCanvasHandler = (canvasIdx: string): void => {
+    setActiveBlockId(canvasIdx)
+    setShowEditCanvasModal(true)
+  }
+
   const handleClose = (): void => setShowModal(false)
   const handleEditCanvasClose = (): void => setShowEditCanvasModal(false)
   return (
@@ -103,11 +114,19 @@ function BlockEditor(): ReactElement {
         type={modalType}
         genericButtons={genericButtons}
         inputButtons={inputButtons}
-        onAddBlock={handleAddBlockToRow}
+        onAddBlock={addBlockToRowHandler}
         onMusicButtonClick={handleMusicButtonClick}
       />
-      <MusicModal show={showMusicModal} onClose={() => setShowMusicModal(false)} />
-      <CanvasModal show={showEditCanvasModal} onClose={handleEditCanvasClose} />
+      <MusicModal
+        show={showMusicModal}
+        onClose={() => setShowMusicModal(false)}
+        activeSoundResourceId={activeBlockId || ''}
+      />
+      <CanvasModal
+        show={showEditCanvasModal}
+        activeSceneResourceId={activeBlockId || ''}
+        onClose={handleEditCanvasClose}
+      />
       <span style={{ padding: '1em', width: '40em', height: '40em' }}>
         <div
           style={{
@@ -127,7 +146,7 @@ function BlockEditor(): ReactElement {
               key={idx}
               blocks={row.blocks}
               addButtonHandler={() => handleOpenModal(idx, 'other')}
-              editCanvasHandler={() => {}}
+              editCanvasHandler={editCanvasHandler}
               editTimeHandler={() => {}}
             />
           ))}
