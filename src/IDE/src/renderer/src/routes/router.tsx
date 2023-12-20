@@ -11,9 +11,10 @@ import '../assets/styles/global.css'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Login from '../pages/Login'
 import Navbar from '../components/Navbar'
-import Projects from '../pages/Projects'
 import Patients from '../pages/Patients'
 import Register from '../pages/Register'
+import Home from '../pages/Home'
+import Projects from '../pages/Projects'
 import RegisterPatient from '../pages/RegisterPatient'
 import { AuthProvider } from '../contexts/AuthContext'
 import { useState, useEffect, ReactElement } from 'react'
@@ -41,9 +42,9 @@ export default function Router(): ReactElement {
       {showNavbar && <Navbar />}
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<BlockEditor />} />
         <Route path="/editor" element={<BlockEditor />} />
         <Route path="/projects" element={<Projects />} />
+        <Route path="/" element={<Home />} />
         <Route path="/patients" element={<Patients />} />
         <Route path="/fabric" element={<FabricPage />} />
         <Route path="/new-function" element={<NewFunction />} />

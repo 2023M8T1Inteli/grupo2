@@ -18,6 +18,7 @@ interface ModalProps {
   onClose: () => void
   onAddBlock: (newBlock: IBaseButton) => void
   onMusicButtonClick?: (button: IBaseButton) => void // Optional prop for music button
+  onTimerButtonClick?: (button: IBaseButton) => void // Optional prop for time button
 }
 
 export interface IBaseButtonProps {
@@ -40,6 +41,8 @@ export default function Modal(props: ModalProps): ReactElement {
   const handleAddButtonClick = (button: IBaseButton): void => {
     if (button.name === 'Tocar Música' && props.onMusicButtonClick) {
       props.onMusicButtonClick(button)
+    } else if (button.name == 'Esperar Segundos' && props.onTimerButtonClick) {
+      props.onTimerButtonClick(button)
     } else {
       props.onAddBlock(button)
     }

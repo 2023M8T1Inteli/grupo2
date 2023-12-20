@@ -19,6 +19,7 @@ import { SceneProcessor, BlockUtil, IProject } from '@renderer/utils/util'
 import { IBaseButton, genericButtons, inputButtons } from '@renderer/staticButtons'
 import MusicModal from '@renderer/components/MusicModal'
 import { useNavigate } from 'react-router-dom'
+import TimerModal from '@renderer/components/TimerModal'
 
 export interface IBlockRow {
   order: number
@@ -35,6 +36,7 @@ function BlockEditor(): ReactElement {
   const sceneProcessor = new SceneProcessor()
   const [showMusicModal, setShowMusicModal] = useState(false)
   const navigate = useNavigate()
+  const [showTimerModal, setShowTimerModal] = useState(false)
 
   // Be aware that this is VERY INNEFICIENT and will lead to "counter" leaks.
   // This is just a quick fix to make sure that the "src" property of each block is uniquely mapped.
@@ -140,6 +142,9 @@ function BlockEditor(): ReactElement {
   const handleMusicButtonClick = (button: IBaseButton) => {
     setShowMusicModal(true)
   }
+  const handleTimerButtonClick = (button: IBaseButton) => {
+    setShowTimerModal(true)
+  }
 
   const addBlockToRow = (newBlock: IBaseButton): void => {
     if (activeRowIndex !== null) {
@@ -180,12 +185,14 @@ function BlockEditor(): ReactElement {
         inputButtons={inputButtons}
         onAddBlock={addBlockToRowHandler}
         onMusicButtonClick={handleMusicButtonClick}
+        onTimerButtonClick={handleTimerButtonClick}
       />
       <MusicModal
         show={showMusicModal}
         onClose={() => setShowMusicModal(false)}
         activeSoundResourceId={activeBlockId || ''}
       />
+      <TimerModal show={showTimerModal} onClose={() => setShowTimerModal(false)} />
       <CanvasModal
         show={showEditCanvasModal}
         activeSceneResourceId={activeBlockId || ''}
