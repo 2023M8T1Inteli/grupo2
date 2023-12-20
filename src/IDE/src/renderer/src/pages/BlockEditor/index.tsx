@@ -85,10 +85,10 @@ const genericButtons: IBaseButton[] = [
   {
     name: 'Esperar Segundos',
     icon: faHourglassHalf,
-    correspondingCompileCode: 'timer',
+    correspondingCompileCode: '',
     type: 'wait',
     category: 'action',
-    src: '0'
+    src: '10000'
   },
   {
     name: 'Caso errado',
@@ -147,7 +147,6 @@ function BlockEditor(): ReactElement {
           if (index === activeRowIndex) {
             if (['graphical', 'resource'].includes(newBlock.category)) {
               newBlock.id = `${globalResourceCounter}`
-              setNewBlockCompileCode(newBlock)
               setGlobalResourceCounter(globalResourceCounter + 1)
             } else if (newBlock.category === 'input') {
               newBlock.id = activeRowIndex.toString()
@@ -160,7 +159,6 @@ function BlockEditor(): ReactElement {
       } else {
         if (['graphical', 'resource'].includes(newBlock.category)) {
           newBlock.id = `${globalResourceCounter}`
-          setNewBlockCompileCode(newBlock)
           setGlobalResourceCounter(globalResourceCounter + 1)
         } else if (newBlock.category === 'input') {
           newBlock.id = activeRowIndex.toString()
@@ -168,14 +166,10 @@ function BlockEditor(): ReactElement {
         const newRow = { order: activeRowIndex, blocks: [newBlock] }
         setRows([...rows, newRow])
       }
+      setNewBlockCompileCode(newBlock)
     }
     setShowModal(false)
   }
-
-  useEffect(() => {
-    console.log(sceneProcessor({ name: 'teste', blockRows: rows }))
-  }, [rows])
-
   const handleClose = (): void => setShowModal(false)
   const handleEditCanvasClose = (): void => setShowEditCanvasModal(false)
   return (
@@ -217,7 +211,13 @@ function BlockEditor(): ReactElement {
       <span style={{ padding: '1em' }} onClick={() => handleOpenModal(rows.length, 'input')}>
         <FontAwesomeIcon icon={faPlusCircle} size="4x" color="black" />
       </span>
-      <button>Test Compile</button>
+      <button
+        onClick={() => {
+          alert(sceneProcessor({ name: 'teste', blockRows: rows }))
+        }}
+      >
+        Test Compile
+      </button>
     </div>
   )
 }

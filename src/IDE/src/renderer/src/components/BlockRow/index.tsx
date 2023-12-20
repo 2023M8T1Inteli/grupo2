@@ -31,8 +31,6 @@ export default function BlockRow(props: IBlockRowProps): ReactElement {
       default:
         return 'darkBlue'
     }
-
-    console.log('BlockRow: colorSwitch: type not found')
   }
 
   return (

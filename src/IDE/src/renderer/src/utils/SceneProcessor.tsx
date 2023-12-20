@@ -23,12 +23,6 @@ function _processBlockRow(blockRow: IBlockRow): string {
     code += `    ${block.correspondingCompileCode}\n`
   }
 
-  // for (const block of blockRow.blocks.slice(1)) {
-  //   if (block.type === 'else') {
-  //     code += '  fim senao\n  inicio\n'
-  //   }
-  //   code += `    ${block.correspondingCompileCode}\n`
-  // }
   code += '  fim\n'
   return code
 }
