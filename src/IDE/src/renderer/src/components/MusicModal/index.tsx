@@ -1,12 +1,18 @@
 // MusicModal.js
-import React, { useState } from 'react';
-import AudioRecorder from '../AudioRecord';
-import AudioUploader from '../AudioUpload';
+import React, { useState } from 'react'
+import AudioRecorder from '../AudioRecord'
+import AudioUploader from '../AudioUpload'
 
-const MusicModal = ({ show, onClose }) => {
-  const [mode, setMode] = useState(null);
+interface MusicModalProps {
+  show: boolean
+  onClose: () => void
+  activeSoundResourceId: string
+}
 
-  if (!show) return null;
+const MusicModal = (props: MusicModalProps) => {
+  const [mode, setMode] = useState(null)
+
+  if (!props.show) return null
 
   return (
     <div className="modal">
@@ -21,17 +27,21 @@ const MusicModal = ({ show, onClose }) => {
               <button onClick={() => setMode('upload')}>Upload Audio</button>
             </div>
           )}
-          {mode === 'record' && <AudioRecorder />}
-          {mode === 'upload' && <AudioUploader />}
+          {mode === 'record' && (
+            <AudioRecorder activeSoundResourceId={props.activeSoundResourceId} />
+          )}
+          {mode === 'upload' && (
+            <AudioUploader activeSoundResourceId={props.activeSoundResourceId} />
+          )}
         </div>
         <div className="modal-footer">
-          <button className="button" onClick={onClose}>
+          <button className="button" onClick={props.onClose}>
             Close
           </button>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MusicModal;
+export default MusicModal

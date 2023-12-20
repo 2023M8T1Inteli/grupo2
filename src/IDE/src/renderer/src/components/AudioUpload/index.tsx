@@ -1,20 +1,24 @@
 // Updated AudioUploader.js
-import React, { useEffect, useRef, useState } from 'react';
-import WaveSurfer from 'wavesurfer.js';
-import SaveAsWav from '../SaveAudio';
+import React, { useEffect, useRef, useState } from 'react'
+import WaveSurfer from 'wavesurfer.js'
+import SaveAsWav from '../SaveAudio'
 
-const AudioUploader = () => {
-  const [uploadedFile, setUploadedFile] = useState(null);
-  const [fileBlob, setFileBlob] = useState(null); // Store the actual file blob
+interface AudioUploaderProps {
+  activeSoundResourceId: string
+}
 
-  const waveSurferRef = useRef(null);
+const AudioUploader = (props: AudioUploaderProps) => {
+  const [uploadedFile, setUploadedFile] = useState(null)
+  const [fileBlob, setFileBlob] = useState(null) // Store the actual file blob
+
+  const waveSurferRef = useRef(null)
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
+    const file = event.target.files[0]
     if (file) {
-      setUploadedFile(URL.createObjectURL(file));
-      setFileBlob(file); // Store the file blob
+      setUploadedFile(URL.createObjectURL(file))
+      setFileBlob(file) // Store the file blob
     }
-  };
+  }
 
   useEffect(() => {
     if (uploadedFile) {
@@ -26,16 +30,16 @@ const AudioUploader = () => {
         height: 200,
         responsive: true,
         backend: 'WebAudio'
-      });
-      waveSurferRef.current.load(uploadedFile);
+      })
+      waveSurferRef.current.load(uploadedFile)
     }
 
     return () => {
       if (waveSurferRef.current) {
-        waveSurferRef.current.destroy();
+        waveSurferRef.current.destroy()
       }
-    };
-  }, [uploadedFile]);
+    }
+  }, [uploadedFile])
 
   return (
     <div>
@@ -44,11 +48,11 @@ const AudioUploader = () => {
       {uploadedFile && (
         <div>
           <button onClick={() => waveSurferRef.current.playPause()}>Play/Pause</button>
-          <SaveAsWav audioData={fileBlob} />
+          <SaveAsWav audioData={fileBlob} activeSoundResourceId={props.activeSoundResourceId} />
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default AudioUploader;
+export default AudioUploader

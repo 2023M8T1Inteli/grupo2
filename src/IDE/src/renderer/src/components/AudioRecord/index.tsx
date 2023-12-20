@@ -1,8 +1,12 @@
-import React, { useRef, useState } from 'react';
-import { useVoiceVisualizer, VoiceVisualizer } from 'react-voice-visualizer';
-import SaveAsWav from '../SaveAudio';
+import React, { useRef, useState } from 'react'
+import { useVoiceVisualizer, VoiceVisualizer } from 'react-voice-visualizer'
+import SaveAsWav from '../SaveAudio'
 
-const AudioRecorder = () => {
+interface AudioRecorderProps {
+  activeSoundResourceId: string
+}
+
+const AudioRecorder = (props: AudioRecorderProps) => {
   const recorderControls = useVoiceVisualizer()
   const { recordedBlob, error, audioRef } = recorderControls
   return (
@@ -16,7 +20,9 @@ const AudioRecorder = () => {
         isDefaultUIShown={true}
         defaultMicrophoneIconColor={'#000000'}
       />
-      {recordedBlob && <SaveAsWav audioData={recordedBlob} />}
+      {recordedBlob && (
+        <SaveAsWav audioData={recordedBlob} activeSoundResourceId={props.activeSoundResourceId} />
+      )}
     </div>
   )
 }
