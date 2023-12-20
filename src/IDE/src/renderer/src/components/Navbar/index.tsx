@@ -1,9 +1,9 @@
-// Navbar com funcionalidades de autenticação.
-// Inclui:
-// - Interface `NavbarProps` para propriedades opcionais como 'name' e 'role'.
-// - Uso do contexto de autenticação "useAuth" para obter funções de usuário e logout.
-// - Implementação de um menu responsivo e um botão de logout com uma mensagem de sucesso.
-// - Exibição do nome do usuário e imagem de perfil no componente.
+// Navbar with authentication functionalities.
+// Includes:
+// - Interface `NavbarProps` for optional properties like 'name' and 'role'.
+// - Usage of the authentication context "useAuth" to obtain user and logout functions.
+// - Implementation of a responsive menu and a logout button with a success message.
+// - Display of the user's name and profile image in the component.
 
 import React, { useState } from 'react'
 import './styles.css'

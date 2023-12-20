@@ -8,6 +8,21 @@ interface DefinedBlockProps {
   icon: IconDefinition
 }
 
+/**
+ * Props for the Block component.
+ */
+interface BlockProps extends DefinedBlockProps {
+  /**
+   * The type of the block.
+   * Can be 'start', 'middle', or 'end'.
+   */
+  type: 'start' | 'middle' | 'end';
+
+  /**
+   * Callback function to be called when the block is clicked.
+   */
+  onClick?: () => void;
+}
 interface BlockProps extends DefinedBlockProps {
   type: 'start' | 'middle' | 'end'
   onClick?: () => void

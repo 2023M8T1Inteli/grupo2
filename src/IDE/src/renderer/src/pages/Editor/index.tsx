@@ -1,10 +1,10 @@
-// Tela focada na criação e manipulação de cenas do projeto.
-// Inclui:
-// - Utilização do componente Button para navegação.
-// - Estrutura dividida em colunas e linhas para organizar o layout da página.
-// - Uso da biblioteca `react-rnd` para criar um bloco redimensionável e arrastável.
-// - Botões e links para adicionar elementos e editar blocos, com redirecionamento para outras páginas.
-// - Estilização através do arquivo `styles.css`.
+// Screen focused on creating and manipulating project scenes.
+// Includes:
+// - Use of the Button component for navigation.
+// - Structure divided into columns and rows to organize the page layout.
+// - Use of the `react-rnd` library to create a resizable and draggable block.
+// - Buttons and links to add elements and edit blocks, with redirection to other pages.
+// - Styling through the `styles.css` file.
 
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'

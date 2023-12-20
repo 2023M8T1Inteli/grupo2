@@ -1,3 +1,6 @@
+// This code is designed for recording audio and visualizing the voice input. The component uses custom hooks and  components from the react-voice-visualizer library to handle the audio recording and visualization process.
+
+
 import React, { useRef, useState } from 'react'
 import { useVoiceVisualizer, VoiceVisualizer } from 'react-voice-visualizer'
 import SaveAsWav from '../SaveAudio'

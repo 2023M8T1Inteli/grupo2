@@ -1,3 +1,14 @@
+// App.js is the main React component of an Electron project integrated with React and TypeScript.
+// The component:
+// - Utilizes 'useEffect' to perform initial data fetching from a database via Electron's IPC (Inter-Process Communication) renderer.
+// - Renders a 'Versions' component to display version information.
+// - Displays an SVG logo using 'icons.svg', demonstrating the integration of SVGs in React components.
+// - Provides a headline and tagline to guide users about the Electron project setup.
+// - Includes links to relevant documentation, help resources, and the 'create-electron' GitHub repository for further guidance and support.
+// - Showcases various features of Electron with React and TypeScript, such as configuring, Hot Module Replacement (HMR), hot reloading, debugging, source code protection, and packaging.
+// - Each feature is represented as an 'article' within a 'feature-item' div, providing succinct information and links to detailed documentation.
+// - Styling is managed through 'styles.css', defining the layout and appearance of the App component and its elements.
+
 import Versions from './components/Versions'
 import icons from './assets/icons.svg'
 import { useEffect } from 'react'

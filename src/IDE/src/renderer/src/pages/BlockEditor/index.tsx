@@ -1,3 +1,13 @@
+// BlockEditor.js is a comprehensive React component that serves as an interactive editor for managing and assembling blocks within a scene.
+// The component leverages several custom components and utilities, including BlockRow, Modal, CanvasModal, and MusicModal, for various aspects of scene creation and editing.
+// Key functionalities include:
+// - Managing modal visibility and types (standard, canvas editing, music) through state.
+// - Handling the creation and arrangement of blocks (represented by IBlockRow[]).
+// - Utilizing SceneProcessor for processing the scene and BlockUtil for block-specific logic.
+// - Dynamically adding blocks to rows and handling their interactions.
+// - Providing UI elements for user interaction, such as buttons for adding blocks, editing canvas, and music settings.
+// - The component also contains experimental or placeholder func
+
 import './styles.css'
 import { ReactElement, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

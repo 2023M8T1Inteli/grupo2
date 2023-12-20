@@ -1,11 +1,15 @@
-// SaveAsWav.js
-import React from 'react'
-import toWav from 'audiobuffer-to-wav'
+// SaveAsWav.js is a functional React component that provides the functionality to save audio data as a WAV file.
+// It utilizes the 'audiobuffer-to-wav' library to convert audio data into WAV format.
+// The component:
+// - Receives 'audioData' as a prop, which is expected to be an audio recording data.
+// - Contains a function 'saveAsWav' that:
+//   - Checks if 'audioData' exists. If not, it returns early.
+//   - Converts 'audioData' from an ArrayBuffer to an AudioBuffer, and then to a WAV format ArrayBuffer using 'toWav'.
+//   - Creates a Blob from the WAV ArrayBuffer and passes it to 'downloadWav'.
+// - 'downloadWav' function creates a temporary download link and triggers the download of the WAV file.
+// - Renders a button that, when clicked, triggers the 'saveAsWav' function.
 
-interface SaveAsWavProps {
-  audioData: any
-  activeSoundResourceId: string
-}
+import toWav from 'audiobuffer-to-wav'
 
 const SaveAsWav = (props: SaveAsWavProps) => {
   const saveAsWav = async () => {
