@@ -73,16 +73,8 @@ function FabricPage() {
         const filePath = `${imageFolderPath}/${imageName}`
 
         // Save the cloned image using IPC
-        const result = await window.electronAPI.saveImage(filePath, base64data)
-        if (result) {
-          console.log('Cloned image saved successfully at', filePath)
-          // Add the cloned image to the canvas
-          fabric.Image.fromURL(filePath, function (oImg) {
-            editor?.canvas.add(oImg)
-          })
-        } else {
-          console.error('Failed to save cloned image')
-        }
+        const result = await window.electronAPI.uploadAndSaveImage(filePath, base64data);
+        console.log(result)
       }
     } catch (err) {
       console.error('Error processing the image:', err)

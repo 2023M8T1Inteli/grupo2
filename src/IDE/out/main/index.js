@@ -364,10 +364,11 @@ electron.ipcMain.handle("read-canvas-state", async (event, filePath) => {
   }
 });
 electron.ipcMain.handle("upload-and-save-image", async (event, filePath, base64Data) => {
+electron.ipcMain.handle("upload-and-save-image", async (event, filePath, base64Data) => {
   try {
-    const directoryPath = path.dirname(filePath);
-    if (!fs$1.existsSync(directoryPath)) {
-      fs$1.mkdirSync(directoryPath, { recursive: true });
+    const projectFolderPath = path.join(os.homedir(), "YourAppFolder", "ProjectImages");
+    if (!fs$1.existsSync(projectFolderPath)) {
+      fs$1.mkdirSync(projectFolderPath, { recursive: true });
     }
     const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, "");
     const buffer = Buffer.from(base64Image, "base64");
