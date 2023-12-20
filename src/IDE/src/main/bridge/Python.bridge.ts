@@ -41,5 +41,29 @@ export const codeBridge = {
         }
       })
     })
+  },
+  async saveCompiledCodeAndRun(code: string, filepath: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      fs.writeFileSync(filepath + '/main.py', code)
+      const spawn = require('child_process').spawn
+      const compileProcess = spawn('python', [filepath + '/main.py'])
+      let errorData = ''
+
+      compileProcess.stderr.on('data', (chunk: any) => {
+        errorData += chunk.toString()
+      })
+
+      compileProcess.on('error', (error: any) => {
+        reject(`Error occurred: ${error.message}`)
+      })
+
+      compileProcess.stdout.on('end', () => {
+        if (errorData) {
+          reject(`Error output: ${errorData}`)
+        } else {
+          resolve()
+        }
+      })
+    })
   }
 }

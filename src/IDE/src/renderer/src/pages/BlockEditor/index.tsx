@@ -40,6 +40,13 @@ function BlockEditor(): ReactElement {
       const compiledCode = await window.api.compileCode(code)
       console.log(compiledCode)
       alert(compiledCode)
+      try {
+        const projectFolderPath = localStorage.getItem('currentProjectPath')
+        const runCode = await window.api.saveAndRunCode(compiledCode, projectFolderPath)
+        console.log(runCode)
+      } catch (err) {
+        alert(err)
+      }
     } catch (err) {
       alert(err)
     }
@@ -145,7 +152,7 @@ function BlockEditor(): ReactElement {
       <span style={{ padding: '1em' }} onClick={() => handleOpenModal(rows.length, 'input')}>
         <FontAwesomeIcon icon={faPlusCircle} size="4x" color="black" />
       </span>
-      <button>Test Save</button>
+      {/* <button>Test Save</button> */}
       <button onClick={() => compileCodeHandler()}>Test Compile</button>
     </div>
   )

@@ -1,26 +1,4 @@
 "use strict";
-var __create = Object.create;
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __getProtoOf = Object.getPrototypeOf;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
-  // If the importer is in node compatibility mode or this is not an ESM
-  // file that has been converted to a CommonJS file using a Babel-
-  // compatible transform (i.e. "__esModule" has not been set), then set
-  // "default" to the CommonJS "module.exports" for node compatibility.
-  isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
-  mod
-));
 const electron = require("electron");
 const path = require("path");
 const utils = require("@electron-toolkit/utils");
@@ -162,6 +140,27 @@ const codeBridge = {
         }
       });
     });
+  },
+  async saveCompiledCodeAndRun(code, filepath) {
+    return new Promise((resolve, reject) => {
+      fs.writeFileSync(filepath + "/main.py", code);
+      const spawn = require("child_process").spawn;
+      const compileProcess = spawn("python", [filepath + "/main.py"]);
+      let errorData = "";
+      compileProcess.stderr.on("data", (chunk) => {
+        errorData += chunk.toString();
+      });
+      compileProcess.on("error", (error) => {
+        reject(`Error occurred: ${error.message}`);
+      });
+      compileProcess.stdout.on("end", () => {
+        if (errorData) {
+          reject(`Error output: ${errorData}`);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 };
 function createWindow() {
@@ -249,6 +248,9 @@ electron.app.whenReady().then(() => {
   });
   electron.ipcMain.handle("compiler:compile", async (_, code) => {
     return codeBridge.compileCode(code);
+  });
+  electron.ipcMain.handle("compiler:saveAndRun", async (_, code, filepath) => {
+    return codeBridge.saveCompiledCodeAndRun(code, filepath);
   });
 });
 electron.app.on("window-all-closed", () => {
@@ -364,11 +366,10 @@ electron.ipcMain.handle("read-canvas-state", async (event, filePath) => {
   }
 });
 electron.ipcMain.handle("upload-and-save-image", async (event, filePath, base64Data) => {
-electron.ipcMain.handle("upload-and-save-image", async (event, filePath, base64Data) => {
   try {
-    const projectFolderPath = path.join(os.homedir(), "YourAppFolder", "ProjectImages");
-    if (!fs$1.existsSync(projectFolderPath)) {
-      fs$1.mkdirSync(projectFolderPath, { recursive: true });
+    const directoryPath = path.dirname(filePath);
+    if (!fs$1.existsSync(directoryPath)) {
+      fs$1.mkdirSync(directoryPath, { recursive: true });
     }
     const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, "");
     const buffer = Buffer.from(base64Image, "base64");
@@ -378,35 +379,6 @@ electron.ipcMain.handle("upload-and-save-image", async (event, filePath, base64D
     return dataUrl;
   } catch (error) {
     console.error("Error in upload-and-save-image:", error);
-    return null;
-  }
-});
-electron.ipcMain.handle("readFileAsBuffer", async (event, filePath) => {
-  try {
-    return fs$1.readFileSync(filePath);
-  } catch (error) {
-    console.error("Error reading file as buffer:", error);
-    return null;
-  }
-});
-electron.ipcMain.handle("convert-blob-to-ogg", async (event, buffer) => {
-  try {
-    const { createFFmpeg } = await import("@ffmpeg/ffmpeg");
-    const ffmpeg = createFFmpeg({ log: true });
-    if (!ffmpeg.isLoaded()) {
-      await ffmpeg.load();
-    }
-    const tempPath = path.join(os.tmpdir(), "temp.webm");
-    fs$1.writeFileSync(tempPath, buffer);
-    await ffmpeg.run("-i", tempPath, "output.ogg");
-    const data = ffmpeg.FS("readFile", "output.ogg");
-    const downloadsFolder = path.join(os.homedir(), "Downloads");
-    const outputPath = path.join(downloadsFolder, "output.ogg");
-    fs$1.writeFileSync(outputPath, Buffer.from(data.buffer));
-    fs$1.unlinkSync(tempPath);
-    return outputPath;
-  } catch (error) {
-    console.error("Error converting audio:", error);
     return null;
   }
 });

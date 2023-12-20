@@ -31,7 +31,8 @@ const api = {
   readCanvasState: (filePath) => electron.ipcRenderer.invoke("read-canvas-state", filePath),
   uploadAndSaveImage: (filePath, data) => electron.ipcRenderer.invoke("upload-and-save-image", filePath, data),
   readFileAsBuffer: (filePath) => electron.ipcRenderer.invoke("readFileAsBuffer", filePath),
-  compileCode: (code) => electron.ipcRenderer.invoke("compiler:compile", code)
+  compileCode: (code) => electron.ipcRenderer.invoke("compiler:compile", code),
+  saveAndRunCode: (code, filepath) => electron.ipcRenderer.invoke("compiler:saveAndRun", code, filepath)
 };
 if (process.contextIsolated) {
   try {

@@ -130,7 +130,7 @@ function CanvasEditor(props: ICanvasEditorProps): ReactElement {
 
       const imageName = props.activeSceneResourceId + '.png'
       // Assuming you want to save inside a folder called 'imagens' in the project folder
-      const imageFolderPath = `${projectFolderPath}/img`
+      const imageFolderPath = `${projectFolderPath}/imgs`
       const filePath = `${imageFolderPath}/${imageName}`
 
       // Call the IPC method to save the image
