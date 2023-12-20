@@ -292,9 +292,9 @@ ipcMain.handle('read-canvas-state', async (event, filePath) => {
 ipcMain.handle('upload-and-save-image', async (event, filePath, base64Data) => {
   try {
     // Ensure the directory exists
-    const directoryPath = path.dirname(filePath)
+    const directoryPath = path.dirname(filePath);
     if (!fs.existsSync(directoryPath)) {
-      fs.mkdirSync(directoryPath, { recursive: true })
+      fs.mkdirSync(directoryPath, { recursive: true });
     }
     // Process and save the image
     const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, '')
@@ -305,7 +305,7 @@ ipcMain.handle('upload-and-save-image', async (event, filePath, base64Data) => {
     const dataUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`
     return dataUrl
   } catch (error) {
-    console.error('Error in upload-and-save-image:', error)
-    return null
+    console.error('Error in upload-and-save-image:', error);
+    return null;
   }
 })
