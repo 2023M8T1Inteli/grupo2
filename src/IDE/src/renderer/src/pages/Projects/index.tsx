@@ -76,21 +76,33 @@ export default function Projects() {
       </div>
 
       {isModalOpen && (
-        <div className="modal">
-          <input
-            type="text"
-            value={newFolderName}
-            onChange={(e) => setNewFolderName(e.target.value)}
-            placeholder="Insira o nome do projeto"
-          />
-          <button onClick={handleCreateProject}>Criar Projeto</button>
-          <button
-            onClick={() => {
-              setIsModalOpen(false)
-            }}
-          >
-            Cancelar
-          </button>
+        <div className="modal-short">
+          <div className="modal-short-content">
+            <div className="modal-short-header">
+              <h2>Criar Projeto</h2>
+              <span className="close-short-button" onClick={() => setIsModalOpen(false)}>
+                &times;
+              </span>
+            </div>
+            <div className="modal-short-body">
+              <p>Insira o nome do seu novo projeto</p>
+              <input
+                type="text"
+                value={newFolderName}
+                onChange={(e) => setNewFolderName(e.target.value)}
+                placeholder="Meu Projeto X"
+                className="modal-input"
+              />
+            </div>
+            <div className="modal-short-footer">
+              <button className="btn-short btn-cancel" onClick={() => setIsModalOpen(false)}>
+                Cancel
+              </button>
+              <button className="btn-short btn-continue" onClick={handleCreateProject}>
+                Continue
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

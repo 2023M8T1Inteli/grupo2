@@ -73,3 +73,31 @@
     justify-content: space-evenly;
     align-items: center;
 }
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 20px; /* Space between buttons */
+  }
+  
+  .editor-button {
+    font-size: 2em;
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out /* Smooth transitions for transform and shadow */
+  }
+  
+  .editor-button:hover, .editor-button:focus {
+    transform: scale(1.1); /* Slightly enlarge buttons on hover/focus */
+    color:green;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .button-container {
+      flex-direction: column; /* Stack buttons vertically on smaller screens */
+    }
+  }
+  

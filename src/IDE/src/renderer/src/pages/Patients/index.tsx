@@ -20,8 +20,7 @@ interface IPatient {
 }
 
 export default function Patients() {
-
-  const [patients, setPatients] = useState<IPatient[]>([]);
+  const [patients, setPatients] = useState<IPatient[]>([])
   const [filteredPatients, setFilteredPatients] = useState<IPatient[]>(patients)
 
   useEffect(() => {
@@ -33,38 +32,37 @@ export default function Patients() {
   }, [])
 
   const handleSearch = (e: any) => {
-    let searchTerm = e.target.value;
+    const searchTerm = e.target.value
     console.log(searchTerm)
-    setFilteredPatients(patients.filter((patient) => {
-      return (
-        patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        patient.surname.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    }))
-  };
+    setFilteredPatients(
+      patients.filter((patient) => {
+        return (
+          patient.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          patient.surname.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+      })
+    )
+  }
 
   return (
     <div className="patients-container">
       <AutoRedirect />
-      <Button
-        variant='back'
-      />
-      <h1>
-        Pacientes
-      </h1>
-      <input className='search-patient' onChange={handleSearch} />
-      <div className='patients'>
-        <a href='register-patient' className='patient add'>
+      <Button variant="back" />
+      <h1>Pacientes</h1>
+      <input className="search-patient" onChange={handleSearch} />
+      <div className="patients">
+        <a href="register-patient" className="patient add">
           <img src={plus} />
         </a>
         {filteredPatients?.map((patient) => (
-          <a key={patient.id} href="http://" className="patient">
+          <a key={patient.id} className="patient">
             <img src={profilePhoto} alt="" />
-            <p className="patient-name">{patient.name} {patient.surname}</p>
+            <p className="patient-name">
+              {patient.name} {patient.surname}
+            </p>
             <p className="patient-age">{new Date(patient.birthdate).toLocaleDateString()}</p>
           </a>
-        ))
-        }
+        ))}
       </div>
     </div>
   )

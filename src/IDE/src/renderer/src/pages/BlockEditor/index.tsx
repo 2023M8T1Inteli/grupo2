@@ -20,6 +20,7 @@ import { IBaseButton, genericButtons, inputButtons } from '@renderer/staticButto
 import MusicModal from '@renderer/components/MusicModal'
 import { useNavigate } from 'react-router-dom'
 import TimerModal from '@renderer/components/TimerModal'
+import { infoToast } from '@renderer/components/Toast'
 
 export interface IBlockRow {
   order: number
@@ -84,6 +85,7 @@ function BlockEditor(): ReactElement {
     } else {
       console.log('No project folder path found.')
     }
+    infoToast('Projeto salvo com sucesso!')
   }
 
   useEffect(() => {
@@ -223,17 +225,17 @@ function BlockEditor(): ReactElement {
           ))}
         </div>
       </span>
-      <span style={{ display: 'flex', flexDirection: 'row' }}>
-        <span style={{ padding: '1em' }} onClick={() => handleOpenModal(rows.length, 'input')}>
-          <FontAwesomeIcon icon={faPlusCircle} size="4x" color="black" />
-        </span>
-        <span style={{ padding: '1em' }} onClick={saveProjectAndNavigate}>
-          <FontAwesomeIcon icon={faCheckCircle} size="4x" color="black" />
-        </span>
-        <span style={{ padding: '1em' }} onClick={compileCodeHandler}>
-          <FontAwesomeIcon icon={faPlayCircle} size="4x" color="black" />
-        </span>
-      </span>
+      <div className="button-container">
+        <button className="editor-button" onClick={() => handleOpenModal(rows.length, 'input')}>
+          <FontAwesomeIcon icon={faPlusCircle} size="2x" />
+        </button>
+        <button className="editor-button" onClick={saveProjectAndNavigate}>
+          <FontAwesomeIcon icon={faCheckCircle} size="2x" />
+        </button>
+        <button className="editor-button" onClick={compileCodeHandler}>
+          <FontAwesomeIcon icon={faPlayCircle} size="2x" />
+        </button>
+      </div>
     </div>
   )
 }
