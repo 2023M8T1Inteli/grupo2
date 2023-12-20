@@ -24,7 +24,6 @@ import FabricPage from '../pages/Fabric'
 import NewFunction from '../pages/NewFunction'
 import BlockEditor from '@renderer/pages/BlockEditor'
 
-
 export default function Router(): ReactElement {
   const location = useLocation()
   const [showNavbar, setShowNavbar] = useState(false)

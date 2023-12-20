@@ -3,6 +3,7 @@ import { IBaseButton } from '@renderer/staticButtons'
 
 export interface IProject {
   name: string
+  globalCounter: number
   blockRows: IBlockRow[]
 }
 
