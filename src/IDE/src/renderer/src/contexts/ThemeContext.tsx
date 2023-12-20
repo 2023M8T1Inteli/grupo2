@@ -11,7 +11,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const initialTheme = localStorage.getItem('theme') as 'dark' | 'light' || 'light';
-  const initialColor = localStorage.getItem('color') || 'blue';
+  const initialColor = localStorage.getItem('color') || '#a805a3';
 
   const [theme, setTheme] = useState<'dark' | 'light'>(initialTheme);
   const [color, setColor] = useState<string>(initialColor);
