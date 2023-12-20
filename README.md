@@ -75,5 +75,5 @@ Este é um dos repositórios do projeto de alunos do Inteli em parceria com a AA
 
 ## Manual de Instrução:
 
-Clique <a href="https://drive.google.com/drive/u/1/folders/1ub0BKAtJ6MK75tWgmhBkvW18zJpg7AAr"> aqui</a> para acessar o Manual de Instrução para entendimento completo das funcionalidades da aplicação.
+Clique <a href="https://drive.google.com/drive/folders/1jp6ClTOCdblO-j1ru-LTOpB9WauLwAzS?usp=sharing"> aqui</a> para acessar o Manual de Instrução para entendimento completo das funcionalidades da aplicação.
 
