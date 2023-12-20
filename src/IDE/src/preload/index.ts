@@ -17,7 +17,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   uploadAndSaveImage: (filePath, data) =>
     ipcRenderer.invoke('upload-and-save-image', filePath, data),
   readFileAsBuffer: (filePath) => ipcRenderer.invoke('readFileAsBuffer', filePath)
-})
+    convertArrayBufferToBuffer: (arrayBuffer) => Buffer.from(arrayBuffer),
+    convertBlobToOgg: (buffer) => ipcRenderer.invoke('convert-blob-to-ogg', buffer),
+
+  })
 
 // Custom APIs for renderer
 export const api = {

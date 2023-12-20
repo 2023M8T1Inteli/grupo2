@@ -17,6 +17,7 @@ interface ModalProps {
   type: 'input' | 'other'
   onClose: () => void
   onAddBlock: (newBlock: IBaseButton) => void
+  onMusicButtonClick?: (button: IBaseButton) => void // Optional prop for music button
 }
 
 export interface IBaseButtonProps {
@@ -36,8 +37,12 @@ const InputButtonElement = (props: IBaseButtonProps): ReactElement => {
 export default function Modal(props: ModalProps): ReactElement {
   const groupedButtons = groupBy(props.genericButtons, 'type')
 
-  const handleAddButtonClick = (newBlock: IBaseButton): void => {
-    props.onAddBlock(newBlock)
+  const handleAddButtonClick = (button: IBaseButton): void => {
+    if (button.name === 'Tocar Música' && props.onMusicButtonClick) {
+      props.onMusicButtonClick(button)
+    } else {
+      props.onAddBlock(button)
+    }
   }
 
   return props.show ? (

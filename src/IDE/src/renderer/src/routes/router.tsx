@@ -24,6 +24,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import FabricPage from '../pages/Fabric'
 import NewFunction from '../pages/NewFunction'
 import BlockEditor from '@renderer/pages/BlockEditor'
+import Audio from '@renderer/pages/Audio'
 
 export default function Router(): ReactElement {
   const location = useLocation()
