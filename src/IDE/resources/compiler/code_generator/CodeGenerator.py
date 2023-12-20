@@ -49,9 +49,11 @@ class CodeGenerator:
         self.code += "import pygame\n"
         self.code += "pygame.init()\n"
         self.code += "pygame.mixer.init()\n"
-        self.code += "width, height = 800, 600\n"
-        self.code += "screen = pygame.display.set_mode((width, height))\n"
+        self.code += "infoObject = pygame.display.Info()\n"
+        self.code += "width, height = infoObject.current_w, infoObject.current_h\n"
+        self.code += "screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)\n"
         self.code += f"pygame.display.set_caption('{self.tree.get('nome')}')\n"
+        self.code += f"script_directory = os.path.dirname(os.path.abspath(__file__))"
         
     def funcs(self):
         self.play_audio()
@@ -75,7 +77,14 @@ class CodeGenerator:
         self.code += "def show_image(image):\n"
         self.indent += 1
         self.code += f"{self.indent_str * self.indent}screen.fill((0, 0, 0))\n"
-        self.code += f"{self.indent_str * self.indent}screen.blit(image, (300, 200))\n\n"
+        self.code += f"{self.indent_str * self.indent}img_width, img_height = image.get_size()\n"
+        self.code += f"{self.indent_str * self.indent}scale = min(width / img_width, height / img_height)\n"
+        self.code += f"{self.indent_str * self.indent}new_width = int(img_width * scale)\n"
+        self.code += f"{self.indent_str * self.indent}new_height = int(img_height * scale)\n"
+        self.code += f"{self.indent_str * self.indent}image = pygame.transform.scale(image, (new_width, new_height))\n"
+        self.code += f"{self.indent_str * self.indent}x = (width - new_width) // 2\n"
+        self.code += f"{self.indent_str * self.indent}y = (height - new_height) // 2\n"
+        self.code += f"{self.indent_str * self.indent}screen.blit(image, (x, y))\n"
         self.code += f"{self.indent_str * self.indent}pygame.display.flip()\n"
         self.code += f"{self.indent_str * self.indent}time.sleep(1)\n"
         self.indent -= 1
@@ -88,7 +97,7 @@ class CodeGenerator:
         self.code += f"{self.indent_str * self.indent}img_counter = 0\n"
         self.code += f"{self.indent_str * self.indent}for filename in os.listdir(directory):\n"
         self.indent += 1
-        self.code += f"{self.indent_str * self.indent}if filename.endswith('.jpg'):\n"
+        self.code += f"{self.indent_str * self.indent}if filename.endswith('.png'):\n"
         self.indent += 1
         self.code += f"{self.indent_str * self.indent}img_map[img_counter] = pygame.image.load(f'{{directory}}/{{filename}}')\n"
         self.code += f"{self.indent_str * self.indent}img_counter += 1\n"
@@ -180,8 +189,8 @@ class CodeGenerator:
     
     def visitarCacheMaps(self):
         self.code += "\n\n"
-        self.code += "img = create_image_map('imgs')\n"
-        self.code += "audio = create_audio_map('audios')\n"
+        self.code += "img = create_image_map(script_directory + '/imgs')\n"
+        self.code += "audio = create_audio_map(script_directory + '/audios')\n"
 
     def visitarBlock(self, block):
         self.indent += 1

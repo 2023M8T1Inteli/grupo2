@@ -144,6 +144,10 @@ app.whenReady().then(() => {
   ipcMain.handle('compiler:compile', async (_, code: string) => {
     return codeBridge.compileCode(code)
   })
+
+  ipcMain.handle('compiler:saveAndRun', async (_, code: string, filepath: string) => {
+    return codeBridge.saveCompiledCodeAndRun(code, filepath)
+  })
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

@@ -29,8 +29,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.invoke('upload-and-save-image', filePath, data),
   readFileAsBuffer: (filePath) => ipcRenderer.invoke('readFileAsBuffer', filePath),
   convertArrayBufferToBuffer: (arrayBuffer) => Buffer.from(arrayBuffer),
-  convertBlobToOgg: (buffer) => ipcRenderer.invoke('convert-blob-to-ogg', buffer),
-  })
+  convertBlobToOgg: (buffer) => ipcRenderer.invoke('convert-blob-to-ogg', buffer)
+})
 
 // Custom APIs for renderer
 export const api = {
@@ -57,7 +57,9 @@ export const api = {
     ipcRenderer.invoke('upload-and-save-image', filePath, data),
   readFileAsBuffer: (filePath): Promise<unknown> =>
     ipcRenderer.invoke('readFileAsBuffer', filePath),
-  compileCode: (code: string): Promise<string> => ipcRenderer.invoke('compiler:compile', code)
+  compileCode: (code: string): Promise<string> => ipcRenderer.invoke('compiler:compile', code),
+  saveAndRunCode: (code: string, filepath: string): Promise<void> =>
+    ipcRenderer.invoke('compiler:saveAndRun', code, filepath)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
