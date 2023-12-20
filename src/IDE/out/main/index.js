@@ -4,7 +4,7 @@ const path = require("path");
 const utils = require("@electron-toolkit/utils");
 const Sequelize = require("sequelize");
 const os = require("os");
-const fs = require("fs");
+const fs$1 = require("fs");
 const icon = path.join(__dirname, "../../resources/icon.png");
 const Database = new Sequelize.Sequelize({
   dialect: "sqlite",
@@ -111,6 +111,37 @@ const projects = {
     return projects2;
   }
 };
+const fs = require("fs");
+const compilerPath = path.join(__dirname, "../../resources/compiler/", "main.py");
+const codeBridge = {
+  async compileCode(code) {
+    return new Promise((resolve, reject) => {
+      fs.writeFileSync("temp.qal", code);
+      const spawn = require("child_process").spawn;
+      const compileProcess = spawn("python", [compilerPath, "temp.qal"]);
+      let data = "";
+      let errorData = "";
+      compileProcess.stdout.on("data", (chunk) => {
+        data += chunk.toString();
+      });
+      compileProcess.stderr.on("data", (chunk) => {
+        errorData += chunk.toString();
+      });
+      compileProcess.on("error", (error) => {
+        fs.unlinkSync("temp.qal");
+        reject(`Error occurred: ${error.message}`);
+      });
+      compileProcess.stdout.on("end", () => {
+        fs.unlinkSync("temp.qal");
+        if (errorData) {
+          reject(`Error output: ${errorData}`);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  }
+};
 function createWindow() {
   const mainWindow = new electron.BrowserWindow({
     width: 900,
@@ -194,6 +225,9 @@ electron.app.whenReady().then(() => {
   electron.ipcMain.handle("db:project.getAll", async () => {
     return projects.getAll();
   });
+  electron.ipcMain.handle("compiler:compile", async (_, code) => {
+    return codeBridge.compileCode(code);
+  });
 });
 electron.app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
@@ -202,7 +236,7 @@ electron.app.on("window-all-closed", () => {
 });
 electron.ipcMain.handle("read-file", async (event, filePath) => {
   try {
-    const content = fs.readFileSync(filePath, "utf-8");
+    const content = fs$1.readFileSync(filePath, "utf-8");
     return content;
   } catch (error) {
     console.error("Error reading file:", error);
@@ -211,11 +245,11 @@ electron.ipcMain.handle("read-file", async (event, filePath) => {
 });
 electron.ipcMain.handle("write-file", async (event, filePath, content) => {
   const directory = path.dirname(filePath);
-  if (!fs.existsSync(directory)) {
-    fs.mkdirSync(directory, { recursive: true });
+  if (!fs$1.existsSync(directory)) {
+    fs$1.mkdirSync(directory, { recursive: true });
   }
   try {
-    fs.writeFileSync(filePath, content);
+    fs$1.writeFileSync(filePath, content);
     return true;
   } catch (error) {
     console.error("Error writing file:", error);
@@ -226,10 +260,10 @@ electron.ipcMain.handle("save-image", async (event, filePath, base64Data) => {
   const buffer = Buffer.from(base64Data.replace(/^data:image\/png;base64,/, ""), "base64");
   try {
     const dir = path.dirname(filePath);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
+    if (!fs$1.existsSync(dir)) {
+      fs$1.mkdirSync(dir, { recursive: true });
     }
-    fs.writeFileSync(filePath, buffer);
+    fs$1.writeFileSync(filePath, buffer);
     return true;
   } catch (error) {
     console.error("Error saving image:", error);
@@ -241,8 +275,8 @@ electron.ipcMain.handle("create-new-folder", async (event, folderName) => {
   const documentsPath = path.join(homeDirectory, "Documents");
   const baseDirectory = path.join(documentsPath, "MeusProjetos");
   const folderPath = path.join(baseDirectory, folderName);
-  if (!fs.existsSync(folderPath)) {
-    fs.mkdirSync(folderPath, { recursive: true });
+  if (!fs$1.existsSync(folderPath)) {
+    fs$1.mkdirSync(folderPath, { recursive: true });
   }
   global.myGlobalVariable = folderPath;
   return folderPath;
@@ -252,7 +286,7 @@ electron.ipcMain.handle("read-project-folders", async () => {
     const homeDirectory = os.homedir();
     const documentsPath = path.join(homeDirectory, "Documents");
     const baseDirectory = path.join(documentsPath, "MeusProjetos");
-    const folders = fs.readdirSync(baseDirectory, { withFileTypes: true }).filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
+    const folders = fs$1.readdirSync(baseDirectory, { withFileTypes: true }).filter((dirent) => dirent.isDirectory()).map((dirent) => dirent.name);
     return folders;
   } catch (error) {
     console.error("Error reading project folders:", error);
@@ -261,20 +295,20 @@ electron.ipcMain.handle("read-project-folders", async () => {
 });
 electron.ipcMain.handle("create-project-info", async (event, projectFolderPath) => {
   const filePath = path.join(projectFolderPath, "project-info.json");
-  if (!fs.existsSync(filePath)) {
-    fs.writeFileSync(filePath, JSON.stringify({}));
+  if (!fs$1.existsSync(filePath)) {
+    fs$1.writeFileSync(filePath, JSON.stringify({}));
   }
 });
 electron.ipcMain.handle("update-project-info", async (event, projectFolderPath, data) => {
   const filePath = path.join(projectFolderPath, "project-info.json");
-  fs.writeFileSync(filePath, JSON.stringify(data));
+  fs$1.writeFileSync(filePath, JSON.stringify(data));
 });
 electron.ipcMain.handle("get-folder-path", async (event, folderName) => {
   const homeDirectory = os.homedir();
   const documentsPath = path.join(homeDirectory, "Documents");
   const baseDirectory = path.join(documentsPath, "MeusProjetos");
   const folderPath = path.join(baseDirectory, folderName);
-  if (fs.existsSync(folderPath)) {
+  if (fs$1.existsSync(folderPath)) {
     return folderPath;
   } else {
     throw new Error("Folder not found");
@@ -283,10 +317,10 @@ electron.ipcMain.handle("get-folder-path", async (event, folderName) => {
 electron.ipcMain.handle("save-canvas-state", async (event, filePath, data) => {
   try {
     const canvasDir = path.dirname(filePath);
-    if (!fs.existsSync(canvasDir)) {
-      fs.mkdirSync(canvasDir, { recursive: true });
+    if (!fs$1.existsSync(canvasDir)) {
+      fs$1.mkdirSync(canvasDir, { recursive: true });
     }
-    fs.writeFileSync(filePath, data);
+    fs$1.writeFileSync(filePath, data);
     return true;
   } catch (error) {
     console.error("Error saving canvas state:", error);
@@ -295,8 +329,8 @@ electron.ipcMain.handle("save-canvas-state", async (event, filePath, data) => {
 });
 electron.ipcMain.handle("read-canvas-state", async (event, filePath) => {
   try {
-    if (fs.existsSync(filePath)) {
-      const data = fs.readFileSync(filePath, "utf8");
+    if (fs$1.existsSync(filePath)) {
+      const data = fs$1.readFileSync(filePath, "utf8");
       return data;
     } else {
       console.error("File not found:", filePath);
@@ -310,14 +344,14 @@ electron.ipcMain.handle("read-canvas-state", async (event, filePath) => {
 electron.ipcMain.handle("upload-and-save-image", async (event, base64Data, imageName) => {
   try {
     const projectFolderPath = path.join(os.homedir(), "YourAppFolder", "ProjectImages");
-    if (!fs.existsSync(projectFolderPath)) {
-      fs.mkdirSync(projectFolderPath, { recursive: true });
+    if (!fs$1.existsSync(projectFolderPath)) {
+      fs$1.mkdirSync(projectFolderPath, { recursive: true });
     }
     const filePath = path.join(projectFolderPath, imageName);
     const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, "");
     const buffer = Buffer.from(base64Image, "base64");
-    fs.writeFileSync(filePath, buffer);
-    const imageBuffer = fs.readFileSync(filePath);
+    fs$1.writeFileSync(filePath, buffer);
+    const imageBuffer = fs$1.readFileSync(filePath);
     const dataUrl = `data:image/png;base64,${imageBuffer.toString("base64")}`;
     return dataUrl;
   } catch (error) {
@@ -327,7 +361,7 @@ electron.ipcMain.handle("upload-and-save-image", async (event, base64Data, image
 });
 electron.ipcMain.handle("readFileAsBuffer", async (event, filePath) => {
   try {
-    return fs.readFileSync(filePath);
+    return fs$1.readFileSync(filePath);
   } catch (error) {
     console.error("Error reading file as buffer:", error);
     return null;

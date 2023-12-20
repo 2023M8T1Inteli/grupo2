@@ -204,7 +204,7 @@ class CodeGenerator:
                     if atribuicao.get("inStatement").op == "ler":
                         self.code += f"{self.indent_str * self.indent}{id_token.value} = get_input()\n"
                     else:
-                        print(atribuicao.get("inStatement"))
+                        # print(atribuicao.get("inStatement"))
                         quad = self.visitarSumExpression(atribuicao.get("inStatement").get("param1"))
                         qtd = self.visitarSumExpression(atribuicao.get("inStatement").get("param2"))
                         tol = self.visitarSumExpression(atribuicao.get("inStatement").get("param3"))

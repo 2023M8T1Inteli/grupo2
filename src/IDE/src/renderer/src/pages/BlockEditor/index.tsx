@@ -125,6 +125,7 @@ function BlockEditor(): ReactElement {
     const code = sceneProcessor({ name: 'teste', blockRows: rows })
     try {
       const compiledCode = await window.api.compileCode(code)
+      console.log(compiledCode)
       alert(compiledCode)
     } catch (err) {
       alert(err)
