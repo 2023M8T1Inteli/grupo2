@@ -1,31 +1,32 @@
----
-title: Tapete sensorial para apoiar pessoas com leves desordens neurológicas e sem alteração/restrição sensorial em atividades do cotidiano
-author: 
-  - Cristiane Coutinho
-  - Felipe Sampaio
-  - Gabrio Lina
-  - João Pedro Alcaraz
-  - Moisés Cazé
-  - Pedro Silva
-  - Sergio Lucas
-date: Outubro de 2023
-abstract: 
-This article addresses the global prevalence of disabilities, emphasizing the need for innovative solutions. The evolution of assistive technologies, highlighted by the Akouphone and the World Health Organization's Global Cooperation on Assistive Technology (GATE) initiative, underscores a commitment to providing effective solutions. The Association for Assistance to Disabled Children (AACD) plays a crucial role in addressing the intersection of increasing demands for disability assistance and advancements in assistive technologies. The article introduces an innovative sensory mat project connected to the Greg Maker device, designed for individuals with mild neurological disorders. Aligned with AACD's efforts, the sensory mat project aims to provide an innovative and accessible solution for individuals with mild neurological disorders. The Results section emphasizes the notable advancement with the development of the IDE for occupational therapists, contributing to AACD's goals. In conclusion, the project aligns with AACD's continuous efforts to empower patients and professionals with the latest assistive technology tools.
----
+# Tapete Sensorial para Apoiar Pessoas com Leves Desordens Neurológicas e Sem Alteração/Restrição Sensorial em Atividades do Cotidiano
+
+**Autores:**
+- Cristiane Coutinho
+- Felipe Sampaio
+- Gabrio Lina
+- João Pedro Alcaraz
+- Moisés Cazé
+- Pedro Silva
+- Sergio Lucas
+
+**Data:** Dezembro de 2023
+
+**Abstract:**
+_This article presents an innovative project for a sensory mat connected to the Greg Maker device, designed to help children, adolescents and adults with mild neurological disorders. In view of the global prevalence of disabilities, the importance of innovative solutions such as this one, aligned with the efforts of the Global Initiative for Cooperation in Assistive Technology (GATE) and the Association for the Assistance of Disabled Children (AACD), is highlighted. Based on related studies, the effectiveness of assistive technologies such as Paper-Based Assistive Technology and other solutions for children with cerebral palsy is highlighted. The article explores the relevance of early and personalized intervention to improve the autonomy and quality of life of these individuals. The results indicate not only technical feasibility, but also the potential positive impact on patients' independence and quality of life. This work represents a breakthrough at the intersection between the demand for assistance and advances in assistive technologies, pushing the field forward to build a more inclusive world._
 
 # Introdução
 
-A prevalência de deficiências no mundo é uma realidade impactante, afetando mais de um bilhão de pessoas, incluindo aproximadamente 240 milhões de crianças, conforme revelado por Zdravkova et al. em 2022. Diante desse expressivo número, surge a necessidade urgente de explorar soluções inovadoras que possam melhorar a qualidade de vida desses indivíduos. A história das tecnologias assistivas remonta a um marco significativo: o desenvolvimento do Akouphone, o primeiro dispositivo assistivo a emergir. Este aparelho auditivo portátil, equipado com um microfone de carbono e auriculares, representou um avanço pioneiro no suporte àqueles com deficiências auditivas (Zdravkova et al., 2022). Desde então, a evolução dessas tecnologias tem sido constante, refletindo o compromisso em proporcionar soluções cada vez mais eficazes.
+A prevalência de deficiências no mundo é uma realidade impactante, afetando mais de um bilhão de pessoas, incluindo aproximadamente 240 milhões de crianças, conforme revelado por Zdravkova et al. (2022). Diante desse expressivo número, surge a necessidade urgente de explorar soluções inovadoras que possam melhorar a qualidade de vida desses indivíduos. A história das tecnologias assistivas remonta a um marco significativo: o desenvolvimento do Akouphone, o primeiro dispositivo assistivo a emergir. Este aparelho auditivo portátil, equipado com um microfone de carbono e auriculares, representou um avanço pioneiro no suporte àqueles com deficiências auditivas (Zdravkova et al., 2022). Desde então, a evolução dessas tecnologias tem sido constante, refletindo o compromisso em proporcionar soluções cada vez mais eficazes.
 
-Reconhecendo a importância de garantir o direito humano fundamental à educação e combater a discriminação baseada em deficiência, a Organização Mundial da Saúde (OMS) lançou, em 2018, a Iniciativa de Cooperação Global em Tecnologia Assistiva (GATE), conforme destacado por Zdravkova et al. em 2022.  A GATE surge como uma resposta assertiva, com seu objetivo inequívoco de "melhorar o acesso a produtos de assistência de alta qualidade e a preços acessíveis a nível mundial". Este movimento global reflete um comprometimento coletivo em superar as barreiras que limitam o acesso à educação e outros aspectos fundamentais da vida para indivíduos com deficiência.
+Reconhecendo a importância de garantir o direito humano fundamental à educação e combater a discriminação baseada em deficiência, a Organização Mundial da Saúde (OMS) lançou, em 2018, a Iniciativa de Cooperação Global em Tecnologia Assistiva (GATE), conforme destacado por Zdravkova et al. (2022).  A GATE surge como uma resposta assertiva, com seu objetivo inequívoco de "melhorar o acesso a produtos de assistência de alta qualidade e a preços acessíveis a nível mundial". Este movimento global reflete um comprometimento coletivo em superar as barreiras que limitam o acesso à educação e outros aspectos fundamentais da vida para indivíduos com deficiência.
 
 A interseção entre as demandas crescentes por assistência às pessoas com deficiência e os avanços nas tecnologias assistivas é um campo no qual a Associação de Assistência à Criança Deficiente (AACD) se destaca. Com uma trajetória sólida de mais de 72 anos dedicados aos cuidados de saúde, a AACD assume um papel fundamental nesse cenário complexo. Atualmente, a instituição desempenha um papel crucial ao atender uma população diversificada, abrangendo tanto crianças quanto adultos afetados por diversas desordens neurológicas, como paralisia cerebral, amputações, poliomielite, doenças neuromusculares, esclerose múltipla, lesões cerebrais, lesões medulares e malformações congênitas.
 
 Enquanto a AACD busca proporcionar cuidados abrangentes e especializados, a convergência com as iniciativas globais, como a Iniciativa de Cooperação Global em Tecnologia Assistiva (GATE), torna-se crucial. O comprometimento da AACD em oferecer assistência não apenas na esfera médica, mas também na promoção do acesso a tecnologias assistivas, alinha-se diretamente com os esforços globais para melhorar a qualidade de vida das pessoas com deficiência, conforme preconizado por Zdravkova et al. (2022). Nesse contexto, a sinergia entre as instituições globais e locais como a AACD assume uma importância estratégica, buscando abordagens integradas para enfrentar os desafios enfrentados por indivíduos com deficiência em todo o mundo.
 
-Paralisia cerebral (CP) é uma condição que afeta o desenvolvimento motor em crianças, causando restrições de movimento e coordenação (Hamzah, Fatimahwati bt at al., 2022). A CP, incurável, demanda cuidados ao longo da vida, sendo a intervenção precoce crucial. A TA, ao fornecer dispositivos adaptativos, desempenha papel fundamental no desenvolvimento de habilidades adaptativas, melhoria da postura e na promoção da independência em crianças com CP (Hamzah, Fatimahwati bt at al., 2022).
+A paralisia cerebral (CP) é uma condição que afeta o desenvolvimento motor em crianças, causando restrições de movimento e coordenação (Hamzah, Fatimahwati bt at al., 2022). A CP, incurável, demanda cuidados ao longo da vida, sendo a intervenção precoce crucial. A TA, ao fornecer dispositivos adaptativos, desempenha papel fundamental no desenvolvimento de habilidades adaptativas, melhoria da postura e na promoção da independência em crianças com CP (Hamzah, Fatimahwati bt at al., 2022).
 
-A "tecnologia apropriada baseada em papel" emerge como uma solução sustentável e acessível localmente para a fabricação de dispositivos de assento e levantamento destinados a crianças com deficiência no Quênia, conforme indicado por Barton et al. (2020). A introdução de assentos e dispositivos personalizados, construídos com base em APT, demonstrou um impacto positivo significativo na vida de famílias que cuidam de crianças com paralisia cerebral de nível IV ou V do GMFCS. O uso regular desses dispositivos de apoio postural não apenas aprimorou as habilidades motoras das crianças, mas também melhorou sua capacidade funcional e participação em atividades diárias. Além disso, reduziu a carga de cuidados para as famílias e promoveu interações sociais mais robustas para as crianças. Entrevistas com os cuidadores primários ratificaram essas conclusões, destacando a valorização e alta utilização dos dispositivos de apoio postural por parte das crianças e suas famílias neste estudo. 
+A "appropriate paper-based technology - APT" emerge como uma solução sustentável e acessível localmente para a fabricação de dispositivos de assento e levantamento destinados a crianças com deficiência no Quênia, conforme indicado por Barton et al. (2020). A introdução de assentos e dispositivos personalizados, construídos com base em APT, demonstrou um impacto positivo significativo na vida de famílias que cuidam de crianças com paralisia cerebral de nível IV ou V do GMFCS. O uso regular desses dispositivos de apoio postural não apenas aprimorou as habilidades motoras das crianças, mas também melhorou sua capacidade funcional e participação em atividades diárias. Além disso, reduziu a carga de cuidados para as famílias e promoveu interações sociais mais robustas para as crianças. Entrevistas com os cuidadores primários ratificaram essas conclusões, destacando a valorização e alta utilização dos dispositivos de apoio postural por parte das crianças e suas famílias neste estudo. 
 
 Nesse contexto, este artigo introduz o projeto de um tapete sensorial inovador, conectado ao dispositivo Greg Maker, especialmente adaptado para crianças, adolescentes e adultos com leves desordens neurológicas. Esse tapete proporciona uma experiência lúdica e personalizada, estimulando sensações táteis e proprioceptivas que desempenham um papel fundamental na integração do sistema nervoso central e periférico. Tais estímulos favorecem respostas motoras funcionais, melhoram o desempenho nas atividades de vida diária (AVD) e estimulam funções cognitivas, como discriminação figura-fundo, memória visual e relações espaciais.
 
@@ -51,8 +52,6 @@ No estudo "Cutting-edge communication and learning assistive technologies for di
 
 
 # Material e métodos
-
-# Seção de Materiais e Métodos
 
 ## Objetivo do Projeto
 
@@ -99,18 +98,18 @@ O principal objetivo deste projeto é desenvolver um ambiente terapêutico assis
 
 2. **Maior Independência e Qualidade de Vida:** Espera-se que o tapete sensorial, conectado ao Greg Maker e manipulado pela IDE, represente uma solução inovadora e acessível, atendendo às necessidades de indivíduos com desordens neurológicas leves.
 
+# Conclusão
 
-# Resultados
+O presente artigo representa um marco significativo na interseção entre a crescente demanda por assistência a pessoas com deficiência e os avanços contínuos em tecnologias assistivas. Ao abordar a prevalência global de deficiências e a necessidade premente de soluções inovadoras, destacamos a importância de iniciativas como a Iniciativa de Cooperação Global em Tecnologia Assistiva (GATE) da Organização Mundial da Saúde e o compromisso da Associação de Assistência à Criança Deficiente (AACD) em empregar soluções eficazes.
 
-O desenvolvimento do Ambiente de Desenvolvimento Integrado (IDE) para Terapeutas Ocupacionais que atendem pacientes com Paralisia Cerebral é um avanço notável no campo da Tecnologia Assistiva, marcado por um foco especial em usabilidade e acessibilidade. Este IDE, integrado com um tapete sensorial inovador, foi projetado para otimizar a experiência dos profissionais, facilitando o planejamento e a implementação de atividades terapêuticas de maneira eficiente e interativa.
+O projeto apresentado, centrado em um tapete sensorial conectado ao dispositivo Greg Maker e um Ambiente de Desenvolvimento Integrado (IDE), visa oferecer uma solução acessível e inovadora para indivíduos com desordens neurológicas leves. Através da revisão de estudos relacionados, identificamos a relevância dessas tecnologias no contexto das necessidades de crianças com paralisia cerebral e outras condições neurológicas.
 
-Desenvolvido como um sistema desktop, o IDE garante funcionalidade independente da conectividade com a internet, um aspecto crucial em ambientes hospitalares como a AACD, onde falhas de conexão são comuns. A aplicação permite a criação de perfis de usuário e cadastro de pacientes, além da construção interativa de sequências de atividades terapêuticas, e seu acompanhamento. As atividades, ao serem executadas no tapete sensorial, geram feedbacks cruciais para a avaliação e evolução do tratamento.
+O desenvolvimento do IDE, com sua capacidade de criar perfis, cadastrar pacientes, e facilitar a construção interativa de sequências de atividades terapêuticas, representa um avanço notável. A integração do IDE com o tapete sensorial inovador busca otimizar a experiência dos terapeutas, simplificando o planejamento e a implementação de atividades terapêuticas de maneira eficiente e interativa.
 
-Tecnicamente, a aplicação foi construída utilizando o framework Electron, permitindo a criação de uma interface semelhante a aplicações web. Para aprimorar a dinâmica das interfaces, optou-se pelo uso do React, uma biblioteca JavaScript para construção de interfaces de usuário, juntamente com TypeScript, uma extensão de JavaScript que adiciona tipagem estática. A adesão às Diretrizes de Acessibilidade para o Conteúdo da Web (WCAG) garantiu que a aplicação fosse acessível a uma ampla gama de usuários, incluindo aqueles com diferentes habilidades e necessidades.
+Os resultados alcançados até o momento evidenciam não apenas a viabilidade técnica do projeto, mas também seu potencial impacto positivo na melhoria da independência e qualidade de vida dos pacientes. Ao contribuir para os esforços da AACD, o projeto está alinhado com a missão de capacitar pacientes e profissionais com as mais recentes ferramentas de tecnologia assistiva.
 
-O Compilador é um componente fundamental do projeto, atuando como um intermediário entre o hardware (tapete sensorial) e o software (IDE). Ele traduz as instruções da terapeuta de maneira que o Greg Maker possa implementar e executá-las efetivamente no tapete sensorial, garantindo a precisão e eficácia da aplicação. A funcionalidade de sequenciamento de blocos, representando os quadrantes do tapete, introduz uma abordagem lúdica e intuitiva. A implementação de princípios do No Code simplifica a programação, facilitando o aprendizado e a utilização por parte dos terapeutas. A plataforma permite a criação de feedbacks personalizados em diversas formas de comunicação, como som, escrita e elementos lúdicos, enriquecendo a experiência terapêutica.
+Em última análise, este trabalho não apenas reflete os avanços tecnológicos na área, mas também reforça a importância de parcerias entre instituições, pesquisadores e profissionais de saúde na busca por soluções inovadoras que possam fazer a diferença na vida daqueles que enfrentam desafios decorrentes de desordens neurológicas. Acreditamos que este projeto pode servir como um catalisador para futuras pesquisas e desenvolvimentos, impulsionando ainda mais o campo das tecnologias assistivas e contribuindo para a construção de um mundo mais inclusivo.
 
-A IDE desenvolvida representa uma solução inovadora e acessível para atender às necessidades de indivíduos com desordens neurológicas. A experiência do usuário foi otimizada para garantir que os terapeutas possam criar atividades que promovam a evolução das habilidades de indivíduos com paralisia cerebral, contribuindo para sua maior independência e qualidade de vida. Este projeto, portanto, alinha-se aos esforços contínuos da AACD em capacitar seus pacientes e profissionais com as mais recentes ferramentas da Tecnologia Assistiva.
 
 # Referências Bibliográficas 
 
