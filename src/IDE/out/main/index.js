@@ -382,3 +382,18 @@ electron.ipcMain.handle("upload-and-save-image", async (event, filePath, base64D
     return null;
   }
 });
+electron.ipcMain.handle("save-wav-file", async (event, filePath, fileName, wavBuffer) => {
+  try {
+    const fullPath = path.join(filePath, fileName);
+    const directory = path.dirname(fullPath);
+    if (!fs$1.existsSync(directory)) {
+      fs$1.mkdirSync(directory, { recursive: true });
+    }
+    const buffer = Buffer.from(wavBuffer);
+    await fs$1.promises.writeFile(fullPath, buffer);
+    return { success: true, path: fullPath };
+  } catch (error) {
+    console.error("Error saving WAV file:", error);
+    return { success: false, error: error.message };
+  }
+});

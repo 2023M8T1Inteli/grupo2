@@ -29,7 +29,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.invoke('upload-and-save-image', filePath, data),
   readFileAsBuffer: (filePath) => ipcRenderer.invoke('readFileAsBuffer', filePath),
   convertArrayBufferToBuffer: (arrayBuffer) => Buffer.from(arrayBuffer),
-  convertBlobToOgg: (buffer) => ipcRenderer.invoke('convert-blob-to-ogg', buffer)
+  convertBlobToOgg: (buffer) => ipcRenderer.invoke('convert-blob-to-ogg', buffer),
+  saveWavFile: (filePath, soundName, wavBuffer) => ipcRenderer.invoke('save-wav-file', filePath, soundName, wavBuffer)
 })
 
 // Custom APIs for renderer
