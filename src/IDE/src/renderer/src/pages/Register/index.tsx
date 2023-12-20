@@ -1,110 +1,95 @@
-// Componente de login para uma aplicação React, com integração de autenticação e navegação.
-// Inclui:
-// - Uso do React Router (`useNavigate`) para redirecionamento após o login.
-// - Uso do contexto de autenticação "useAuth" para acessar a função de login.
-// - Estados locais para gerenciar os campos de usuário e senha.
-// - Função `handleLogin` para processar o login, incluindo validação e armazenamento de dados do usuário.
-// - Uso de toasts para feedback de ações (erro, informação, sucesso).
-// - Formulário de login com campos para usuário e senha e botão de entrada.
-// - Opção para registrar uma nova conta (ainda em desenvolvimento).
-
-import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../contexts/AuthContext'
-import { useState, useEffect } from 'react'
-import './styles.css'
-import { errorToast, infoToast, successToast } from '../../components/Toast'
-import camera from '../../assets/img/camera.png'
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { useState } from 'react';
+import './styles.css';
+import { errorToast, successToast } from '../../components/Toast';
+import camera from '../../assets/img/camera.png';
+import Button from '@renderer/components/Button';
 
 export type User = {
-  id?: number
-  username: string
-  password: string
-  role: number
-  createdAt: string
-}
+  id?: number;
+  username: string;
+  password: string;
+  role: number;
+  createdAt: string;
+};
 
 export default function Register() {
-  //   useEffect(() => {
-  //     infoToast(`
-  //     Caro avaliador, temos um usuário para testes:
-  //     \nmaria456 | senha456
-  //     `);
-
-  //     infoToast(`
-  //     Para atualizar a página, basta pressionar CTRL + R
-  //     `);
-  //   }, []);
-
-  const { login } = useAuth()
-  const navigate = useNavigate()
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   async function handleLogin(e) {
-    e.preventDefault()
+    e.preventDefault();
+
+    if (password !== confirmPassword) {
+      errorToast('As senhas não coincidem');
+      return;
+    }
 
     const newUser: User = {
       username: username,
       password: password,
       role: 1,
-      createdAt: '2023-12-07T12:00:00Z' // Replace this with the actual creation date
-    }
+      createdAt: new Date().toString()
+    };
 
-    const user = await window.electron.ipcRenderer.invoke('db:user.insert', newUser)
-
-    if (!user) {
-      errorToast('Usuário não criado')
-      return
-    }
-
-    successToast(`Usuário criado com sucesso!`)
-    sessionStorage.setItem('user_data', JSON.stringify(user))
-    navigate('/login')
+    await window.electron.ipcRenderer.invoke('db:user.insert', newUser);
+    successToast("Usuário criado com sucesso!")
+    navigate('/login');
   }
 
   return (
-    <div className="login-container">
-      <div>
-        <img src={camera} alt="Camera" />
-      </div>
-      <div>
-        <h1 style={{ color: 'white' }}>Novo Usuário</h1>
-        <form className="inputs" onSubmit={handleLogin}>
-          <h3 style={{ color: 'white' }}>Nome Completo</h3>
+    <div className="register-container">
+      <Button variant='back' />
+      <img src={camera} alt="Camera" />
+      <h1>Cadastrar novo usuário</h1>
+      <form className="inputs" onSubmit={handleLogin}>
+        <div>
+          <label>Nome de usuário</label>
           <input
             required
             type="text"
+            name='username'
+            id='username'
             placeholder="Nome"
-            onChange={(e) => {
-              setUsername(e.target.value)
-            }}
-            style={{ marginBottom: '2rem', padding: '0.3rem', width: '50rem' }}
+            onChange={(e) => setUsername(e.target.value)}
           />
-          <h3 style={{ color: 'white' }}>Senha</h3>
+        </div>
+        <div>
+          <label>Senha</label>
           <input
             required
             type="password"
             placeholder="Senha"
-            onChange={(e) => {
-              setPassword(e.target.value)
-            }}
-            style={{ marginBottom: '3rem', padding: '0.3rem', width: '50rem' }}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          <div className="buttons">
-            <input
-              type="button"
-              onClick={() => navigate('/registerPatient')}
-              value="CANCELAR"
-              style={{ padding: '0.10rem' }}
-            />
-            <input
-              type="submit"
-              value="CRIAR USUÁRIO"
-              style={{ padding: '0.1rem', width: '100rem' }}
-            />
-          </div>
-        </form>
-      </div>
+        </div>
+        <div>
+          <label>Confirmar Senha</label>
+          <input
+            required
+            type="password"
+            placeholder="Confirmar Senha"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+        <div className="buttons">
+          <input
+            className="submit"
+            type="submit"
+            value="CRIAR USUÁRIO"
+          />
+          <input
+            className="cancel"
+            type="button"
+            onClick={() => navigate('/registerPatient')}
+            value="CANCELAR"
+          />
+        </div>
+      </form>
     </div>
-  )
+  );
 }

@@ -91,7 +91,7 @@ export default function Login() {
         <input type="password" required onChange={handlePassword} placeholder='Sua senha aqui' />
         <input type="submit" value="Entrar" />
         <a href='' className='recover-password'>Recuperar senha</a>
-        <a href='' className='register'>ou crie sua conta aqui</a>
+        <a href='/register' className='register'>ou crie sua conta aqui</a>
       </form>
     </div>
   )
