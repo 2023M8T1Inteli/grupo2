@@ -51,7 +51,7 @@ O estudo "Review of assistive smart-home technology for people with physical and
 No estudo "Cutting-edge communication and learning assistive technologies for disabled children: An artificial intelligence perspective. Frontiers in Artificial Intelligence" de Zdravkova et al., 2022, uma análise aprofundada é fornecida sobre o impacto dos componentes e soluções de inteligência artificial (IA) que sustentam o desenvolvimento de tecnologias assistivas de ponta para crianças com necessidades especiais. Diversas deficiências são abordadas, apresentando as mais recentes tecnologias assistivas que aprimoram a comunicação e a educação de crianças com deficiência, bem como as tecnologias de IA que possibilitaram seu desenvolvimento. O artigo conclui com uma perspectiva de IA sobre futuras tecnologias assistivas e as preocupações éticas decorrentes do uso de tecnologias avançadas de comunicação e aprendizado para crianças com deficiências.
 
 
-# Material e métodos
+# Materiais e métodos
 
 ## Objetivo do Projeto
 
