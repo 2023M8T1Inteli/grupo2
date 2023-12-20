@@ -51,7 +51,7 @@ export default function Router(): ReactElement {
         <Route path="/patients" element={<Patients />} />
         <Route path="/fabric" element={<FabricPage />} />
         <Route path="/new-function" element={<NewFunction />} />
-        <Route path="/registerPatient" element={<RegisterPatient />} />
+        <Route path="/register-patient" element={<RegisterPatient />} />
         <Route path="/register" element={<Register />} />
       </Routes>
     </AuthProvider>
