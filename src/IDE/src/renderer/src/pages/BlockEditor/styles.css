@@ -86,12 +86,13 @@
     border: none;
     background: none;
     cursor: pointer;
+    color: var(--primary-button-hover-color);
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out, color 0.2s ease-in-out /* Smooth transitions for transform and shadow */
   }
   
   .editor-button:hover, .editor-button:focus {
     transform: scale(1.1); /* Slightly enlarge buttons on hover/focus */
-    color:green;
+    color: var(--primary-hover);
   }
   
   /* Responsive adjustments */
