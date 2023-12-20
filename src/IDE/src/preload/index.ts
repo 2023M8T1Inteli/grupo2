@@ -16,11 +16,34 @@ contextBridge.exposeInMainWorld('electronAPI', {
   readCanvasState: (filePath) => ipcRenderer.invoke('read-canvas-state', filePath),
   uploadAndSaveImage: (filePath, data) =>
     ipcRenderer.invoke('upload-and-save-image', filePath, data),
-    readFileAsBuffer: (filePath) => ipcRenderer.invoke('readFileAsBuffer', filePath),
+  readFileAsBuffer: (filePath) => ipcRenderer.invoke('readFileAsBuffer', filePath)
 })
 
 // Custom APIs for renderer
-const api = {}
+export const api = {
+  readFile: (filePath: string): Promise<unknown> => ipcRenderer.invoke('read-file', filePath),
+  writeFile: (filePath, content): Promise<unknown> =>
+    ipcRenderer.invoke('write-file', filePath, content),
+  saveImage: (fileName, imgData): Promise<unknown> =>
+    ipcRenderer.invoke('save-image', fileName, imgData),
+  createNewFolder: (folderName): Promise<unknown> =>
+    ipcRenderer.invoke('create-new-folder', folderName),
+  readProjectFolders: (baseDirectory): Promise<unknown> =>
+    ipcRenderer.invoke('read-project-folders', baseDirectory),
+  createProjectInfo: (projectFolderPath): Promise<unknown> =>
+    ipcRenderer.invoke('create-project-info', projectFolderPath),
+  updateProjectInfo: (projectFolderPath, data): Promise<unknown> =>
+    ipcRenderer.invoke('update-project-info', projectFolderPath, data),
+  getFolderPath: (folderName): Promise<unknown> =>
+    ipcRenderer.invoke('get-folder-path', folderName),
+  saveCanvasState: (filePath, data): Promise<unknown> =>
+    ipcRenderer.invoke('save-canvas-state', filePath, data),
+  readCanvasState: (filePath): Promise<unknown> =>
+    ipcRenderer.invoke('read-canvas-state', filePath),
+  uploadAndSaveImage: (filePath, data): Promise<unknown> =>
+    ipcRenderer.invoke('upload-and-save-image', filePath, data),
+  readFileAsBuffer: (filePath): Promise<unknown> => ipcRenderer.invoke('readFileAsBuffer', filePath)
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise

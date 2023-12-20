@@ -56,7 +56,7 @@ export default function Modal(props: ModalProps): ReactElement {
                     <InputButtonElement
                       key={idx}
                       button={button}
-                      onClick={() => handleAddButtonClick(button)}
+                      onClick={() => handleAddButtonClick({ ...button })}
                     />
                   ))}
                 </div>
@@ -72,7 +72,7 @@ export default function Modal(props: ModalProps): ReactElement {
                         <InputButtonElement
                           button={button}
                           key={button.name}
-                          onClick={() => handleAddButtonClick(button)}
+                          onClick={() => handleAddButtonClick({ ...button })}
                         />
                       ))}
                     </div>
