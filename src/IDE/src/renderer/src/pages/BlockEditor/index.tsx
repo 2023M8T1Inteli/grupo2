@@ -13,6 +13,7 @@ import {
 import BlockRow from '@renderer/components/BlockRow'
 import Modal from '@renderer/components/BlockModal'
 import CanvasModal from '@renderer/components/CanvasModal'
+import MusicModal from '@renderer/components/MusicModal'
 
 export interface IBaseButton {
   name: string
@@ -111,6 +112,7 @@ function BlockEditor(): ReactElement {
   const [modalType, setModalType] = useState<'input' | 'other'>('input')
   const [activeRowIndex, setActiveRowIndex] = useState<number | null>(null)
   const [rows, setRows] = useState<BlockRow[]>([])
+  const [showMusicModal, setShowMusicModal] = useState(false)
 
   // Be aware that this is VERY INNEFICIENT and will lead to "counter" leaks.
   // This is just a quick fix to make sure that the "src" property of each block is uniquely mapped.
@@ -124,6 +126,9 @@ function BlockEditor(): ReactElement {
 
   const handleOpenEditCanvasModal = (idx: active): void => {
     setShowEditCanvasModal(true)
+  }
+  const handleMusicButtonClick = (button: IBaseButton) => {
+    setShowMusicModal(true)
   }
 
   const handleAddBlockToRow = (newBlock: IBaseButton): void => {
@@ -166,7 +171,9 @@ function BlockEditor(): ReactElement {
         genericButtons={genericButtons}
         inputButtons={inputButtons}
         onAddBlock={handleAddBlockToRow}
+        onMusicButtonClick={handleMusicButtonClick}
       />
+      <MusicModal show={showMusicModal} onClose={() => setShowMusicModal(false)} />
       <CanvasModal show={showEditCanvasModal} onClose={handleEditCanvasClose} />
       <span style={{ padding: '1em', width: '40em', height: '40em' }}>
         <div

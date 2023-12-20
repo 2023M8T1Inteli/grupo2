@@ -13,7 +13,9 @@ electron.contextBridge.exposeInMainWorld("electronAPI", {
   saveCanvasState: (filePath, data) => electron.ipcRenderer.invoke("save-canvas-state", filePath, data),
   readCanvasState: (filePath) => electron.ipcRenderer.invoke("read-canvas-state", filePath),
   uploadAndSaveImage: (filePath, data) => electron.ipcRenderer.invoke("upload-and-save-image", filePath, data),
-  readFileAsBuffer: (filePath) => electron.ipcRenderer.invoke("readFileAsBuffer", filePath)
+  readFileAsBuffer: (filePath) => electron.ipcRenderer.invoke("readFileAsBuffer", filePath),
+  convertArrayBufferToBuffer: (arrayBuffer) => Buffer.from(arrayBuffer),
+  convertBlobToOgg: (buffer) => electron.ipcRenderer.invoke("convert-blob-to-ogg", buffer)
 });
 const api = {};
 if (process.contextIsolated) {

@@ -8,121 +8,118 @@
 // - Botão para exibir o código gerado e processá-lo com a lógica de compilação. (integrado com o compilador em python)
 // - Estilização através do arquivo `styles.css`.
 
+import React, { useState, useCallback } from 'react'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
+import Button from '../../components/Button'
+import { AutoRedirect } from '../../contexts/AuthContext'
+import axios from 'axios'
 
-import React, { useState, useCallback } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import Button from "../../components/Button";
-import { AutoRedirect } from "../../contexts/AuthContext";
-import axios from "axios";
 
 const initialTasks = {
   palette1: {
-    title: "Quadrantes",
+    title: 'Quadrantes',
     cards: [
       {
-        value: "Se apertar o quadrante ESPIRAL ",
-        label: "Espiral",
+        value: 'Se apertar o quadrante ESPIRAL ',
+        label: 'Espiral',
         code: `botao_pressionado = ler_varios(4, 1, 0)\nse botao_pressionado entao\ninicio\n`,
-        original: "palette1",
+        original: 'palette1'
       },
       {
-        value: "Se apertar o quadrante LIXA ",
-        label: "Lixa",
+        value: 'Se apertar o quadrante LIXA ',
+        label: 'Lixa',
         code: `botao_pressionado = ler_varios(1, 1, 0)\nse botao_pressionado entao\ninicio\n`,
-        original: "palette1",
+        original: 'palette1'
       },
       {
-        value: "Se apertar o quadrante GRAMA ",
-        label: "Grama",
+        value: 'Se apertar o quadrante GRAMA ',
+        label: 'Grama',
         code: `botao_pressionado = ler_varios(2, 1, 0)\nse botao_pressionado entao\ninicio\n`,
-        original: "palette1",
-      },
-    ],
+        original: 'palette1'
+      }
+    ]
   },
   palette2: {
-    title: "Exibir um(a)",
+    title: 'Exibir um(a)',
     cards: [
       {
-        value: "exibir uma imagem ",
-        label: "Imagem",
-        code: "mostrar(",
-        original: "palette2",
+        value: 'exibir uma imagem ',
+        label: 'Imagem',
+        code: 'mostrar(',
+        original: 'palette2'
       },
       {
-        value: "tocar um som ",
-        label: "Som",
-        code: "1)\nfim",
-        original: "palette2",
-      },
-    ],
+        value: 'tocar um som ',
+        label: 'Som',
+        code: '1)\nfim',
+        original: 'palette2'
+      }
+    ]
   },
   palette3: {
-    title: "Imagens",
+    title: 'Imagens',
     cards: [
       {
-        value: "de uma melancia",
-        label: "Melancia",
-        code: "1)\nfim",
-        original: "palette3",
+        value: 'de uma melancia',
+        label: 'Melancia',
+        code: '1)\nfim',
+        original: 'palette3'
       },
       {
-        value: "de uma maçã",
-        label: "Maçã",
-        code: "2)\nfim",
-        original: "palette3",
+        value: 'de uma maçã',
+        label: 'Maçã',
+        code: '2)\nfim',
+        original: 'palette3'
       },
       {
-        value: "de uma vaca",
-        label: "Vaca",
-        code: "3)\nfim",
-        original: "palette3",
+        value: 'de uma vaca',
+        label: 'Vaca',
+        code: '3)\nfim',
+        original: 'palette3'
       },
       {
-        value: "de um boi",
-        label: "Boi",
-        code: "4)\nfim",
-        original: "palette3",
-      },
-    ],
+        value: 'de um boi',
+        label: 'Boi',
+        code: '4)\nfim',
+        original: 'palette3'
+      }
+    ]
   },
   result: {
-    title: "Resultado",
-    cards: [],
-  },
-};
+    title: 'Resultado',
+    cards: []
+  }
+}
 
 function DragDrop() {
-  const [tasks, setTasks] = useState(initialTasks);
-  const [result, setResult] = useState("");
+  const [tasks, setTasks] = useState(initialTasks)
+  const [result, setResult] = useState('')
   const onDragEnd = useCallback(
     (result) => {
-      const { source, destination } = result;
+      const { source, destination } = result
 
       if (
         !destination ||
-        (destination.droppableId !== "result" &&
-          destination.droppableId !==
-            tasks[source.droppableId].cards[source.index].original)
+        (destination.droppableId !== 'result' &&
+          destination.droppableId !== tasks[source.droppableId].cards[source.index].original)
       ) {
-        return;
+        return
       } else {
-        const newTasks = { ...tasks };
+        const newTasks = { ...tasks }
         newTasks[destination.droppableId].cards.splice(
           destination.index,
           0,
-          tasks[source.droppableId].cards[source.index],
-        );
-        newTasks[source.droppableId].cards = newTasks[
-          source.droppableId
-        ].cards.filter(
-          (item) => item !== tasks[source.droppableId].cards[source.index],
-        );
+          tasks[source.droppableId].cards[source.index]
+        )
+        newTasks[source.droppableId].cards = newTasks[source.droppableId].cards.filter(
+          (item) => item !== tasks[source.droppableId].cards[source.index]
+        )
 
-        setTasks(newTasks);
+        setTasks(newTasks)
       }
     },
-    [tasks],
-  );
+    [tasks]
+  )
 
   const renderTask = useCallback(
     (task, index, id) => (
@@ -134,40 +131,40 @@ function DragDrop() {
             {...provided.dragHandleProps}
             style={{
               ...provided.draggableProps.style,
-              margin: "10px",
-              padding: "10px",
-              backgroundColor: "lightgrey",
-              minWidth: "100px",
+              margin: '10px',
+              padding: '10px',
+              backgroundColor: 'lightgrey',
+              minWidth: '100px'
             }}
           >
-            {id === "result" ? task.value : task.label}
+            {id === 'result' ? task.value : task.label}
           </div>
         )}
       </Draggable>
     ),
-    [],
-  );
+    []
+  )
 
   const codeBuilder = () => {
-    const header = 'programa "mostra_imagem":\ninicio\n';
-    const footer = "\nfim.";
-    const code = tasks["result"].cards.reduce((acc, item) => {
-      return acc + item.code;
-    }, "");
+    const header = 'programa "mostra_imagem":\ninicio\n'
+    const footer = '\nfim.'
+    const code = tasks['result'].cards.reduce((acc, item) => {
+      return acc + item.code
+    }, '')
 
-    const finalCode = header + code + footer;
-    console.log(finalCode);
-    return finalCode;
-  };
+    const finalCode = header + code + footer
+    console.log(finalCode)
+    return finalCode
+  }
 
-  const processCodeBridge = window.electron.codeBridge.processCode;
+  const processCodeBridge = window.electron.codeBridge.processCode
 
   const processCode = async () => {
-    const finalCode = codeBuilder();
-    const compilerResult = await processCodeBridge(finalCode);
-    setResult(compilerResult.result);
-    alert(`Resultado do código: ${compilerResult.result}`);
-  };
+    const finalCode = codeBuilder()
+    const compilerResult = await processCodeBridge(finalCode)
+    setResult(compilerResult.result)
+    alert(`Resultado do código: ${compilerResult.result}`)
+  }
 
   return (
     <div>
@@ -175,7 +172,7 @@ function DragDrop() {
         <Button
           variant="back"
           onClick={() => {
-            console.log("A");
+            console.log('A')
           }}
         />
       </p>
@@ -189,17 +186,15 @@ function DragDrop() {
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                   style={{
-                    display: "flex",
-                    minHeight: "50px",
-                    padding: "2px",
-                    background: id === "palette1" ? "lightblue" : "lightgreen",
-                    overflowX: "auto",
-                    margin: "10px",
+                    display: 'flex',
+                    minHeight: '50px',
+                    padding: '2px',
+                    background: id === 'palette1' ? 'lightblue' : 'lightgreen',
+                    overflowX: 'auto',
+                    margin: '10px'
                   }}
                 >
-                  {taskGroup.cards.map((task, index) =>
-                    renderTask(task, index, id),
-                  )}
+                  {taskGroup.cards.map((task, index) => renderTask(task, index, id))}
                   {provided.placeholder}
                 </div>
               )}
@@ -210,12 +205,12 @@ function DragDrop() {
           value="Exibir código"
           variant="primary"
           onClick={() => {
-            processCode();
+            processCode()
           }}
         />
       </DragDropContext>
     </div>
-  );
+  )
 }
 
-export default DragDrop;
+export default DragDrop

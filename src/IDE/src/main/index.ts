@@ -3,6 +3,7 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
+
 import { users, User } from './services/User.service'
 import { Patient, patients } from './services/Patient.service'
 import { Project, projects } from './services/Project.service'
@@ -149,7 +150,6 @@ ipcMain.handle('read-file', async (event, filePath: string) => {
 })
 
 ipcMain.handle('write-file', async (event, filePath, content) => {
-
   const directory = path.dirname(filePath)
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true })
@@ -304,3 +304,42 @@ ipcMain.handle('readFileAsBuffer', async (event, filePath) => {
     return null
   }
 })
+
+ipcMain.handle('convert-blob-to-ogg', async (event, buffer) => {
+  try {
+    // Dynamically import the ffmpeg module
+    const { createFFmpeg } = await import('@ffmpeg/ffmpeg');
+    const ffmpeg = createFFmpeg({ log: true });
+
+    if (!ffmpeg.isLoaded()) {
+      await ffmpeg.load();
+    }
+
+    // Write the buffer to a temporary file
+    const tempPath = path.join(os.tmpdir(), 'temp.webm');
+    fs.writeFileSync(tempPath, buffer);
+
+    // Convert to .ogg using ffmpeg
+    await ffmpeg.run('-i', tempPath, 'output.ogg');
+
+    // Read the .ogg file from FFmpeg's filesystem
+    const data = ffmpeg.FS('readFile', 'output.ogg');
+
+    // Define the output path in the user's Downloads folder
+    const downloadsFolder = path.join(os.homedir(), 'Downloads');
+    const outputPath = path.join(downloadsFolder, 'output.ogg');
+
+    // Write the .ogg file to the Downloads folder
+    fs.writeFileSync(outputPath, Buffer.from(data.buffer));
+
+    // Optionally, delete the temporary file
+    fs.unlinkSync(tempPath);
+
+    // Return the path to the .ogg file
+    return outputPath;
+  } catch (error) {
+    console.error('Error converting audio:', error);
+    return null;
+  }
+});
+
