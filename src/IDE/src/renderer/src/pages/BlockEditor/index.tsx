@@ -121,6 +121,16 @@ function BlockEditor(): ReactElement {
     setShowEditCanvasModal(true)
   }
 
+  const compileCodeHandler = async (): Promise<void> => {
+    const code = sceneProcessor({ name: 'teste', blockRows: rows })
+    try {
+      const compiledCode = await window.api.compileCode(code)
+      alert(compiledCode)
+    } catch (err) {
+      alert(err)
+    }
+  }
+
   const setNewBlockCompileCode = (newBlock: IBaseButton): void => {
     switch (newBlock.type) {
       case 'scene':
@@ -211,13 +221,7 @@ function BlockEditor(): ReactElement {
       <span style={{ padding: '1em' }} onClick={() => handleOpenModal(rows.length, 'input')}>
         <FontAwesomeIcon icon={faPlusCircle} size="4x" color="black" />
       </span>
-      <button
-        onClick={() => {
-          alert(sceneProcessor({ name: 'teste', blockRows: rows }))
-        }}
-      >
-        Test Compile
-      </button>
+      <button onClick={() => compileCodeHandler()}>Test Compile</button>
     </div>
   )
 }

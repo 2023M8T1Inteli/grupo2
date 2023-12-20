@@ -6,6 +6,7 @@ import icon from '../../resources/icon.png?asset'
 import { users, User } from './services/User.service'
 import { Patient, patients } from './services/Patient.service'
 import { Project, projects } from './services/Project.service'
+import { codeBridge } from './bridge/Python.bridge'
 
 import os from 'os'
 import fs from 'fs'
@@ -127,6 +128,10 @@ app.whenReady().then(() => {
   ipcMain.handle('db:project.getAll', async () => {
     return projects.getAll()
   })
+
+  ipcMain.handle('compiler:compile', async (_, code: string) => {
+    return codeBridge.compileCode(code)
+  })
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -149,7 +154,6 @@ ipcMain.handle('read-file', async (event, filePath: string) => {
 })
 
 ipcMain.handle('write-file', async (event, filePath, content) => {
-
   const directory = path.dirname(filePath)
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true })

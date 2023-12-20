@@ -4,13 +4,42 @@
 // - Objeto `codeBridge` com a função `processCode` para processar código.
 // - A função `processCode` faz uma requisição POST para um endpoint de compilação, enviando o código e retornando a resposta.
 
+import path from 'path'
 import axios from 'axios'
+const fs = require('fs')
+
+const compilerPath = path.join(__dirname, '../../resources/compiler/', 'main.py')
 
 export const codeBridge = {
-  async processCode(code: string): Promise<any> {
-    const result = await axios.post('http://127.0.0.1:8000/compile', {
-      code: code
+  async compileCode(code: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      fs.writeFileSync('temp.qal', code)
+      const spawn = require('child_process').spawn
+      const compileProcess = spawn('python', [compilerPath, 'temp.qal'])
+      let data = ''
+      let errorData = ''
+
+      compileProcess.stdout.on('data', (chunk: any) => {
+        data += chunk.toString()
+      })
+
+      compileProcess.stderr.on('data', (chunk: any) => {
+        errorData += chunk.toString()
+      })
+
+      compileProcess.on('error', (error: any) => {
+        fs.unlinkSync('temp.qal')
+        reject(`Error occurred: ${error.message}`)
+      })
+
+      compileProcess.stdout.on('end', () => {
+        fs.unlinkSync('temp.qal')
+        if (errorData) {
+          reject(`Error output: ${errorData}`)
+        } else {
+          resolve(data)
+        }
+      })
     })
-    return result.data
   }
 }

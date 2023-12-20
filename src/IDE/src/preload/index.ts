@@ -42,7 +42,9 @@ export const api = {
     ipcRenderer.invoke('read-canvas-state', filePath),
   uploadAndSaveImage: (filePath, data): Promise<unknown> =>
     ipcRenderer.invoke('upload-and-save-image', filePath, data),
-  readFileAsBuffer: (filePath): Promise<unknown> => ipcRenderer.invoke('readFileAsBuffer', filePath)
+  readFileAsBuffer: (filePath): Promise<unknown> =>
+    ipcRenderer.invoke('readFileAsBuffer', filePath),
+  compileCode: (code: string): Promise<string> => ipcRenderer.invoke('compiler:compile', code)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
