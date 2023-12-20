@@ -135,16 +135,7 @@ function BlockEditor(): ReactElement {
         onClose={() => setShowMusicModal(false)}
         activeSoundResourceId={activeBlockId || ''}
       />
-      <MusicModal
-        show={showTimerModal}
-        onClose={() => setShowTimerModal(false)}
-        activeSoundResourceId={activeBlockId || ''}
-      />
-      <MusicModal
-        show={showMusicModal}
-        onClose={() => setShowMusicModal(false)}
-        activeSoundResourceId={activeBlockId || ''}
-      />
+      <TimerModal show={showTimerModal} onClose={() => setShowTimerModal(false)} />
       <CanvasModal
         show={showEditCanvasModal}
         activeSceneResourceId={activeBlockId || ''}
