@@ -9,15 +9,16 @@
 // - The component also contains experimental or placeholder func
 
 import './styles.css'
-import { ReactElement, useState } from 'react'
+import { ReactElement, useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCheckCircle, faPlayCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import BlockRow from '@renderer/components/BlockRow'
 import Modal from '@renderer/components/BlockModal'
 import CanvasModal from '@renderer/components/CanvasModal'
-import { SceneProcessor, BlockUtil } from '@renderer/utils/util'
+import { SceneProcessor, BlockUtil, IProject } from '@renderer/utils/util'
 import { IBaseButton, genericButtons, inputButtons } from '@renderer/staticButtons'
 import MusicModal from '@renderer/components/MusicModal'
+import { useNavigate } from 'react-router-dom'
 
 export interface IBlockRow {
   order: number
@@ -25,6 +26,7 @@ export interface IBlockRow {
 }
 function BlockEditor(): ReactElement {
   const [showModal, setShowModal] = useState(false)
+  const [projectName, setProjectName] = useState('')
   const [showEditCanvasModal, setShowEditCanvasModal] = useState(false)
   const [modalType, setModalType] = useState<'input' | 'other'>('input')
   const [activeRowIndex, setActiveRowIndex] = useState<number | null>(null)
@@ -32,6 +34,7 @@ function BlockEditor(): ReactElement {
   const [rows, setRows] = useState<IBlockRow[]>([])
   const sceneProcessor = new SceneProcessor()
   const [showMusicModal, setShowMusicModal] = useState(false)
+  const navigate = useNavigate()
 
   // Be aware that this is VERY INNEFICIENT and will lead to "counter" leaks.
   // This is just a quick fix to make sure that the "src" property of each block is uniquely mapped.
@@ -43,8 +46,62 @@ function BlockEditor(): ReactElement {
     setShowModal(true)
   }
 
+  const loadBlockSelections = async (projectFolderPath): Promise<any> => {
+    try {
+      const data = await window.electronAPI.readFile(`${projectFolderPath}/project-info.json`)
+      const projectData = JSON.parse(data) as IProject
+      setRows(projectData.blockRows || [])
+      setGlobalResourceCounter(projectData.globalCounter || 0)
+    } catch (error) {
+      console.error('Error reading file:', error)
+    }
+  }
+
+  const saveProjectAndNavigate = async () => {
+    console.log('CompleteAndNavigate Called')
+
+    const projectFolderPath = localStorage.getItem('currentProjectPath')
+    console.log('Project folder path:', projectFolderPath)
+
+    if (projectFolderPath) {
+      try {
+        const projectData = {
+          name: projectName,
+          blockRows: rows,
+          globalCounter: globalResourceCounter
+        }
+        await window.electronAPI.writeFile(
+          `${projectFolderPath}/project-info.json`,
+          JSON.stringify(projectData)
+        )
+        console.log('Selections saved successfully!')
+        // navigate('/projects')
+      } catch (err) {
+        console.error('Error during file operations:', err)
+      }
+    } else {
+      console.log('No project folder path found.')
+    }
+  }
+
+  useEffect(() => {
+    // Load the project data on component mount
+    const projectFolderPath = localStorage.getItem('currentProjectPath')
+    console.log('Component Mounted - Editor')
+
+    if (projectFolderPath) {
+      console.log('Project Folder Path:', projectFolderPath)
+      loadBlockSelections(projectFolderPath)
+      const pathParts = projectFolderPath.split(/[\/\\]/)
+      const extractedName = pathParts[pathParts.length - 1]
+      setProjectName(extractedName)
+    } else {
+      console.error('Project folder path not found')
+    }
+  }, [])
+
   const compileCodeHandler = async (): Promise<void> => {
-    const code = sceneProcessor.process({ name: 'teste', blockRows: rows })
+    const code = sceneProcessor.process({ name: 'teste', blockRows: rows, globalCounter: 0 })
     alert(code)
     try {
       const compiledCode = await window.api.compileCode(code)
@@ -134,7 +191,7 @@ function BlockEditor(): ReactElement {
         activeSceneResourceId={activeBlockId || ''}
         onClose={handleEditCanvasClose}
       />
-      <span style={{ padding: '1em', width: '40em', height: '40em' }}>
+      <span style={{ padding: '1em', width: '80%', height: '40em' }}>
         <div
           style={{
             backgroundColor: 'transparent',
@@ -159,11 +216,17 @@ function BlockEditor(): ReactElement {
           ))}
         </div>
       </span>
-      <span style={{ padding: '1em' }} onClick={() => handleOpenModal(rows.length, 'input')}>
-        <FontAwesomeIcon icon={faPlusCircle} size="4x" color="black" />
+      <span style={{ display: 'flex', flexDirection: 'row' }}>
+        <span style={{ padding: '1em' }} onClick={() => handleOpenModal(rows.length, 'input')}>
+          <FontAwesomeIcon icon={faPlusCircle} size="4x" color="black" />
+        </span>
+        <span style={{ padding: '1em' }} onClick={saveProjectAndNavigate}>
+          <FontAwesomeIcon icon={faCheckCircle} size="4x" color="black" />
+        </span>
+        <span style={{ padding: '1em' }} onClick={compileCodeHandler}>
+          <FontAwesomeIcon icon={faPlayCircle} size="4x" color="black" />
+        </span>
       </span>
-      {/* <button>Test Save</button> */}
-      <button onClick={() => compileCodeHandler()}>Test Compile</button>
     </div>
   )
 }

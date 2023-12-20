@@ -11,18 +11,18 @@ import '../assets/styles/global.css'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Login from '../pages/Login'
 import Navbar from '../components/Navbar'
-=import Projects from '../pages/Projects'
+import Projects from '../pages/Projects'
 import Patients from '../pages/Patients'
 import Register from '../pages/Register'
 import RegisterPatient from '../pages/RegisterPatient'
 import { AuthProvider } from '../contexts/AuthContext'
 import { useState, useEffect, ReactElement } from 'react'
-=import { ToastContainer } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import FabricPage from '../pages/Fabric'
 import NewFunction from '../pages/NewFunction'
 import BlockEditor from '@renderer/pages/BlockEditor'
-=
+
 export default function Router(): ReactElement {
   const location = useLocation()
   const [showNavbar, setShowNavbar] = useState(false)
@@ -40,9 +40,10 @@ export default function Router(): ReactElement {
       <ToastContainer />
       {showNavbar && <Navbar />}
       <Routes>
-=        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<BlockEditor />} />
         <Route path="/editor" element={<BlockEditor />} />
-=        <Route path="/projects" element={<Projects />} />
+        <Route path="/projects" element={<Projects />} />
         <Route path="/patients" element={<Patients />} />
         <Route path="/fabric" element={<FabricPage />} />
         <Route path="/new-function" element={<NewFunction />} />
