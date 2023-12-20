@@ -1,0 +1,51 @@
+.colors .modal-content {
+    height: 60vh;
+    border-radius: 1.5rem;
+}
+
+.colors .modal-content .modal-header {
+    border-radius: 1rem 1rem 0 0;
+}
+
+.colors .modal-content .modal-body {
+    display: flex;
+    gap: 2rem;
+}
+
+.colors .modal-content .modal-body > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: space-between;
+    padding: 1rem;
+    flex: 1;
+    text-wrap: nowrap;
+}
+
+.colors .modal-content .modal-body > div > button, .colors .modal-content .modal-body > div > input[type="color"] {
+    width: 100%;
+}
+
+.colors .modal-content .modal-body > div > button {
+    padding: 1rem;
+}
+
+.colors .modal-content .modal-footer {
+    border-radius: 0 0 1rem 1rem;
+    padding: .5rem 1.5rem;
+}
+
+.colors .modal-content .modal-footer button {
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    border: none;
+}
+
+input[type="color"] {
+    -webkit-appearance: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    cursor: pointer;
+}
