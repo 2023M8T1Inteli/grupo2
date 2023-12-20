@@ -1,6 +1,10 @@
 :root {
     --variable-color: purple;
     --gray: #ABABAB;
+    --primary: #C83A61;
+    --primary-hover: #a1102f;
+    --primary-active: #891230;
+    --font-color: #fff;
     --white: #FFF;
     --black: #000;
 }
