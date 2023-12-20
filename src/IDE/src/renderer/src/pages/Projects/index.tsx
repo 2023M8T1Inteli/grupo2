@@ -57,9 +57,6 @@ export default function Projects() {
       <AutoRedirect />
       <Button
         variant="back"
-        onClick={() => {
-          console.log('A')
-        }}
       />
       <h1>Projetos</h1>
 

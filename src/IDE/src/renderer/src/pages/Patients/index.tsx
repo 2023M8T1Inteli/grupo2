@@ -54,6 +54,9 @@ export default function Patients() {
       </h1>
       <input className='search-patient' onChange={handleSearch} />
       <div className='patients'>
+        <a href='register-patient' className='patient add'>
+          <img src={plus} />
+        </a>
         {filteredPatients?.map((patient) => (
           <a key={patient.id} href="http://" className="patient">
             <img src={profilePhoto} alt="" />

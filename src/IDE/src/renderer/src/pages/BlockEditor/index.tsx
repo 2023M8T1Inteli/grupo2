@@ -1,5 +1,5 @@
 import './styles.css'
-import { ReactElement, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   IconDefinition,
@@ -14,16 +14,19 @@ import BlockRow from '@renderer/components/BlockRow'
 import Modal from '@renderer/components/BlockModal'
 import CanvasModal from '@renderer/components/CanvasModal'
 import MusicModal from '@renderer/components/MusicModal'
+import { sceneProcessor } from '@renderer/utils/SceneProcessor'
 
 export interface IBaseButton {
+  id?: string
   name: string
   icon: IconDefinition
-  type: 'input' | 'resource' | 'action' | 'logical' | 'graphical'
+  category: 'input' | 'resource' | 'action' | 'logical'
+  type: 'scene' | 'sound' | 'input' | 'wait' | 'else'
   src?: string
   correspondingCompileCode: string
 }
 
-interface BlockRow {
+export interface IBlockRow {
   order: number
   blocks: IBaseButton[]
 }
@@ -32,26 +35,34 @@ const inputButtons: IBaseButton[] = [
   {
     name: 'Quadrante 1',
     type: 'input',
+    category: 'input',
     icon: faWalking,
-    correspondingCompileCode: '1'
+    correspondingCompileCode: 'ler_varios(1,1,0)',
+    src: ''
   },
   {
     name: 'Quadrante 2',
     type: 'input',
+    category: 'input',
     icon: faWalking,
-    correspondingCompileCode: '2'
+    correspondingCompileCode: 'ler_varios(2,1,0)',
+    src: ''
   },
   {
     name: 'Quadrante 3',
     type: 'input',
+    category: 'input',
     icon: faWalking,
-    correspondingCompileCode: '3'
+    correspondingCompileCode: 'ler_varios(3,1,0)',
+    src: ''
   },
   {
     name: 'Quadrante 4',
     type: 'input',
+    category: 'input',
     icon: faWalking,
-    correspondingCompileCode: '4'
+    correspondingCompileCode: 'ler_varios(4,1,0)',
+    src: ''
   }
 ]
 
@@ -59,50 +70,34 @@ const genericButtons: IBaseButton[] = [
   {
     name: 'Mostrar Cena',
     icon: faImage,
-    correspondingCompileCode: 'image',
-    type: 'resource'
+    correspondingCompileCode: '',
+    type: 'scene',
+    category: 'resource',
+    src: '0'
   },
   {
     name: 'Tocar Música',
     icon: faMusic,
     correspondingCompileCode: 'music',
-    type: 'resource'
+    type: 'sound',
+    category: 'resource',
+    src: '0'
   },
   {
     name: 'Esperar Segundos',
     icon: faHourglassHalf,
-    correspondingCompileCode: 'timer',
-    type: 'action'
+    correspondingCompileCode: '',
+    type: 'wait',
+    category: 'action',
+    src: '10000'
   },
   {
     name: 'Caso errado',
     icon: faUserXmark,
-    correspondingCompileCode: 'wrong',
-    type: 'logical'
-  },
-  {
-    name: 'Quadrante 1',
-    type: 'input',
-    icon: faWalking,
-    correspondingCompileCode: '1'
-  },
-  {
-    name: 'Quadrante 2',
-    type: 'input',
-    icon: faWalking,
-    correspondingCompileCode: '2'
-  },
-  {
-    name: 'Quadrante 3',
-    type: 'input',
-    icon: faWalking,
-    correspondingCompileCode: '3'
-  },
-  {
-    name: 'Quadrante 4',
-    type: 'input',
-    icon: faWalking,
-    correspondingCompileCode: '4'
+    correspondingCompileCode: '',
+    type: 'else',
+    category: 'logical',
+    src: ''
   }
 ]
 
@@ -111,7 +106,7 @@ function BlockEditor(): ReactElement {
   const [showEditCanvasModal, setShowEditCanvasModal] = useState(false)
   const [modalType, setModalType] = useState<'input' | 'other'>('input')
   const [activeRowIndex, setActiveRowIndex] = useState<number | null>(null)
-  const [rows, setRows] = useState<BlockRow[]>([])
+  const [rows, setRows] = useState<IBlockRow[]>([])
   const [showMusicModal, setShowMusicModal] = useState(false)
 
   // Be aware that this is VERY INNEFICIENT and will lead to "counter" leaks.
@@ -127,6 +122,36 @@ function BlockEditor(): ReactElement {
   const handleOpenEditCanvasModal = (idx: active): void => {
     setShowEditCanvasModal(true)
   }
+
+  const compileCodeHandler = async (): Promise<void> => {
+    const code = sceneProcessor({ name: 'teste', blockRows: rows })
+    try {
+      const compiledCode = await window.api.compileCode(code)
+      console.log(compiledCode)
+      alert(compiledCode)
+    } catch (err) {
+      alert(err)
+    }
+  }
+
+  const setNewBlockCompileCode = (newBlock: IBaseButton): void => {
+    switch (newBlock.type) {
+      case 'scene':
+        newBlock.correspondingCompileCode = `mostrar(${newBlock.id})`
+        break
+      case 'sound':
+        newBlock.correspondingCompileCode = `tocar(${newBlock.id})`
+        break
+      case 'wait':
+        newBlock.correspondingCompileCode = `esperar(${newBlock.src})`
+        break
+      case 'else':
+        newBlock.correspondingCompileCode = ''
+        break
+      default:
+        console.log('setNewBlockCompileCode: type not found')
+    }
+  }
   const handleMusicButtonClick = (button: IBaseButton) => {
     setShowMusicModal(true)
   }
@@ -136,10 +161,11 @@ function BlockEditor(): ReactElement {
       if (activeRowIndex < rows.length) {
         const updatedRows = rows.map((row, index) => {
           if (index === activeRowIndex) {
-            const currentBlocksLength = row.blocks.length
-            if (['graphical', 'resource'].includes(newBlock.type)) {
-              newBlock.src = `${globalResourceCounter}`
+            if (['graphical', 'resource'].includes(newBlock.category)) {
+              newBlock.id = `${globalResourceCounter}`
               setGlobalResourceCounter(globalResourceCounter + 1)
+            } else if (newBlock.category === 'input') {
+              newBlock.id = activeRowIndex.toString()
             }
             return { ...row, blocks: [...row.blocks, newBlock] }
           }
@@ -147,21 +173,21 @@ function BlockEditor(): ReactElement {
         })
         setRows(updatedRows)
       } else {
-        if (['graphical', 'resource'].includes(newBlock.type)) {
-          newBlock.src = `${globalResourceCounter}`
+        if (['graphical', 'resource'].includes(newBlock.category)) {
+          newBlock.id = `${globalResourceCounter}`
           setGlobalResourceCounter(globalResourceCounter + 1)
+        } else if (newBlock.category === 'input') {
+          newBlock.id = activeRowIndex.toString()
         }
         const newRow = { order: activeRowIndex, blocks: [newBlock] }
         setRows([...rows, newRow])
       }
+      setNewBlockCompileCode(newBlock)
     }
-    console.log(rows)
     setShowModal(false)
   }
-
   const handleClose = (): void => setShowModal(false)
   const handleEditCanvasClose = (): void => setShowEditCanvasModal(false)
-
   return (
     <div className="Main">
       <Modal
@@ -203,6 +229,7 @@ function BlockEditor(): ReactElement {
       <span style={{ padding: '1em' }} onClick={() => handleOpenModal(rows.length, 'input')}>
         <FontAwesomeIcon icon={faPlusCircle} size="4x" color="black" />
       </span>
+      <button onClick={() => compileCodeHandler()}>Test Compile</button>
     </div>
   )
 }

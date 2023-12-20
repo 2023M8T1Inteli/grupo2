@@ -62,60 +62,60 @@ export default function RegisterPatient() {
     }
 
     successToast(`Paciente criado com sucesso!`)
-    //sessionStorage.setItem("user_data", JSON.stringify(user));
-    navigate('/login')
+    navigate('/patients')
   }
 
   return (
-    <div className="login-container">
-      <div>
-        <img src={camera} alt="Camera" />
-      </div>
-      <div>
-        <h1 style={{ color: 'white' }}>Novo Paciente</h1>
-        <form className="inputs" onSubmit={handleLogin}>
-          <h3 style={{ color: 'white' }}>Nome Completo</h3>
-
+    <div className="register-patient-container">
+      <Button
+        variant='back'
+      />
+      <img src={camera} alt="Camera" />
+      <h1>Novo Paciente</h1>
+      <form className="inputs" onSubmit={handleLogin}>
+        <div>
+          <label htmlFor='name'>Nome</label>
           <input
             required
+            id='name'
+            name='name'
             type="text"
             placeholder="Nome"
             onChange={(e) => {
               setUsername(e.target.value)
             }}
-            style={{ marginBottom: '2rem', padding: '0.3rem', width: '50rem' }}
           />
-          <h3 style={{ color: 'white' }}>Data de nascimento</h3>
+        </div>
+        <div>
+          <label htmlFor='birthdate'>Data de nascimento</label>
           <input
+            id='birthdate'
+            name='birthdate'
             required
             type="date"
             placeholder="Data de nascimento"
             onChange={(e) => {
               setBirthdayDate(e.target.value)
             }}
-            style={{ marginBottom: '3rem', padding: '0.3rem', width: '50rem' }}
           />
-          <div className="buttons">
-            <Button
-              variant="back"
-              onClick={() => {
-                console.log('A')
-              }}
-            />
-            <input
-              type="submit"
-              value="CRIAR PACIENTE"
-              style={{ padding: '0.1rem', width: '100rem' }}
-            />
-            <input
-              type="button"
-              onClick={() => navigate('/registerPatient')}
-              value="CANCELAR"
-              style={{ padding: '0.10rem' }}
-            />
-          </div>
-        </form>
-      </div>
+        </div>
+        <div className="buttons">
+          <Button
+            variant="back"
+          />
+          <input
+            className='submit'
+            type="submit"
+            value="CRIAR PACIENTE"
+          />
+          <input
+            className='cancel'
+            type="button"
+            onClick={() => navigate('/registerPatient')}
+            value="CANCELAR"
+          />
+        </div>
+      </form>
     </div>
   )
 }

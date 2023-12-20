@@ -17,8 +17,8 @@ interface IBlockRowProps {
   editTimeHandler: (timerIdx: number) => void
 }
 export default function BlockRow(props: IBlockRowProps): ReactElement {
-  const colorSwitch = (type: string): string => {
-    switch (type) {
+  const colorSwitch = (category: string): string => {
+    switch (category) {
       case 'input':
         return 'green'
       case 'action':
@@ -31,8 +31,6 @@ export default function BlockRow(props: IBlockRowProps): ReactElement {
       default:
         return 'darkBlue'
     }
-
-    console.log('BlockRow: colorSwitch: type not found')
   }
 
   return (
@@ -51,12 +49,12 @@ export default function BlockRow(props: IBlockRowProps): ReactElement {
           <GenericBlock
             key={idx}
             type={idx === 0 ? 'start' : 'middle'}
-            color={colorSwitch(block.type)}
+            color={colorSwitch(block.category)}
             icon={block.icon}
             onClick={() => {
               if (block.type === 'input') {
                 props.editCanvasHandler(idx)
-              } else if (block.type === 'action') {
+              } else if (block.type === 'wait') {
                 props.editTimeHandler(idx)
               }
             }}
@@ -64,12 +62,6 @@ export default function BlockRow(props: IBlockRowProps): ReactElement {
         )
       })}
 
-      {/* <GenericBlock type="start" color="green" icon={faWalking} /> */}
-      {/* <GenericBlock type="middle" color="yellow" icon={faMusic} />
-            <GenericBlock type="middle" color="darkOrange" icon={faHourglassHalf} />
-            <GenericBlock type="middle" color="teal" icon={faImage} />
-            <GenericBlock type="middle" color="teal" icon={faImage} /> */}
-      {/* <GenericBlock type="middle" color="teal" icon={faImage} /> */}
       <GenericBlock
         type="end"
         color="darkBlue"

@@ -58,9 +58,6 @@ export default function Projects() {
     <div className="projects-container">
       <Button
         variant="back"
-        onClick={() => {
-          console.log('A')
-        }}
       />
       <h1>Projetos</h1>
       <div className="centered-content">
