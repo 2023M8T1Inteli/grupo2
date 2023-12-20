@@ -98,6 +98,15 @@ O principal objetivo deste projeto é desenvolver um ambiente terapêutico assis
 
 2. **Maior Independência e Qualidade de Vida:** Espera-se que o tapete sensorial, conectado ao Greg Maker e manipulado pela IDE, represente uma solução inovadora e acessível, atendendo às necessidades de indivíduos com desordens neurológicas leves.
 
+# Resultados 
+
+O desenvolvimento do Ambiente de Desenvolvimento Integrado (IDE) para Terapeutas Ocupacionais que atendem pacientes com Paralisia Cerebral é um avanço notável no campo da Tecnologia Assistiva, marcado por um foco especial em usabilidade e acessibilidade. Este IDE, integrado com um tapete sensorial inovador, foi projetado para otimizar a experiência dos profissionais, facilitando o planejamento e a implementação de atividades terapêuticas de maneira eficiente e interativa.
+
+1. **Login e criação de usuários**
+![Login](img/artigo/1.jpg)
+
+1. **Construção Iterativa**
+
 # Conclusão
 
 O presente artigo representa um marco significativo na interseção entre a crescente demanda por assistência a pessoas com deficiência e os avanços contínuos em tecnologias assistivas. Ao abordar a prevalência global de deficiências e a necessidade premente de soluções inovadoras, destacamos a importância de iniciativas como a Iniciativa de Cooperação Global em Tecnologia Assistiva (GATE) da Organização Mundial da Saúde e o compromisso da Associação de Assistência à Criança Deficiente (AACD) em empregar soluções eficazes.
