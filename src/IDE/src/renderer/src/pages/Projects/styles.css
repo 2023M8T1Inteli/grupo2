@@ -22,7 +22,8 @@
     min-height: 10rem;
     min-width: 10rem;
     padding: 1rem;
-    border: 1px solid var(--primary);
+    border: var(--navbar-border);
+    background: var(--primary);
     text-decoration: none;
 }
 
@@ -68,7 +69,8 @@
   }
   
   .modal-short-content {
-    background: white;
+    background: var(--primary);
+    border: var(--navbar-border);
     width: 90%;
     max-width: 400px;
     padding: 20px;
