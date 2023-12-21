@@ -107,7 +107,6 @@ function BlockEditor(): ReactElement {
 
   const compileCodeHandler = async (): Promise<void> => {
     const code = sceneProcessor.process({ name: 'teste', blockRows: rows, globalCounter: 0 })
-    alert(code)
     try {
       const compiledCode = await window.api.compileCode(code)
       console.log(compiledCode)

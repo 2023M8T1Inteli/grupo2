@@ -176,7 +176,6 @@ export default function Patients() {
     try {
       const patientId = selectedPatient.id
       const mainUserId = userId()
-      alert(mainUserId)
 
       infoToast('Carregando projeto...')
       const folderPath = await window.electronAPI.getFolderPath(project)
