@@ -1,4 +1,16 @@
-import React from 'react'
+/**
+ * This file defines a SaveAsWav component for React that is used to save audio data as a WAV file.
+ * It includes:
+ * - Importing necessary libraries and functions.
+ * - The SaveAsWav component which renders a button. When this button is clicked, the 'saveAsWav' function is called.
+ * - The 'saveAsWav' function converts the audio data to a WAV file and saves it to the project's 'sounds' folder.
+ * - The 'audioData' and 'activeSoundResourceId' props are used to get the audio data and the name of the sound resource.
+ * - The 'AudioContext' is used to decode the audio data.
+ * - The 'toWav' function is used to convert the audio buffer to a WAV buffer.
+ * - The 'electronAPI.saveWavFile' function is used to save the WAV buffer to a file.
+ * - Errors are logged to the console.
+ */
+
 import toWav from 'audiobuffer-to-wav'
 
 const SaveAsWav = (props) => {

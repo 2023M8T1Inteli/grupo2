@@ -1,11 +1,11 @@
-// This code allows the user to upload their own audio files and visualize them. The component uses the wavesurfer.js library to handle the audio visualization process. 
+// This code allows the user to upload their own audio files and visualize them. The component uses the wavesurfer.js library to handle the audio visualization process.
 
 import React, { useEffect, useRef, useState } from 'react'
 import WaveSurfer from 'wavesurfer.js'
-import SaveAsWav from '../SaveAudio'
 
 interface AudioUploaderProps {
   activeSoundResourceId: string
+  confirmEvent: (audioData) => void
 }
 
 const AudioUploader = (props: AudioUploaderProps) => {
@@ -19,6 +19,10 @@ const AudioUploader = (props: AudioUploaderProps) => {
       setUploadedFile(URL.createObjectURL(file))
       setFileBlob(file) // Store the file blob
     }
+  }
+
+  const onConfirm = () => {
+    props.confirmEvent(fileBlob)
   }
 
   useEffect(() => {
@@ -47,10 +51,18 @@ const AudioUploader = (props: AudioUploaderProps) => {
       <input type="file" onChange={handleFileChange} />
       <div id="waveform" />
       {uploadedFile && (
-        <div>
-          <button onClick={() => waveSurferRef.current.playPause()}>Play/Pause</button>
-          <SaveAsWav audioData={fileBlob} activeSoundResourceId={props.activeSoundResourceId} />
-        </div>
+        <>
+          <div>
+            <button
+              onClick={() => {
+                waveSurferRef.current.playPause()
+              }}
+            >
+              Play/Pause
+            </button>
+          </div>
+          <button onClick={onConfirm}>confirmar</button>
+        </>
       )}
     </div>
   )

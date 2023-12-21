@@ -8,14 +8,14 @@ import path from 'path'
 import axios from 'axios'
 const fs = require('fs')
 
-const compilerPath = path.join(__dirname, '../../resources/compiler/', 'main.py')
+const compilerPath = path.join(__dirname, '../../resources/compiler/', 'compiler.exe')
 
 export const codeBridge = {
   async compileCode(code: string): Promise<string> {
     return new Promise((resolve, reject) => {
       fs.writeFileSync('temp.qal', code)
-      const spawn = require('child_process').spawn
-      const compileProcess = spawn('python', [compilerPath, 'temp.qal'])
+      const execFile = require('child_process').execFile
+      const compileProcess = execFile(compilerPath, ['temp.qal'])
       let data = ''
       let errorData = ''
 
@@ -42,12 +42,14 @@ export const codeBridge = {
       })
     })
   },
-  async saveCompiledCodeAndRun(code: string, filepath: string): Promise<void> {
+  async saveCompiledCodeAndRun(code: string, filepath: string): Promise<number> {
     return new Promise((resolve, reject) => {
       fs.writeFileSync(filepath + '/main.py', code)
       const spawn = require('child_process').spawn
       const compileProcess = spawn('python', [filepath + '/main.py'])
       let errorData = ''
+      const startTime = Date.now()
+      let endTime = Date.now()
 
       compileProcess.stderr.on('data', (chunk: any) => {
         errorData += chunk.toString()
@@ -58,10 +60,12 @@ export const codeBridge = {
       })
 
       compileProcess.stdout.on('end', () => {
+        endTime = Date.now()
+        const elapsedMinutes = (endTime - startTime) / 1000 / 60
         if (errorData) {
           reject(`Error output: ${errorData}`)
         } else {
-          resolve()
+          resolve(elapsedMinutes)
         }
       })
     })

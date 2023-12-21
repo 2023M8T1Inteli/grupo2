@@ -30,7 +30,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   readFileAsBuffer: (filePath) => ipcRenderer.invoke('readFileAsBuffer', filePath),
   convertArrayBufferToBuffer: (arrayBuffer) => Buffer.from(arrayBuffer),
   convertBlobToOgg: (buffer) => ipcRenderer.invoke('convert-blob-to-ogg', buffer),
-  saveWavFile: (filePath, soundName, wavBuffer) => ipcRenderer.invoke('save-wav-file', filePath, soundName, wavBuffer)
+  saveWavFile: (filePath, soundName, wavBuffer) =>
+    ipcRenderer.invoke('save-wav-file', filePath, soundName, wavBuffer)
 })
 
 // Custom APIs for renderer
@@ -59,8 +60,14 @@ export const api = {
   readFileAsBuffer: (filePath): Promise<unknown> =>
     ipcRenderer.invoke('readFileAsBuffer', filePath),
   compileCode: (code: string): Promise<string> => ipcRenderer.invoke('compiler:compile', code),
-  saveAndRunCode: (code: string, filepath: string): Promise<void> =>
-    ipcRenderer.invoke('compiler:saveAndRun', code, filepath)
+  saveAndRunCode: (
+    code: string,
+    filepath: string,
+    isSession: boolean,
+    patientId?: string,
+    userId?: string
+  ): Promise<void> =>
+    ipcRenderer.invoke('compiler:saveAndRun', code, filepath, isSession, patientId, userId)
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

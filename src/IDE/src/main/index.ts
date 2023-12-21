@@ -1,28 +1,19 @@
-// This is the main process script for an Electron application that handles various backend functionalities.
-// It includes code for creating and managing the main window, handling inter-process communication (IPC) events, and performing file operations.
-// Key features of this script include:
-// - Creating the main BrowserWindow with specific dimensions, configurations, and loading the correct URL based on the environment (development or production).
-// - Setting up IPC event handlers to interact with different services like user, patient, and project management, and executing database operations (CRUD).
-// - Utilizing the 'electron-toolkit' utils for optimizing window shortcuts and setting app user model ID.
-// - Managing file operations including reading, writing, saving images, handling project folders, and maintaining canvas states.
-// - Handling special operations like compiling code using a Python bridge, converting audio files using FFmpeg, and dealing with binary data.
-// - The script ensures cross-platform compatibility (e.g., special handling for Linux icon).
-// - It includes exception handling for file operations and returns appropriate responses to the renderer process.
-// - The script also contains logic for application lifecycle management, like quitting the app when all windows are closed (except on macOS).
-
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
+
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import iconWindows from '../../resources/icon.ico?asset'
+
+import path from 'path'
+import fs from 'fs'
+import os from 'os'
 
 import { users, User } from './services/User.service'
 import { Patient, patients } from './services/Patient.service'
 import { Project, projects } from './services/Project.service'
 import { codeBridge } from './bridge/Python.bridge'
-
-import os from 'os'
-import fs from 'fs'
-import path from 'path'
+import { Session, sessions } from './services/Session.service'
 
 function createWindow(): void {
   // Create the browser window.
@@ -31,7 +22,7 @@ function createWindow(): void {
     height: 670,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    ...(process.platform === 'linux' ? { icon } : { icon: iconWindows }),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false
@@ -77,77 +68,6 @@ app.whenReady().then(() => {
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
-
-  ipcMain.handle('db:user.insert', async (_, user: User) => {
-    return users.insert(user)
-  })
-
-  ipcMain.handle('db:user.update', async (_, user: User) => {
-    return users.update(user)
-  })
-
-  ipcMain.handle('db:user.delete', async (_, id: string) => {
-    return users.delete(id)
-  })
-
-  ipcMain.handle('db:user.get', async (_, id: string) => {
-    return users.get(id)
-  })
-
-  ipcMain.handle('db:user.getAll', async () => {
-    return users.getAll()
-  })
-
-  ipcMain.handle('db:user.getByUsername', async (_, username: string) => {
-    return users.getByUsername(username)
-  })
-
-  ipcMain.handle('db:patient.insert', async (_, patient: Patient) => {
-    return patients.insert(patient)
-  })
-
-  ipcMain.handle('db:patient.update', async (_, patient: Patient) => {
-    return patients.update(patient)
-  })
-
-  ipcMain.handle('db:patient.delete', async (_, id: string) => {
-    return patients.delete(id)
-  })
-
-  ipcMain.handle('db:patient.get', async (_, id: string) => {
-    return patients.get(id)
-  })
-
-  ipcMain.handle('db:patient.getAll', async () => {
-    return patients.getAll()
-  })
-  ipcMain.handle('db:project.insert', async (_, project: Project) => {
-    return projects.insert(project)
-  })
-
-  ipcMain.handle('db:project.update', async (_, project: Project) => {
-    return projects.update(project)
-  })
-
-  ipcMain.handle('db:project.delete', async (_, id: string) => {
-    return projects.delete(id)
-  })
-
-  ipcMain.handle('db:project.get', async (_, id: string) => {
-    return projects.get(id)
-  })
-
-  ipcMain.handle('db:project.getAll', async () => {
-    return projects.getAll()
-  })
-
-  ipcMain.handle('compiler:compile', async (_, code: string) => {
-    return codeBridge.compileCode(code)
-  })
-
-  ipcMain.handle('compiler:saveAndRun', async (_, code: string, filepath: string) => {
-    return codeBridge.saveCompiledCodeAndRun(code, filepath)
-  })
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -159,7 +79,107 @@ app.on('window-all-closed', () => {
   }
 })
 
-ipcMain.handle('read-file', async (event, filePath: string) => {
+// In this file you can include the rest of your app"s specific main process
+// code. You can also put them in separate files and require them here.
+ipcMain.handle('db:user.insert', async (_, user: User) => {
+  return users.insert(user)
+})
+
+ipcMain.handle('db:user.update', async (_, user: User) => {
+  return users.update(user)
+})
+
+ipcMain.handle('db:user.delete', async (_, id: string) => {
+  return users.delete(id)
+})
+
+ipcMain.handle('db:user.get', async (_, id: string) => {
+  return users.get(id)
+})
+
+ipcMain.handle('db:user.getAll', async () => {
+  return users.getAll()
+})
+
+ipcMain.handle('db:user.getByUsername', async (_, username: string) => {
+  return users.getByUsername(username)
+})
+
+ipcMain.handle('db:patient.insert', async (_, patient: Patient) => {
+  return patients.insert(patient)
+})
+
+ipcMain.handle('db:patient.update', async (_, patient: Patient) => {
+  return patients.update(patient)
+})
+
+ipcMain.handle('db:patient.delete', async (_, id: string) => {
+  return patients.delete(id)
+})
+
+ipcMain.handle('db:patient.get', async (_, id: string) => {
+  return patients.get(id)
+})
+
+ipcMain.handle('db:patient.getAll', async () => {
+  return patients.getAll()
+})
+ipcMain.handle('db:project.insert', async (_, project: Project) => {
+  return projects.insert(project)
+})
+
+ipcMain.handle('db:project.update', async (_, project: Project) => {
+  return projects.update(project)
+})
+
+ipcMain.handle('db:project.delete', async (_, id: string) => {
+  return projects.delete(id)
+})
+
+ipcMain.handle('db:project.get', async (_, id: string) => {
+  return projects.get(id)
+})
+
+ipcMain.handle('db:project.getAll', async () => {
+  return projects.getAll()
+})
+
+ipcMain.handle('compiler:compile', async (_, code: string) => {
+  return codeBridge.compileCode(code)
+})
+
+ipcMain.handle(
+  'compiler:saveAndRun',
+  async (
+    _,
+    code: string,
+    filepath: string,
+    isSession?: boolean,
+    patientId?: string,
+    userId?: string
+  ) => {
+    const result = await codeBridge.saveCompiledCodeAndRun(code, filepath)
+    if (!isSession) return result
+
+    const session = new Session({
+      projectId: 1,
+      userId: parseInt(userId!),
+      patientId: parseInt(patientId!),
+      logPath: '',
+      createdAt: Date.now().toString(),
+      duration: result
+    })
+    await session.save()
+
+    // await sessions.insert(session)
+  }
+)
+
+ipcMain.handle('db:session.getByUserId', async (_, userId) => {
+  return await sessions.getByUserId(userId)
+})
+
+ipcMain.handle('read-file', async (_, filePath: string) => {
   try {
     const content = fs.readFileSync(filePath, 'utf-8')
     return content
@@ -169,7 +189,7 @@ ipcMain.handle('read-file', async (event, filePath: string) => {
   }
 })
 
-ipcMain.handle('write-file', async (event, filePath, content) => {
+ipcMain.handle('write-file', async (_, filePath, content) => {
   const directory = path.dirname(filePath)
   if (!fs.existsSync(directory)) {
     fs.mkdirSync(directory, { recursive: true })
@@ -184,7 +204,7 @@ ipcMain.handle('write-file', async (event, filePath, content) => {
   }
 })
 
-ipcMain.handle('save-image', async (event, filePath, base64Data) => {
+ipcMain.handle('save-image', async (_, filePath, base64Data) => {
   const buffer = Buffer.from(base64Data.replace(/^data:image\/png;base64,/, ''), 'base64')
   try {
     // Ensure the directory exists
@@ -232,7 +252,7 @@ ipcMain.handle('read-project-folders', async () => {
   }
 })
 
-ipcMain.handle('create-project-info', async (event, projectFolderPath) => {
+ipcMain.handle('create-project-info', async (_, projectFolderPath) => {
   const filePath = path.join(projectFolderPath, 'project-info.json')
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, JSON.stringify({}))
@@ -240,12 +260,12 @@ ipcMain.handle('create-project-info', async (event, projectFolderPath) => {
 })
 
 // Handler to update the JSON file
-ipcMain.handle('update-project-info', async (event, projectFolderPath, data) => {
+ipcMain.handle('update-project-info', async (_, projectFolderPath, data) => {
   const filePath = path.join(projectFolderPath, 'project-info.json')
   fs.writeFileSync(filePath, JSON.stringify(data))
 })
 
-ipcMain.handle('get-folder-path', async (event, folderName) => {
+ipcMain.handle('get-folder-path', async (_, folderName) => {
   // Implement the logic to get the folder path based on folderName
   // This is an example assuming folderName is the name of the folder in the base directory
   const homeDirectory = os.homedir()
@@ -261,7 +281,7 @@ ipcMain.handle('get-folder-path', async (event, folderName) => {
   }
 })
 
-ipcMain.handle('save-canvas-state', async (event, filePath, data) => {
+ipcMain.handle('save-canvas-state', async (_, filePath, data) => {
   try {
     // Ensure the canvas directory exists
     const canvasDir = path.dirname(filePath)
@@ -278,7 +298,7 @@ ipcMain.handle('save-canvas-state', async (event, filePath, data) => {
   }
 })
 
-ipcMain.handle('read-canvas-state', async (event, filePath) => {
+ipcMain.handle('read-canvas-state', async (_, filePath) => {
   try {
     if (fs.existsSync(filePath)) {
       const data = fs.readFileSync(filePath, 'utf8')
@@ -293,12 +313,12 @@ ipcMain.handle('read-canvas-state', async (event, filePath) => {
   }
 })
 
-ipcMain.handle('upload-and-save-image', async (event, filePath, base64Data) => {
+ipcMain.handle('upload-and-save-image', async (_, filePath, base64Data) => {
   try {
     // Ensure the directory exists
-    const directoryPath = path.dirname(filePath);
+    const directoryPath = path.dirname(filePath)
     if (!fs.existsSync(directoryPath)) {
-      fs.mkdirSync(directoryPath, { recursive: true });
+      fs.mkdirSync(directoryPath, { recursive: true })
     }
     // Process and save the image
     const base64Image = base64Data.replace(/^data:image\/\w+;base64,/, '')
@@ -309,28 +329,26 @@ ipcMain.handle('upload-and-save-image', async (event, filePath, base64Data) => {
     const dataUrl = `data:image/png;base64,${imageBuffer.toString('base64')}`
     return dataUrl
   } catch (error) {
-    console.error('Error in upload-and-save-image:', error);
-    return null;
+    console.error('Error in upload-and-save-image:', error)
+    return null
   }
 })
 
-ipcMain.handle('save-wav-file', async (event, filePath, fileName, wavBuffer) => {
+ipcMain.handle('save-wav-file', async (_, filePath, fileName, wavBuffer) => {
   try {
-    const fullPath = path.join(filePath, fileName);
+    const fullPath = path.join(filePath, fileName)
 
     // Ensure the directory exists
-    const directory = path.dirname(fullPath);
+    const directory = path.dirname(fullPath)
     if (!fs.existsSync(directory)) {
-      fs.mkdirSync(directory, { recursive: true });
+      fs.mkdirSync(directory, { recursive: true })
     }
 
-    const buffer = Buffer.from(wavBuffer);
-    await fs.promises.writeFile(fullPath, buffer);
-    return { success: true, path: fullPath };
+    const buffer = Buffer.from(wavBuffer)
+    await fs.promises.writeFile(fullPath, buffer)
+    return { success: true, path: fullPath }
   } catch (error) {
-    console.error('Error saving WAV file:', error);
-    return { success: false, error: error.message };
+    console.error('Error saving WAV file:', error)
+    return { success: false, error: error }
   }
-});
-
-
+})

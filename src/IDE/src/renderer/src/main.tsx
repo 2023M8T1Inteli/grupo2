@@ -1,16 +1,20 @@
-// index.tsx ou index.jsx
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter } from 'react-router-dom'
 import VLibras from '@djpfs/react-vlibras'
 import Router from './routes/router'
-import { ThemeProvider } from './contexts/ThemeContext'
+
+import './assets/index.css'
+import { BrowserRouter } from 'react-router-dom'
+import '@fontsource/roboto/300.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/700.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <ThemeProvider>
+  <React.StrictMode>
     <VLibras forceOnload={true} />
     <BrowserRouter>
       <Router />
     </BrowserRouter>
-  </ThemeProvider>
+  </React.StrictMode>
 )

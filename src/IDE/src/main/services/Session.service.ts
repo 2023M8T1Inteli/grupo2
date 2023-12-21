@@ -1,63 +1,83 @@
-// Este serviço tem como objetivo gerenciar sessões de terapia no banco de dados.
-// Inclui:
-// - Tipo `Session` para modelar a estrutura de dados de uma sessão.
-// - Objeto `sessions` com funções CRUD para sessões.
-// - Cada função utiliza a função `connect` do módulo `Database.service` para interagir com o banco de dados.
+/**
+ * Este arquivo define o modelo de dados para a tabela 'Session'.
+ * A classe 'Session' estende o 'Model' do Sequelize, e representa uma sessão de terapia, no banco de dados.
+ * Cada instância da classe 'Session' corresponde a uma linha na tabela 'Session'.
+ * O método 'init' é usado para definir os campos da tabela e suas características.
+ */
 
+import { Sequelize, DataTypes, Model } from 'sequelize'
+import { Database as sequelize } from './Database.service'
 
-import { connect } from "./Database.service";
+export class Session extends Model {
+  public id?: number
+  public projectId!: number
+  public userId!: number
+  public patientId!: number
+  public logPath!: string
+  public createdAt!: string
+  public duration!: number
+}
 
-export type Session = {
-  id?: number;
-  projectId: number;
-  userId: number;
-  patientId: number;
-  logPath: string;
-  createdAt: string;
-};
+Session.init(
+  {
+    id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    projectId: {
+      type: new DataTypes.INTEGER(),
+      allowNull: false
+    },
+    userId: {
+      type: new DataTypes.INTEGER(),
+      allowNull: false
+    },
+    patientId: {
+      type: new DataTypes.INTEGER(),
+      allowNull: false
+    },
+    logPath: {
+      type: new DataTypes.STRING(),
+      allowNull: false
+    },
+    createdAt: {
+      type: new DataTypes.DATE(),
+      allowNull: false
+    },
+    duration: {
+      type: new DataTypes.REAL(),
+      allowNull: false
+    }
+  },
+  {
+    tableName: 'sessions',
+    sequelize: sequelize // this bit is important
+  }
+)
 
 export const sessions = {
   async insert(session: Session) {
-    const db = connect();
-    const stmt = db.prepare(
-      "INSERT INTO sessions (projectId, userId, patientId, logPath, createdAt) VALUES (@projectId, @userId, @patientId, @logPath, @createdAt)",
-    );
-    const info = stmt.run(session);
-    db.close();
-    return info;
+    return await Session.create(session)
   },
 
   async update(session: Session) {
-    const db = connect();
-    const stmt = db.prepare(
-      "UPDATE sessions SET projectId = @projectId, userId = @userId, patientId = @patientId, logPath = @logPath, createdAt = @createdAt WHERE id = @id",
-    );
-    const info = stmt.run(session);
-    db.close();
-    return info;
+    return await Session.update(session, { where: { id: session.id } })
   },
 
   async delete(id: string) {
-    const db = connect();
-    const stmt = db.prepare("DELETE FROM sessions WHERE id = ?");
-    const info = stmt.run(id);
-    db.close();
-    return info;
+    return await Session.destroy({ where: { id: id } })
   },
 
   async get(id: string) {
-    const db = connect();
-    const stmt = db.prepare("SELECT * FROM sessions WHERE id = ?");
-    const info = await stmt.get(id);
-    db.close();
-    return info;
+    return await Session.findByPk(id)
+  },
+
+  async getByUserId(userId: string) {
+    return await Session.findAll({ where: { patientId: userId } })
   },
 
   async getAll() {
-    const db = connect();
-    const stmt = db.prepare("SELECT * FROM sessions");
-    const info = stmt.all();
-    db.close();
-    return info;
-  },
-};
+    return await Session.findAll()
+  }
+}

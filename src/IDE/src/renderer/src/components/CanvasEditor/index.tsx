@@ -21,6 +21,7 @@ import {
 import { fabric } from 'fabric'
 import { FabricJSCanvas, useFabricJSEditor } from 'fabricjs-react'
 import './styles.css'
+import { successToast } from '../Toast'
 
 interface ICanvasEditorProps {
   activeSceneResourceId: string
@@ -165,6 +166,7 @@ function CanvasEditor(props: ICanvasEditorProps): ReactElement {
       const result = await window.electronAPI.saveCanvasState(filePath, serializedCanvas)
       if (result) {
         console.log('Canvas state saved successfully to', filePath)
+        successToast('Cena salva com sucesso!')
       } else {
         console.error('Failed to save canvas state')
       }

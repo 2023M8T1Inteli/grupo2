@@ -1,3 +1,14 @@
+/**
+ * This file defines a GenericBlock component for React that is used to display a block with a specific color and icon.
+ * It includes:
+ * - Importing necessary libraries and styles.
+ * - The DefinedBlockProps interface to define properties such as 'color' and 'icon'.
+ * - The BlockProps interface extends DefinedBlockProps and adds 'type' and 'onClick' properties.
+ * - The 'type' can be 'start', 'middle', or 'end'.
+ * - The 'onClick' is a callback function to be called when the block is clicked.
+ * - The GenericBlock component which renders a block with a specific color and icon and handles the click event.
+ */
+
 import './styles.css'
 import { ReactElement } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -16,12 +27,12 @@ interface BlockProps extends DefinedBlockProps {
    * The type of the block.
    * Can be 'start', 'middle', or 'end'.
    */
-  type: 'start' | 'middle' | 'end';
+  type: 'start' | 'middle' | 'end'
 
   /**
    * Callback function to be called when the block is clicked.
    */
-  onClick?: () => void;
+  onClick?: () => void
 }
 interface BlockProps extends DefinedBlockProps {
   type: 'start' | 'middle' | 'end'

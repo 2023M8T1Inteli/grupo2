@@ -1,9 +1,4 @@
-.container {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    background: var(--login-bg);
-}
+
 
 .img-container {
     position: relative;
@@ -55,7 +50,7 @@ img.login-bg {
     width: 100%;
     border-radius: .5rem;
     border: 2px solid var(--login-button-border);
-    background: var(--primary-button-bg);
+    /* background: var(--primary-button-bg); */
     text-transform: uppercase;
     color: var(--white);
     font-weight: 600;
@@ -64,7 +59,7 @@ img.login-bg {
 }
 
 .container form input[type="submit"]:hover {
-    background: var(--primary-button-hover-bg);
+    /* background: var(--primary-button-hover-bg); */
     color: var(--primary-button-hover-color);
 }
 

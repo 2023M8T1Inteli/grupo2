@@ -60,12 +60,14 @@ export class BlockUtil {
         setGlobalCounter(globalCounter + 1)
         break
       case 'sound':
-        newBlock.id = globalCounter.toString()
+        newBlock.id = `${globalCounter}`
         newBlock.correspondingCompileCode = `tocar(${newBlock.id})`
         setGlobalCounter(globalCounter + 1)
         break
       case 'wait':
+        newBlock.id = `${globalCounter}`
         newBlock.correspondingCompileCode = `esperar(${newBlock.src})`
+        setGlobalCounter(globalCounter + 1)
         break
       case 'else':
         newBlock.correspondingCompileCode = ''

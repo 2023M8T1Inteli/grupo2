@@ -7,26 +7,28 @@
 // - Logic to show or hide the Navbar based on the current route.
 // - Toast notifications container.
 
-import '../assets/styles/global.css'
+// import '../assets/styles/global.css'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import Login from '../pages/Login'
-import Navbar from '../components/Navbar'
-import Patients from '../pages/Patients'
-import Register from '../pages/Register'
-import Home from '../pages/Home'
-import Projects from '../pages/Projects'
-import RegisterPatient from '../pages/RegisterPatient'
-import { AuthProvider } from '../contexts/AuthContext'
 import { useState, useEffect, ReactElement } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import FabricPage from '../pages/Fabric'
-import NewFunction from '../pages/NewFunction'
+import { DEFAULT_THEME } from '@renderer/themes'
+import { applyTheme } from '@renderer/themes/utils'
+import { AuthProvider } from '@renderer/contexts/AuthContext'
+import Home from '@renderer/pages/Home'
+import Projects from '@renderer/pages/Projects'
 import BlockEditor from '@renderer/pages/BlockEditor'
+import Patients from '@renderer/pages/Patients'
 
 export default function Router(): ReactElement {
   const location = useLocation()
   const [showNavbar, setShowNavbar] = useState(false)
+  const [theme, setTheme] = useState(DEFAULT_THEME)
+
+  useEffect(() => {
+    applyTheme(theme)
+  }, [theme])
 
   useEffect(() => {
     setShowNavbar(
@@ -39,17 +41,14 @@ export default function Router(): ReactElement {
   return (
     <AuthProvider>
       <ToastContainer />
-      {showNavbar && <Navbar />}
+
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/editor" element={<BlockEditor />} />
-        <Route path="/projects" element={<Projects />} />
         <Route path="/" element={<Home />} />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/register-patient" element={<Patients />} />
         <Route path="/patients" element={<Patients />} />
-        <Route path="/fabric" element={<FabricPage />} />
-        <Route path="/new-function" element={<NewFunction />} />
-        <Route path="/register-patient" element={<RegisterPatient />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/editor" element={<BlockEditor />} />
       </Routes>
     </AuthProvider>
   )

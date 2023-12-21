@@ -25,18 +25,20 @@ class CodeGenerator:
         
         self.code += "\n\n"
         self.indent += 1
-        self.code += "while True:\n"
+        self.code += "running = True\n"
+        self.code += "while running:\n"
         self.indent += 1
         self.code += f"{self.indent_str * self.indent}for event in pygame.event.get():\n"
         self.indent += 1
         self.code += f"{self.indent_str * self.indent}if event.type == pygame.QUIT:\n"
         self.indent += 1
-        self.code += f"{self.indent_str * self.indent}pygame.quit()\n"
+        self.code += f"{self.indent_str * self.indent}running = False\n"
         self.indent -= 3
 
         self.visitarBlock(self.tree.get("bloco"))
 
         self.indent += 1
+        self.code += f"{self.indent_str * self.indent}running = False\n"
         self.code += f"{self.indent_str * self.indent}pygame.quit()\n"
 
         return self.code
@@ -49,9 +51,9 @@ class CodeGenerator:
         self.code += "import pygame\n"
         self.code += "pygame.init()\n"
         self.code += "pygame.mixer.init()\n"
+        self.code += "screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)\n"        
         self.code += "infoObject = pygame.display.Info()\n"
         self.code += "width, height = infoObject.current_w, infoObject.current_h\n"
-        self.code += "screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)\n"
         self.code += f"pygame.display.set_caption('{self.tree.get('nome')}')\n"
         self.code += f"script_directory = os.path.dirname(os.path.abspath(__file__))"
         
@@ -70,6 +72,8 @@ class CodeGenerator:
         self.code += "def play_audio(audio):\n"
         self.indent += 1
         self.code += f"{self.indent_str * self.indent}audio.play()\n"
+        self.code += f"{self.indent_str * self.indent}length = audio.get_length()\n"
+        self.code += f"{self.indent_str * self.indent}pygame.time.wait(int(length * 1000))\n"
         self.indent -= 1
 
     def show_image(self):
@@ -94,29 +98,27 @@ class CodeGenerator:
         self.code += "def create_image_map(directory):\n"
         self.indent += 1
         self.code += f"{self.indent_str * self.indent}img_map = {{}}\n"
-        self.code += f"{self.indent_str * self.indent}img_counter = 0\n"
         self.code += f"{self.indent_str * self.indent}for filename in os.listdir(directory):\n"
         self.indent += 1
         self.code += f"{self.indent_str * self.indent}if filename.endswith('.png'):\n"
         self.indent += 1
-        self.code += f"{self.indent_str * self.indent}img_map[img_counter] = pygame.image.load(f'{{directory}}/{{filename}}')\n"
-        self.code += f"{self.indent_str * self.indent}img_counter += 1\n"
+        self.code += f"{self.indent_str * self.indent}key = int(filename.split('.')[0])\n"
+        self.code += f"{self.indent_str * self.indent}img_map[key] = pygame.image.load(f'{{directory}}/{{filename}}')\n"
         self.indent -= 2
         self.code += f"{self.indent_str * self.indent}return img_map\n"
         self.indent -= 1
-    
+
     def create_audio_map(self):
         self.code += "\n\n"
         self.code += "def create_audio_map(directory):\n"
         self.indent += 1
         self.code += f"{self.indent_str * self.indent}audio_map = {{}}\n"
-        self.code += f"{self.indent_str * self.indent}audio_counter = 0\n"
         self.code += f"{self.indent_str * self.indent}for filename in os.listdir(directory):\n"
         self.indent += 1
-        self.code += f"{self.indent_str * self.indent}if filename.endswith('.mp3'):\n"
+        self.code += f"{self.indent_str * self.indent}if filename.endswith('.wav'):\n"
         self.indent += 1
-        self.code += f"{self.indent_str * self.indent}audio_map[audio_counter] = pygame.mixer.Sound(f'{{directory}}/{{filename}}')\n"
-        self.code += f"{self.indent_str * self.indent}audio_counter += 1\n"
+        self.code += f"{self.indent_str * self.indent}key = int(filename.split('.')[0])\n"
+        self.code += f"{self.indent_str * self.indent}audio_map[key] = pygame.mixer.Sound(f'{{directory}}/{{filename}}')\n"
         self.indent -= 2
         self.code += f"{self.indent_str * self.indent}return audio_map\n"
         self.indent -= 1
