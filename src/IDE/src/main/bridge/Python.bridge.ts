@@ -8,14 +8,14 @@ import path from 'path'
 import axios from 'axios'
 const fs = require('fs')
 
-const compilerPath = path.join(__dirname, '../../resources/compiler/', 'main.py')
+const compilerPath = path.join(__dirname, '../../resources/compiler/', 'compiler.exe')
 
 export const codeBridge = {
   async compileCode(code: string): Promise<string> {
     return new Promise((resolve, reject) => {
       fs.writeFileSync('temp.qal', code)
-      const spawn = require('child_process').spawn
-      const compileProcess = spawn('python', [compilerPath, 'temp.qal'])
+      const execFile = require('child_process').execFile
+      const compileProcess = execFile(compilerPath, ['temp.qal'])
       let data = ''
       let errorData = ''
 
