@@ -762,16 +762,19 @@ export default function Patients() {
                 </div>
                 <div className="p-4 md:p-5 overflow-auto max-h-96">
                   <div className="p-4 md:p-5 flex flex-col">
-                    <div className="flex gap-10 overflow-auto justify-center">
+                    <div className="flex flex-wrap gap-10 overflow-auto justify-center">
                       {projects.map((project) => (
                         <div
                           key={project}
                           className="max-w-sm flex justify-center items-center text-center w-48 h-48 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 transform transition duration-500 ease-in-out"
                           onClick={() => runProject(project)}
                         >
-                          <div className="p-5">
-                            <a href="#">
-                              <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                          <div className="text-ellipsis overflow-hidden">
+                            <a href="#" title={project}>
+                              <h5
+                                className="mb-2 flex text-2xl font-bold tracking-tight text-gray-900 dark:text-white truncate"
+                                title={project}
+                              >
                                 {project}
                               </h5>
                             </a>
